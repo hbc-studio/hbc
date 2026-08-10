@@ -51,7 +51,7 @@ Her mockup sayfasında mockup kabuğunun üstünde **Sunum** linki (sol) ve **D�
 - **Sunum** (sol): müşteri gösterimi — `?sunum=1`
 - **Düzenle** (sağ): `TASK_CURSOR.open({ mode: 'mockup-duzelt', mockup })` — seçili ekran için Cursor düzeltme metni; rapor mockup'larında **+ Widget ekle** paneli de açılır
 - **Düzenle dialogu:** arka plan şeffaf — mockup arkada görünür; sağ altta konumlanır; **−** ile sağ alt köşede ince çubuk halinde küçültülür (**Yeniden aç** veya başlığa tıklayarak geri gelir); dışarı/boşluğa tıklayınca **kapanmaz** — yalnızca **Kapat**
-- Sunum modunda (`?sunum=1`) üst çubuk ve Düzenle gizlenir; **sol altta** (sabit) iki kontrol kalır — **FE uyarılarını göster** / gizle + **Sunumdan çık** (`.mock-sunum-fe-toggle`, `.mock-sunum-exit` — `position: fixed; bottom/left`; şablon: `templates/mock-shell.css`). Sağ üste koyma.
+- Sunum modunda (`?sunum=1`) üst çubuk ve Düzenle gizlenir; **sol altta** (sabit) iki kontrol kalır — **FE uyarılarını göster** / gizle + **Sunumdan çık** (`.mock-sunum-fe-toggle`, `.mock-sunum-exit` — `position: fixed; bottom/left`; şablon: `templates/mock-shell.css`). Kontroller **alt alta** (`flex-direction: column` — üstte FE toggle, altta Sunumdan çık); yan yana koyma. Sağ üste koyma.
 - **FE yazılımcı uyarıları** (`mock-fe-warning`): normal mockup görünümünde varsayılan **açık**; sunum modunda varsayılan **kapalı** — sol alttaki **FE uyarılarını göster** ile geçici açılır (`body.mock-fe-warnings-on`, `js/mock-sunum.js`)
 - **Kullanıcı bilgi kutusu** (`mock-ui-info`): canlı uygulamada da görünecek durum mesajları (ör. «Hayır seçildiği için…») — FE uyarısı değil; sunumda da görünür kalır
 - Tıklanınca `?sunum=1` — sol **HBC** menüsü, sayfa başlığı, alttaki Cursor prompt bölümü ve üst çubuk (Sunum / Düzenle) gizlenir
@@ -207,7 +207,7 @@ Form ekranlarında (`mockup/*-form.html`):
 | `mock-ui-info` | Canlıda kullanıcıya görünecek bilgi — turuncu **Bilgi** başlığı (ör. hüküm Hayır mesajı) | **Her zaman görünür** |
 
 - Stiller: `mock-shell.css` (şablon + çalışma kopyaları); sunum gizleme: `body.mock-sunum:not(.mock-fe-warnings-on) .mock-fe-warning`
-- Toggle: `js/mock-sunum.js` → `.mock-sunum-fe-toggle` — **sol altta**, `.mock-sunum-exit` (Sunumdan çık) ile aynı sabit şeritte; sağ üst değil
+- Toggle: `js/mock-sunum.js` → `.mock-sunum-fe-toggle` — **sol altta**, `.mock-sunum-exit` (Sunumdan çık) ile aynı `.mock-sunum-controls` kutusunda **alt alta**; sağ üst / yan yana değil
 - **Jira aktarımı (zorunlu):** Mockup’a eklenen her `mock-fe-warning` ve `mock-ui-info` metni, `isler.html` task yazımında ilgili `[BE]` / `[FE]` kutusunun **Mockup notları** bölümüne taşınır — ayrıntı: **Task sayfası** → «Mockup FE/BE notları → Jira».
 
 ```html
@@ -878,7 +878,7 @@ assets/
 - İptal geri al: önceki `durum` değerine dön, `iptal` alanını kaldır; özet ve `isler.html` içindeki iptal metinlerini scaffold boş şablonuna döndür
 - Boş `isler.html` scaffold mesajını silme; task eklenene kadar `empty-note` + rehber linki kalsın
 - Mockup / onay / task işlerinde `js/calismalar-meta.js` güncelle; ayrıntılı plan: `module-creator.md`
-- Mockup uyarı kutuları: `mock-fe-warning` (yazılımcı) ile `mock-ui-info` (kullanıcı) karıştırma; sunumda FE uyarıları varsayılan gizli; **FE uyarılarını göster** + **Sunumdan çık** sol altta
+- Mockup uyarı kutuları: `mock-fe-warning` (yazılımcı) ile `mock-ui-info` (kullanıcı) karıştırma; sunumda FE uyarıları varsayılan gizli; **FE uyarılarını göster** + **Sunumdan çık** sol altta **alt alta**
 - `isler.html` yazarken **Bağlı Olduğu İşler** (`Frontend:` / `Backend:`) kullan; **Tüketici** / **Veri** yazma
 - Mockup’taki `mock-fe-warning` / `mock-ui-info` metinlerini ilgili task kutusunda **Mockup notları** olarak aktar
 - HBC dialoglarında `hbc-dialog-backdrop` kullan; Bootstrap `.modal-backdrop` kullanma (dock / minimize / dışarı tıklayınca kapanmaz)
