@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mockup: Hidromorfolojik Baskı Ekleme</title>
+  <link rel="stylesheet" href="../../../css/style.css" />
+  <link rel="stylesheet" href="mock-shell.css" />
+  <link rel="stylesheet" href="../../../css/mock-bootstrap.css" />
+</head>
+<body>
+<div class="layout">
+  <nav id="sidebar"></nav>
+  <main>
+    <h1 class="mock-dev-only">Mockup: Hidromorfolojik baskı ekleme</h1>
+    <p class="subtitle mock-dev-only">Harita polygon → otomatik konum · su kütlesi türüne göre anket soruları</p>
+    <div class="mock-app-shell">
+      <nav class="mock-app-menu" aria-label="Uygulama menüsü">
+        <div class="menu-app">Havza Bilgi Sistemi</div>
+        <button class="mock-menu-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#mock-menu-baskilar" aria-expanded="true" aria-controls="mock-menu-baskilar">Baskılar</button>
+        <div class="collapse show mock-menu-collapse" id="mock-menu-baskilar">
+          <div class="mock-menu-sub">
+            <a href="#">Katmanlar</a>
+            <a href="hidromorfolojik-baski-liste.html">Hidromorfolojik Baskılar</a>
+          </div>
+        </div>
+      </nav>
+      <div class="mock-app-body">
+        <div class="mock-header">
+          <div class="mock-breadcrumb">Havza Bilgi Sistemi › Baskılar › Hidromorfolojik Baskılar › Hidromorfolojik Baskı Ekleme</div>
+          <strong>Hidromorfolojik Baskı Ekleme</strong>
+        </div>
+        <div class="mock-content mock-content--form">
+          <div class="mock-form-panel mock-form-panel--wide">
+            <fieldset class="hb-form-section">
+              <legend>Konum Bilgileri</legend>
+              <p class="mock-section-hint">Yıl sol panelden girilir. Polygon çizimi veya geometri yüklemesi sonrası konum bilgileri otomatik doldurulur. <strong>Su kütlesi türü</strong> (nehir / göl) konumdan tespit edilir; ölçüm anketi yalnızca bu türe göre açılır.</p>
+
+              <div class="mock-map-draw" aria-label="Harita — polygon çizimi">
+                <div class="mock-map-draw__aside">
+                  <div class="hb-map-konum__item hb-map-konum__item--edit">
+                    <label class="hb-map-konum__label" for="f-hb-yil">Yıl *</label>
+                    <input type="text" class="hb-map-konum__value hb-map-konum__value--edit" id="f-hb-yil" value="2024" inputmode="numeric" />
+                  </div>
+                  <h3 class="hb-map-konum__title">Konum Bilgisi</h3>
+                  <p class="hb-map-konum__empty" id="hb-map-konum-empty">Polygon çizildiğinde veya geometri yüklendiğinde tespit edilen alanlar burada listelenir.</p>
+                  <div class="hb-map-konum__body" id="hb-map-konum-body" hidden>
+                    <div class="hb-map-konum__item">
+                      <span class="hb-map-konum__label">Su Kütlesi Kodu</span>
+                      <input type="text" class="hb-map-konum__value" id="f-hb-su-kutlesi" readonly tabindex="-1" />
+                    </div>
+                    <div class="hb-map-konum__item">
+                      <span class="hb-map-konum__label">Havza</span>
+                      <input type="text" class="hb-map-konum__value" id="f-hb-havza" readonly tabindex="-1" />
+                    </div>
+                    <div class="hb-map-konum__item">
+                      <span class="hb-map-konum__label">Alt Havza</span>
+                      <input type="text" class="hb-map-konum__value" id="f-hb-alt-havza" readonly tabindex="-1" />
+                    </div>
+                    <div class="hb-map-konum__item">
+                      <span class="hb-map-konum__label">İl</span>
+                      <input type="text" class="hb-map-konum__value" id="f-hb-il" readonly tabindex="-1" />
+                    </div>
+                    <div class="hb-map-konum__item">
+                      <span class="hb-map-konum__label">Su Kütlesi Türü</span>
+                      <input type="text" class="hb-map-konum__value" id="f-hb-tur" readonly tabindex="-1" />
+                    </div>
+                  </div>
+                  <div class="mock-map-draw__coords">
+                    <span>Enlem: <strong id="hb-map-lat">—</strong></span>
+                    <span>Boylam: <strong id="hb-map-lon">—</strong></span>
+                  </div>
+                </div>
+                <div class="mock-map-draw__canvas-wrap">
+                  <div class="mock-map-draw__canvas" id="hb-map-canvas">
+                    <div class="mock-map-draw__labels" id="hb-map-labels">
+                      <span class="mock-map-label" data-hb-label="nehir" style="left:38%;top:42%">MANİSA</span>
+                      <span class="mock-map-label" data-hb-label="nehir" style="left:52%;top:35%">GEDİZ</span>
+                      <span class="mock-map-label" data-hb-label="gol" style="left:40%;top:40%" hidden>SAKARYA</span>
+                      <span class="mock-map-label" data-hb-label="gol" style="left:55%;top:48%" hidden>SAPANCA</span>
+                    </div>
+                    <svg class="mock-map-draw__polygon" id="hb-map-polygon" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true" hidden>
+                      <polygon id="hb-map-polygon-shape" points="155,95 235,88 248,145 198,168 142,132" fill="rgba(220,53,69,0.45)" stroke="#dc3545" stroke-width="2.5" />
+                      <circle id="hb-map-polygon-pin" cx="198" cy="128" r="5" fill="#fff" stroke="#dc3545" stroke-width="2" />
+                    </svg>
+                  </div>
+                  <div class="mock-map-draw__toolbar" role="toolbar" aria-label="Harita araçları">
+                    <button type="button" class="mock-icon-btn" id="hb-map-draw" title="Polygon çiz" aria-label="Polygon çiz">
+                      <svg class="mock-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                    </button>
+                    <button type="button" class="mock-icon-btn" id="hb-map-upload" title="Geometri yükle" aria-label="Geometri yükle">
+                      <svg class="mock-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+                    </button>
+                    <button type="button" class="mock-icon-btn" id="hb-map-clear" title="Geometriyi sil" aria-label="Geometriyi sil">
+                      <svg class="mock-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+                    </button>
+                    <span class="mock-map-draw__toolbar-spacer"></span>
+                    <button type="button" class="mock-icon-btn" title="Bilgi" aria-label="Bilgi">
+                      <svg class="mock-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                    </button>
+                  </div>
+                  <div class="mock-map-draw__zoom" aria-hidden="true">
+                    <button type="button" disabled>‹</button>
+                    <button type="button" disabled>+</button>
+                    <button type="button" disabled>−</button>
+                    <button type="button" disabled title="Ana görünüm">⌂</button>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="hb-form-section" id="hb-olcum-section" hidden>
+              <legend id="hb-olcum-legend">Ölçüm Bilgisi Ekleme Ekranı</legend>
+              <p class="mock-section-hint" id="hb-olcum-tur-hint" hidden></p>
+              <div id="hb-anket-note"></div>
+              <div id="hb-anket-nehir" hidden>
+                <div id="hb-anket-nehir-list"></div>
+              </div>
+              <div id="hb-anket-gol" hidden>
+                <div id="hb-anket-gol-list"></div>
+              </div>
+            </fieldset>
+
+            <div class="mock-footer">
+              <a href="hidromorfolojik-baski-liste.html" class="mock-btn">← Listeye Dön</a>
+              <button type="button" class="mock-btn mock-btn-primary mock-btn--success">Kaydet</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script>
+window.TASK_HUB = {
+  taskRoot: '../../..',
+  page: 'mock-hidromorfolojik-baski-form',
+  calisma: {
+    id: 'hidromorfolojik_baski',
+    label: 'Hidromorfolojik Baskı',
+    base: '..',
+    menuYer: 'sol',
+    mockups: [
+      { id: 'mock-hidromorfolojik-baski-liste', label: 'Hidromorfolojik Baskılar', href: 'mockup/hidromorfolojik-baski-liste.html' },
+      { id: 'mock-hidromorfolojik-baski-form', label: 'Hidromorfolojik Baskı Ekleme', href: 'mockup/hidromorfolojik-baski-form.html' }
+    ],
+    islerHref: 'isler.html'
+  }
+};
+</script>
+<script src="../../../assets/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
+<script src="mock-hb-anket-data.js"></script>
+<script src="mock-hb-baski-form.js"></script>
+<script src="../../../js/calismalar-meta.js"></script>
+<script src="../../../js/rapor-widgets.js"></script>
+<script src="../../../js/calisma-cursor.js"></script>
+<script src="../../../js/sunum-query.js"></script>
+<script src="../../../js/mock-sunum.js"></script>
+<script src="../../../js/nav.js"></script>
+</body>
+</html>

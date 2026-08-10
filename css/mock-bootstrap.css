@@ -77,3 +77,13 @@ body > .ts-dropdown {
 .ts-dropdown input[type="text"] {
   background: #fff;
 }
+
+/* HBC özel dialoglar — Bootstrap .modal-backdrop (#000) ile çakışmasın */
+.hbc-dialog-backdrop {
+  background: transparent !important;
+  pointer-events: none;
+}
+.hbc-dialog-backdrop .modal-card,
+.hbc-dialog-backdrop .wizard-shell {
+  pointer-events: auto;
+}

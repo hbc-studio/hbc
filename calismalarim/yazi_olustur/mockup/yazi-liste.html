@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
@@ -13,32 +13,77 @@
   <nav id="sidebar"></nav>
   <main>
     <h1 class="mock-dev-only">Mockup: Yazı listesi</h1>
-    <p class="subtitle mock-dev-only">Oluşturulan görüş yazıları</p>
+    <p class="subtitle mock-dev-only">Oluşturulan yazılar</p>
     <div class="mock-app-shell">
       <nav class="mock-app-menu" aria-label="Uygulama menüsü">
-        <div class="menu-app">Görüş Yazısı</div>
-        <button class="mock-menu-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#mock-menu-yazi" aria-expanded="true" aria-controls="mock-menu-yazi">Görüş Yazısı</button>
-        <div class="collapse show mock-menu-collapse" id="mock-menu-yazi">
+        <div class="menu-app">İçme Suyu Bilgi Sistemi</div>
+        <button class="mock-menu-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#mock-menu-isd" aria-expanded="true" aria-controls="mock-menu-isd">İçme Suyu Denetimleri</button>
+        <div class="collapse show mock-menu-collapse" id="mock-menu-isd">
           <div class="mock-menu-sub">
-            <a href="yazi-liste.html" class="active">Yazılar</a>
-            <a href="hukumler-liste.html">Hükümler Tablosu</a>
+            <button
+              class="mock-menu-toggle mock-menu-toggle--nested"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#mock-menu-dashboard"
+              aria-expanded="true"
+              aria-controls="mock-menu-dashboard"
+            >
+              Dashboard
+            </button>
+            <div class="collapse show mock-menu-collapse" id="mock-menu-dashboard">
+              <div class="mock-menu-sub mock-menu-sub--nested">
+                <a href="yazi-liste.html" class="active">Yazı Oluştur</a>
+              </div>
+            </div>
+            <a href="hukumler-liste.html">Özel Hükümler</a>
           </div>
         </div>
       </nav>
       <div class="mock-app-body">
         <div class="mock-header">
-          <div class="mock-breadcrumb">Görüş Yazısı › Yazılar</div>
-          <strong>Görüş Yazıları</strong>
+          <div class="mock-breadcrumb">İçme Suyu Bilgi Sistemi › İçme Suyu Denetimleri › Dashboard › Yazı Oluştur</div>
+          <strong>Yazı Oluştur</strong>
         </div>
+        <div class="mock-list-map-panel" id="mock-list-map-panel" hidden aria-hidden="true">
+          <div class="mock-list-map-panel__head">
+            <strong>Seçilen kayıtlar haritada gösteriliyor</strong>
+            <button type="button" class="mock-btn-map-close" id="mock-list-map-close">× Haritayı Kapat</button>
+          </div>
+          <div class="mock-list-map-panel__body">
+            <aside class="mock-list-map-aside" id="mock-list-map-aside"></aside>
+            <div class="mock-list-map-canvas-wrap">
+              <div class="mock-list-map-canvas" id="mock-list-map-canvas">
+                <span class="mock-list-map-canvas__label mock-list-map-canvas__label--tr">TÜRKİYE</span>
+              </div>
+              <div class="mock-map-draw__zoom" aria-hidden="true">
+                <button type="button" disabled>‹</button>
+                <button type="button" disabled>+</button>
+                <button type="button" disabled>−</button>
+                <button type="button" disabled title="Ana görünüm">⌂</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mock-list-area">
         <div class="mock-toolbar">
           <a href="yazi-form.html" class="mock-btn mock-btn-primary">+ Yeni Yazı</a>
+          <div class="mock-toolbar-end">
+            <button type="button" class="mock-btn mock-btn-map" id="mock-list-map-show" disabled>
+              <svg class="mock-icon-svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+              Haritada Göster
+            </button>
+          </div>
         </div>
         <div class="mock-content">
           <div class="mock-list-wrap">
-            <table class="mock-table">
+            <table class="mock-table mock-list-map-table" id="mock-list-map-table">
               <thead>
                 <tr>
+                  <th class="mock-th-check"><input type="checkbox" class="form-check-input mock-row-check-all" id="mock-select-all" aria-label="Tümünü seç" /></th>
                   <th>Başlık</th>
+                  <th>İçme Suyu Havzası</th>
+                  <th>İl</th>
+                  <th>Ada/Parsel</th>
                   <th>Açıklama</th>
                   <th>Oluşturulma</th>
                   <th>Güncelleme</th>
@@ -47,7 +92,11 @@
               </thead>
               <tbody>
                 <tr>
+                  <td class="mock-td-check"><input type="checkbox" class="form-check-input mock-row-check" data-map-label="Koza Altın Maden İşletme Görüşü" data-map-sub="Çanakkale — Serçiler Köyü, 32 parsel" data-map-il="Çanakkale" aria-label="Satırı seç" /></td>
                   <td>Koza Altın Maden İşletme Görüşü</td>
+                  <td>Hayır</td>
+                  <td>Çanakkale</td>
+                  <td>Serçiler Köyü — 32 parsel</td>
                   <td>Çanakkale Serçiler Köyü — 32 parsel maden faaliyeti</td>
                   <td>23.06.2026 14:32</td>
                   <td>23.06.2026 14:32</td>
@@ -63,7 +112,11 @@
                   </td>
                 </tr>
                 <tr>
+                  <td class="mock-td-check"><input type="checkbox" class="form-check-input mock-row-check" data-map-label="Tavuk Kümesi — Elazığ Adalı Köy" data-map-sub="Elazığ — Adalı Köy, 18 parsel" data-map-il="Elazığ" aria-label="Satırı seç" /></td>
                   <td>Tavuk Kümesi — Elazığ Adalı Köy</td>
+                  <td>Evet</td>
+                  <td>Elazığ</td>
+                  <td>Adalı Köy — 18 parsel</td>
                   <td>15.000 adet/dönem kapasiteli kaz çiftliği görüş talebi</td>
                   <td>20.06.2026 09:15</td>
                   <td>21.06.2026 11:40</td>
@@ -79,7 +132,11 @@
                   </td>
                 </tr>
                 <tr>
+                  <td class="mock-td-check"><input type="checkbox" class="form-check-input mock-row-check" data-map-label="GES Projesi Ön Görüş" data-map-sub="Konya — Karapınar, 245/12" data-map-il="Konya" aria-label="Satırı seç" /></td>
                   <td>GES Projesi Ön Görüş</td>
+                  <td>Evet ama protokol yok</td>
+                  <td>Konya</td>
+                  <td>Karapınar — 245/12</td>
                   <td>Konya ili güneş enerji santrali yer seçimi</td>
                   <td>15.06.2026 16:00</td>
                   <td>15.06.2026 16:00</td>
@@ -98,6 +155,7 @@
             </table>
           </div>
         </div>
+        </div>
       </div>
     </div>
   </main>
@@ -113,14 +171,21 @@ window.TASK_HUB = {
     mockups: [
       { id: 'mock-yazi-liste', label: 'Yazı Listesi', href: 'mockup/yazi-liste.html' },
       { id: 'mock-yazi-form', label: 'Yazı Formu', href: 'mockup/yazi-form.html' },
-      { id: 'mock-hukumler-liste', label: 'Hükümler Tablosu', href: 'mockup/hukumler-liste.html' },
-      { id: 'mock-hukumler-form', label: 'Hüküm Kaydı', href: 'mockup/hukumler-form.html' }
+      { id: 'mock-hukumler-liste', label: 'Özel Hüküm Listesi', href: 'mockup/hukumler-liste.html' },
+      { id: 'mock-hukumler-form', label: 'Özel Hüküm Kaydı', href: 'mockup/hukumler-form.html' }
     ],
     islerHref: 'isler.html'
   }
 };
 </script>
 <script src="../../../assets/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
+<script src="mock-list-map.js"></script>
+<script>
+  MOCK_LIST_MAP.init({
+    listTitle: 'Yazı Oluştur',
+    tableSelector: '#mock-list-map-table'
+  });
+</script>
 <script src="../../../js/calismalar-meta.js"></script>
 <script src="../../../js/rapor-widgets.js"></script>
 <script src="../../../js/calisma-cursor.js"></script>

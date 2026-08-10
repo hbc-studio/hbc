@@ -59,7 +59,12 @@
   }
 
   function ensureModal() {
-    if (document.getElementById('isler-edit-modal')) return;
+    var existing = document.getElementById('isler-edit-modal');
+    if (existing && !existing.classList.contains('hbc-dialog-backdrop')) {
+      existing.remove();
+      existing = null;
+    }
+    if (existing) return;
 
     var opts = EDIT_TYPES.map(function (t) {
       return '<option value="' + t.id + '">' + t.label + '</option>';
@@ -67,7 +72,7 @@
 
     document.body.insertAdjacentHTML(
       'beforeend',
-      '<div class="modal-backdrop" id="isler-edit-modal" hidden>' +
+      '<div class="hbc-dialog-backdrop" id="isler-edit-modal" hidden>' +
         '<div class="modal-card modal-card--cursor" role="dialog" aria-labelledby="isler-edit-title" aria-modal="true">' +
           '<h3 id="isler-edit-title">Task düzenleme — Cursor metni</h3>' +
           '<p class="modal-lead" id="isler-edit-task-name"></p>' +
@@ -87,9 +92,6 @@
     );
 
     document.getElementById('isler-edit-close').addEventListener('click', closeModal);
-    document.getElementById('isler-edit-modal').addEventListener('click', function (e) {
-      if (e.target.id === 'isler-edit-modal') closeModal();
-    });
     document.getElementById('isler-edit-copy').addEventListener('click', function () {
       var preview = document.getElementById('isler-edit-preview');
       if (!preview || !preview.value.trim()) return;

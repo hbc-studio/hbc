@@ -50,7 +50,10 @@ Her mockup sayfasında mockup kabuğunun üstünde **Sunum** linki (sol) ve **D�
 
 - **Sunum** (sol): müşteri gösterimi — `?sunum=1`
 - **Düzenle** (sağ): `TASK_CURSOR.open({ mode: 'mockup-duzelt', mockup })` — seçili ekran için Cursor düzeltme metni; rapor mockup'larında **+ Widget ekle** paneli de açılır
-- Sunum modunda (`?sunum=1`) üst çubuk ve Düzenle gizlenir; sol altta yalnızca **Sunumdan çık** kalır (`.mock-sunum-exit` — `position: fixed; bottom/left`; şablon: `templates/mock-shell.css`)
+- **Düzenle dialogu:** arka plan şeffaf — mockup arkada görünür; sağ altta konumlanır; **−** ile sağ alt köşede ince çubuk halinde küçültülür (**Yeniden aç** veya başlığa tıklayarak geri gelir); dışarı/boşluğa tıklayınca **kapanmaz** — yalnızca **Kapat**
+- Sunum modunda (`?sunum=1`) üst çubuk ve Düzenle gizlenir; **sol altta** (sabit) iki kontrol kalır — **FE uyarılarını göster** / gizle + **Sunumdan çık** (`.mock-sunum-fe-toggle`, `.mock-sunum-exit` — `position: fixed; bottom/left`; şablon: `templates/mock-shell.css`). Kontroller **alt alta** (`flex-direction: column` — üstte FE toggle, altta Sunumdan çık); yan yana koyma. Sağ üste koyma.
+- **FE yazılımcı uyarıları** (`mock-fe-warning`): normal mockup görünümünde varsayılan **açık**; sunum modunda varsayılan **kapalı** — sol alttaki **FE uyarılarını göster** ile geçici açılır (`body.mock-fe-warnings-on`, `js/mock-sunum.js`)
+- **Kullanıcı bilgi kutusu** (`mock-ui-info`): canlı uygulamada da görünecek durum mesajları (ör. «Hayır seçildiği için…») — FE uyarısı değil; sunumda da görünür kalır
 - Tıklanınca `?sunum=1` — sol **HBC** menüsü, sayfa başlığı, alttaki Cursor prompt bölümü ve üst çubuk (Sunum / Düzenle) gizlenir
 - Yalnızca uygulama mockup'ı (sol menü + içerik) tam sayfa kalır; müşteri sunumu için
 - Uzun raporlarda içerik alanı kaydırılabilir (`body.mock-sunum .mock-content { overflow-y: auto }`)
@@ -155,6 +158,7 @@ Satır işlemleri (Düzenle, Sil, Görüntüle vb.) **metin linki değil ikon** 
 - Her aksiyonun kendi ikonu, `title` ve `aria-label` metni olur.
 - Toolbar’daki birincil aksiyonlar (ör. «+ Yeni») metinli kalabilir; satır içi işlemler ikon.
 - Stil: `mock-shell.css` → `.mock-icon-btn`, `.mock-icon-svg`, `.mock-row-actions` (ghost buton, hover’da mavi).
+- **Birincil buton hover:** `mock-bootstrap.css` sonrası Bootstrap `a:hover` link rengi `.mock-btn-primary` yazısını okunaksız yapar. `mock-shell.css` içinde `a.mock-btn-primary:hover` (ve `:focus`) için `color: #fff` + biraz koyu arka plan zorunlu; `.mock-btn--success` için de aynı kural.
 
 Referans: `calismalarim/yazi_olustur/mockup/yazi-liste.html`, `calismalarim/kaynaktan_musluga/mockup/kaynak-liste.html`.
 
@@ -193,6 +197,19 @@ Form ekranlarında (`mockup/*-form.html`):
 - **Evet / Hayır** alanı: dropdown değil — `.mock-radio-group` içinde iki `radio` (Evet, Hayır)
 - Sunum modunda gri alan içerik yüksekliğini doldurur; form kartı üstte kalır
 
+### Mockup — uyarı kutuları (agent)
+
+İki ayrı sınıf; karıştırma:
+
+| Sınıf | Amaç | Sunumda (`?sunum=1`) |
+|-------|------|----------------------|
+| `mock-fe-warning` | Yazılımcıya not — «Frontend İçin Uyarı», Excel seçenekleri, koşullu alan SS notu | Varsayılan **gizli**; **FE uyarılarını göster** ile açılır |
+| `mock-ui-info` | Canlıda kullanıcıya görünecek bilgi — turuncu **Bilgi** başlığı (ör. hüküm Hayır mesajı) | **Her zaman görünür** |
+
+- Stiller: `mock-shell.css` (şablon + çalışma kopyaları); sunum gizleme: `body.mock-sunum:not(.mock-fe-warnings-on) .mock-fe-warning`
+- Toggle: `js/mock-sunum.js` → `.mock-sunum-fe-toggle` — **sol altta**, `.mock-sunum-exit` (Sunumdan çık) ile aynı `.mock-sunum-controls` kutusunda **alt alta**; sağ üst / yan yana değil
+- **Jira aktarımı (zorunlu):** Mockup’a eklenen her `mock-fe-warning` ve `mock-ui-info` metni, `isler.html` task yazımında ilgili `[BE]` / `[FE]` kutusunun **Mockup notları** bölümüne taşınır — ayrıntı: **Task sayfası** → «Mockup FE/BE notları → Jira».
+
 ```html
 <div class="mock-field">
   <span class="mock-field-label" id="f-ornek-label">Soru metni *</span>
@@ -215,7 +232,7 @@ Form ekranlarında (`mockup/*-form.html`):
 Referans: `calismalarim/taslak_demo/mockup/sinif-form.html` (CRUD), `iletisim-form.html` (tekil)
 Referans (görüş yazısı / Excel): `calismalarim/yazi_olustur/` — dropdown listeler `scripts/export-yazi-excel-secenekler.py` → `mockup/mock-yazi-excel-secenekler.js` (Excel «Seçenekler» + «Faaliyet»). **Tekli** uzun listeler → `form-select` (native); **çoklu** (ör. koruma alanı) → `form-select mock-tom-select` + Tom Select (`musluk-form.html` ile aynı kalıp). **Yasak:** `size="5"` native çoklu liste.
 
-**Yazı Oluştur mockup akışı:** `yazi-liste.html` + `yazi-form.html` (9 adımlı wizard) + `hukumler-liste.html` / `hukumler-form.html` (referans veri — `hükümler_tablosu.xlsx` → `scripts/export-yazi-hukumler-tablosu.py` → `mock-hukumler-tablosu.js`). Menü: **Yazılar** | **Hükümler Tablosu** (yeni yazı yalnızca liste araç çubuğundan). Stepper: `mock-yazi-wizard.css` + `mock-yazi-wizard.js` — her adımda «X / Y dolduruldu» (`data-yazi-field`, `data-required="true"`). Özet adımında seçim özeti + **Yazı Oluştur**; Yazı adımında metin önizleme + Word indir. Liste sütunları: başlık, açıklama, oluşturulma, güncelleme. Tüm label ve seçenek metinleri kelime başı büyük harf. Dropdown altında **Frontend İçin Uyarı** (`mock-yazi-form.js`): Excel kaynaklı listeler → «Excel'den alınan seçeneklerdir. Canlı ekranda görünmelidir.» Radio gruplarına uyarı eklenmez. **Koşullu alanlar:** koruma alanı açıklaması (`Diğer (Yazınız)`); faaliyet-tedbir uyarısı (talep türü «Diğer») — canlıda koşullu; mockup'ta `yazi-fe-note-block` içinde uyarı (ve gerekiyorsa alan) her zaman görünür.
+**Yazı Oluştur mockup akışı:** `yazi-liste.html` + `yazi-form.html` (9 adımlı wizard) + `hukumler-liste.html` / `hukumler-form.html` (referans veri — `hükümler_tablosu.xlsx` → `scripts/export-yazi-hukumler-tablosu.py` → `mock-hukumler-tablosu.js`). Menü: **Yazılar** | **Hükümler Tablosu** (yeni yazı yalnızca liste araç çubuğundan). Stepper: `mock-yazi-wizard.css` + `mock-yazi-wizard.js` — her adımda «X / Y dolduruldu» (`data-yazi-field`, `data-required="true"`). Özet adımında seçim özeti + **Yazı Oluştur**; Yazı adımında metin önizleme + Word indir. Liste sütunları: başlık, açıklama, oluşturulma, güncelleme. Tüm label ve seçenek metinleri kelime başı büyük harf. Dropdown altında **Frontend İçin Uyarı** (`mock-yazi-form.js`, sınıf `mock-fe-warning`): Excel kaynaklı listeler → «Excel'den alınan seçeneklerdir. Canlı ekranda görünmelidir.» Radio gruplarına uyarı eklenmez. **Hüküm Yazıyor Muyuz = Hayır** bilgi mesajı → `mock-ui-info` (kullanıcıya yönelik; sunumda da görünür). **Koşullu alanlar:** koruma alanı açıklaması (`Diğer (Yazınız)`); faaliyet-tedbir uyarısı (talep türü «Diğer») — canlıda koşullu; mockup'ta `yazi-fe-note-block` içinde uyarı (ve gerekiyorsa alan) her zaman görünür. **Not:** A.Hazal dalında adım sayısı / Kaydet+PDF akışı farklılaşmış olabilir — canlı `calismalarim/yazi_olustur/` mockup kaynağına bak; bu rule paket taşınana kadar A.1 mockup’ını esas al.
 
 ### Özet sayfası — FE Mockup'lar
 
@@ -416,14 +433,55 @@ Basit modüllerde tüm Jira metinleri tek dosyada; **sekme (tab)** yapısı zoru
 - Aktif sekme vurgulanır; isteğe bağlı URL hash: `#be`, `#fe`.
 - Task başlığı (`h4`) ilgili sekmenin önekiyle başlar: Backend → `[BE] …`, Frontend → `[FE] …`. Jira issue başlığı = kutudaki `h4` metni.
 - Başlıkta görsel **chip/badge kullanma** (`tag-be`, `tag-fe` span'leri yok); yalnızca metin öneki.
-- Çapraz referanslarda (Tüketici / Veri) diğer sekmedeki task'ı belirtmek için `[BE]` / `[FE]` öneki kullanılır.
+- Çapraz referanslarda diğer sekmedeki task'ı belirtmek için `[BE]` / `[FE]` öneki kullanılır; **Bağlı Olduğu İşler** bölümünde **Frontend:** ve **Backend:** etiketleri ile yazılır (**Tüketici:** / **Veri** kullanılmaz).
 - Referans uygulama: `calismalarim/kaynaktan_musluga/isler.html` (CRUD), `calismalarim/taslak_demo/isler.html` (tüm türler + sağ TOC).
 
-**BE task:** Method, Tablo, Tüketici (hangi FE ekranı kullanır). Menü detayı Jira metnine yazma.
+**BE task:** `issue-meta` içinde yalnızca Method ve Tablo. Menü detayı Jira metnine yazma.
+
+**FE task:** `issue-meta` içinde yalnızca Menü. İster + kabul kriterleri analist dilinde.
+
+**Çapraz bağlantılar — Bağlı Olduğu İşler bölümü (zorunlu):**
+
+Birbirine bağlı `[BE]` ve `[FE]` task’ları Jira metninde **İster** başlığının **hemen üstünde** ayrı bir **Bağlı Olduğu İşler** bölümünde gösterilir (`<h5>Bağlı Olduğu İşler</h5>` — **Veri** / **Tüketici** başlığı kullanılmaz). Bağlantılar `issue-meta` içinde **yazılmaz**.
+
+| Etiket | İçerik |
+|--------|--------|
+| **Frontend:** | Bağlı `[FE]` ekran task’ları (`h4` metniyle aynı; birden fazlaysa noktalı virgülle) |
+| **Backend:** | Bağlı `[BE]` endpoint task’ları (`h4` metniyle aynı; birden fazlaysa noktalı virgülle) |
+
+- Her task kutusunda **her iki etiket** de yer alır: `[BE]` task’ta ilgili FE tüketiciler + kendi BE task adı; `[FE]` task’ta kendi FE ekranı (ve varsa geçiş yaptığı diğer FE ekranları) + kullandığı BE endpoint’ler
+- Format: `<ul class="criteria issue-veri">` içinde iki madde — `<li><strong>Frontend:</strong> …</li>` ve `<li><strong>Backend:</strong> …</li>`
+- Karşı sekmedeki task adı, kutudaki `h4` metniyle aynı olmalı (`[BE]` / `[FE]` öneki dahil)
+- Paylaşılan endpoint (ör. mekansal sorgu) her tüketen FE task’ta ve BE task’ta tüm taraflar listelenerek yazılır
+- Bağlı Olduğu İşler bölümü **Tümünü kopyala** çıktısına dahildir (Jira’ya gider)
+- Örnek: `calismalarim/yazi_olustur/isler.html`
+
+```html
+        <div class="issue-meta">
+          <span><strong>Method:</strong> getOrnek</span>
+          <span><strong>Tablo:</strong> ornek</span>
+        </div>
+        <h5>Bağlı Olduğu İşler</h5>
+        <ul class="criteria issue-veri">
+          <li><strong>Frontend:</strong> [FE] Örnek Listesi</li>
+          <li><strong>Backend:</strong> [BE] Örnek Listesi Endpoint'i</li>
+        </ul>
+        <h5>İster</h5>
+```
+
+```html
+        <div class="issue-meta">
+          <span><strong>Menü:</strong> Uygulama › Modül › Örnek</span>
+        </div>
+        <h5>Bağlı Olduğu İşler</h5>
+        <ul class="criteria issue-veri">
+          <li><strong>Frontend:</strong> [FE] Örnek Formu; [FE] Örnek Listesi — giriş ve kayıt sonrası dönüş</li>
+          <li><strong>Backend:</strong> [BE] Örnek Detay Endpoint'i; [BE] Örnek Kaydet Endpoint'i</li>
+        </ul>
+        <h5>İster</h5>
+```
 
 **Tablo adı (`issue-meta` içindeki `Tablo:` satırı):** Yalnızca tablo adını yaz — şema öneki (`hbc.` vb.) **yazma**. Örnek: `Tablo: yazi_secenek` (veya Excel import tabloları); `Tablo: yazi, yazi_form_alan`. Kabul kriterlerinde ve İster metninde de aynı kural geçerli.
-
-**FE task:** Menü, Veri (hangi BE endpoint). İster + kabul kriterleri analist dilinde.
 
 **FE tema notu (zorunlu):** Her `[FE]` task kutusunda kabul kriterleri listesinin **altında** (boş satırla ayrılmış) şu metin yer alır; Jira kopyasında kalın görünsün diye HTML'de `<strong>`, `js/isler-copy.js` bunu `*metin*` olarak kopyalar:
 
@@ -436,6 +494,32 @@ Basit modüllerde tüm Jira metinleri tek dosyada; **sekme (tab)** yapısı zoru
 
 - BE task'larına bu not **eklenmez**.
 - Mockup'taki Tom Select, native select vb. teknik ayrıntıları FE task metnine yazma; yazılımcı mevcut uygulama bileşenlerini kullanır.
+
+**Mockup FE/BE notları → Jira (zorunlu):**
+
+Mockup ekranlarına eklenen `mock-fe-warning` (Frontend İçin Uyarı / Backend İçin Uyarı) ve iş kuralını taşıyan `mock-ui-info` (kullanıcı bilgi kutusu) metinleri, `isler.html` yazılırken ilgili task kutularına **Mockup notları** başlığı altında aktarılır.
+
+| Mockup sınıfı | Jira’ya hangi task? |
+|---------------|---------------------|
+| `mock-fe-warning` — Frontend İçin Uyarı | İlgili `[FE]` task |
+| `mock-fe-warning` — Backend İçin Uyarı | İlgili `[BE]` task |
+| `mock-ui-info` (koşullu kullanıcı mesajı) | İlgili `[FE]` task — kabul kriteri veya mockup notu olarak |
+
+- Her not maddesi mockup metniyle uyumlu, analist dilinde; gereksiz HTML/code etiketi kopyalamadan tablo/alan adı düz metin olarak yazılabilir.
+- Aynı kural birden fazla task’ta geçiyorsa (ör. mekansal sorgu) BE task’ta toplanır; FE task’ta yalnızca arayüz davranışı notu kalır.
+- `isler.html` doldurulurken mockup’taki tüm `mock-fe-warning` kutuları taranır; atlanan not bırakılmaz.
+- Örnek: `calismalarim/yazi_olustur/isler.html` — [BE] Yazı Mekansal Sorgu, [FE] Yazı Formu.
+
+```html
+        <h5>Mockup notları</h5>
+        <ul class="criteria">
+          <li><strong>FE:</strong> … (mockup’taki Frontend İçin Uyarı metni)</li>
+          <li><strong>BE:</strong> … (mockup’taki Backend İçin Uyarı metni)</li>
+        </ul>
+```
+
+- Mockup notları **Tümünü kopyala** çıktısına dahildir (Jira’ya gider).
+- Onay sonrası `isler.html` güncellenirken mockup’ta yeni not eklendiyse task metinleri de güncellenir.
 
 **Mockup linki (yalnızca sayfada, Jira'ya gitmez):**
 
@@ -459,7 +543,7 @@ Mockup linkinin **altında** koyu arka planlı kopya container'ı; **Tümünü k
 ```
 [Mockup: link]
 ┌─ issue-copy-block ─────────────────── [Tümünü kopyala] ─┐
-│ h4, issue-meta, İster, Kabul kriterleri                    │
+│ h4, issue-meta, Bağlı Olduğu İşler, İster, Kabul kriterleri │
 └────────────────────────────────────────────────────────────┘
 ```
 
@@ -473,6 +557,11 @@ Mockup linkinin **altında** koyu arka planlı kopya container'ı; **Tümünü k
   <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/liste.html" target="_blank" rel="noopener">mockup/liste.html</a></div>
   <h4>[BE] Örnek Endpoint</h4>
   <div class="issue-meta">…</div>
+  <h5>Bağlı Olduğu İşler</h5>
+  <ul class="criteria issue-veri">
+    <li><strong>Frontend:</strong> [FE] Örnek Listesi</li>
+    <li><strong>Backend:</strong> [BE] Örnek Endpoint</li>
+  </ul>
   <h5>İster</h5>
   <p class="desc">…</p>
   <h5>Kabul kriterleri</h5>
@@ -494,7 +583,7 @@ FE şablonunda tema notu zorunlu; BE şablonunda yok. Her kutuda **Tümünü kop
 **Task düzenleme (Düzenle butonu):**
 
 - `js/isler-task-edit.js` — `isler-copy.js` toolbar oluşturduktan sonra çalışır; **Düzenle** butonu **Tümünü kopyala**'nın solunda.
-- Dialog: `modal-backdrop` + iç kart **`modal-card modal-card--cursor`** (yalnızca `modal` sınıfı kullanma — arka plan ve gölge `modal-card` ile gelir; Bootstrap `.modal` ile karışmaz).
+- Dialog: dış katman **`hbc-dialog-backdrop`** + iç kart **`modal-card modal-card--cursor`** (Bootstrap `.modal-backdrop` / `.modal` sınıflarını kullanma — mockup sayfalarında Bootstrap siyah perde basar).
 - Alanlar: düzenleme türü (İster / Kabul kriterleri / Method·Tablo·Menü / Diğer) + istenen değişiklik metni → Cursor prompt önizlemesi → panoya kopyala.
 - Prompt şablonu: `{calismaId} isler.html içinde «{task başlığı}» task kutusunu güncelle` — yalnızca ilgili kutuya dokun.
 
@@ -505,6 +594,8 @@ Script sırası (`isler.html` sonunda): `isler-mockups.js` → `isler-copy.js` �
 ### Ekranlar sayfası ve sihirbaz (`js/ekran-wizard.js`, `js/ekranlar-page.js`)
 
 Her çalışmada `calismalarim/<modul>/ekranlar.html` — mockup **önizleme kartları** + **+ Yeni ekran** sihirbazı. Bu sayfada mockup düzelt butonu **yok**; düzeltme mockup sayfasındaki **Düzenle** veya özet mockup kartından yapılır.
+
+**Sihirbaz dialogu (`ekran-wizard.js`):** dış katman **`hbc-dialog-backdrop`** — arka plan şeffaf, Ekranlar listesi görünür kalır; Bootstrap `.modal-backdrop` **kullanma** (`ekranlar.html` → `mock-bootstrap.css` yüklü). Eski DOM otomatik yenilenir.
 
 Script sırası `ekranlar.html`: `sunum-query.js` → **`rapor-widgets.js`** → `ekran-wizard.js` → `ekranlar-page.js` → `nav.js`
 
@@ -659,6 +750,13 @@ HBC meta dosyasını tarayıcıdan yazamaz. **Çalışma özet sayfasında** (`#
 | `iptal` | Listeye geri al… | Meta'da iptali kaldır |
 
 - İsteğe bağlı alanlar: **onaylayan / iptal eden** ismi, **ek not** (mockup/task tarifi)
+- **Dialog UX (`calisma-cursor.js` + `css/style.css`):**
+  - **Tüm HBC özel dialoglar** (`calisma-cursor.js`, `ekran-wizard.js`, `yeni-calisma.js`, `isler-task-edit.js`): dış katman **`hbc-dialog-backdrop`** — Bootstrap `.modal-backdrop` **kullanma** (mock-bootstrap yüklü sayfalarda siyah perde basar)
+  - İç kart: `modal-card modal-card--cursor`; `mockup-duzelt` modunda `hbc-dialog-backdrop--dock` (sağ alt)
+  - **−** minimize → `modal-card--minimized` + `hbc-dialog-backdrop--minimized`: sağ altta **kompakt çubuk** (başlık · mavi **Yeniden aç** · Kapat · Panoya kopyala); tam genişlik şerit yapma
+  - Geri açma: `#calisma-cursor-restore-mini` veya başlığa (`#calisma-cursor-title`) tıklama — `restoreModal()`
+  - Backdrop / boş alan tıklaması dialogu **kapatmaz**; yalnızca **Kapat**
+  - Eski DOM'da minibar yoksa `ensureModal()` modalı yeniden oluşturur (sayfa yenileme veya otomatik upgrade)
 - Scaffold + mevcut özet `index.html` dosyalarına `calisma-cursor.js` ekle
 - `window.TASK_CURSOR.open({ id, mode })` — `mode`: `mockup-iste` \| `mockup-duzelt` \| `onay-task` \| `iptal` \| `geri-al`
 
@@ -780,4 +878,9 @@ assets/
 - İptal geri al: önceki `durum` değerine dön, `iptal` alanını kaldır; özet ve `isler.html` içindeki iptal metinlerini scaffold boş şablonuna döndür
 - Boş `isler.html` scaffold mesajını silme; task eklenene kadar `empty-note` + rehber linki kalsın
 - Mockup / onay / task işlerinde `js/calismalar-meta.js` güncelle; ayrıntılı plan: `module-creator.md`
+- Mockup uyarı kutuları: `mock-fe-warning` (yazılımcı) ile `mock-ui-info` (kullanıcı) karıştırma; sunumda FE uyarıları varsayılan gizli; **FE uyarılarını göster** + **Sunumdan çık** sol altta **alt alta**
+- `isler.html` yazarken **Bağlı Olduğu İşler** (`Frontend:` / `Backend:`) kullan; **Tüketici** / **Veri** yazma
+- Mockup’taki `mock-fe-warning` / `mock-ui-info` metinlerini ilgili task kutusunda **Mockup notları** olarak aktar
+- HBC dialoglarında `hbc-dialog-backdrop` kullan; Bootstrap `.modal-backdrop` kullanma (dock / minimize / dışarı tıklayınca kapanmaz)
+- Birincil buton hover: `a.mock-btn-primary:hover` için `color: #fff` (`mock-shell.css`)
 - #5 toplantı şablonu, #9 toplu kopyala, #10 veri modeli sayfası, #11 npm rehberi — yapma

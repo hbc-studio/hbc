@@ -1,4 +1,28 @@
-/* Yazı Oluştur — adım stepper (mockup) */
+.mock-form-panel--yazi .mock-section-title {
+  margin: 0 0 0.35rem;
+  font-size: 0.9rem;
+  color: #2d3748;
+  border: none;
+  padding: 0;
+}
+.mock-form-panel--yazi .mock-section-hint {
+  margin: 0 0 1rem;
+  font-size: 0.78rem;
+  color: #64748b;
+}
+.mock-map-draw--yazi {
+  margin-bottom: 1.1rem;
+  min-height: 14rem;
+}
+.mock-map-draw--yazi .mock-map-draw__canvas-wrap {
+  min-height: 14rem;
+}
+.mock-spatial-note {
+  margin-top: 0.45rem;
+}
+.mock-hukum-yaz-hayir-info {
+  margin-top: 0.5rem;
+}
 .yazi-wizard-wrap {
   max-width: 960px;
   margin: 0 auto;

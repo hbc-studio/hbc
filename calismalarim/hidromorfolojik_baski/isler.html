@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hidromorfolojik Baskı — Jira Task Metinleri</title>
+  <link rel="stylesheet" href="../../css/style.css" />
+  <style>
+    .task-tabs { display: flex; gap: 0.35rem; margin: 1rem 0 0; border-bottom: 2px solid var(--border); }
+    .task-tab { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.55rem 1rem; font-size: 0.85rem; font-weight: 600; color: var(--muted); border: none; background: none; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; border-radius: 6px 6px 0 0; }
+    .task-tab.active { color: var(--accent); border-bottom-color: var(--accent); background: #fff; }
+    .tab-chip { display: inline-flex; align-items: center; justify-content: center; min-width: 1.35rem; height: 1.35rem; padding: 0 0.35rem; border-radius: 999px; font-size: 0.7rem; font-weight: 700; }
+    .tab-chip-be { background: #e3f2fd; color: #1565c0; }
+    .tab-chip-fe { background: #e8f5e9; color: #2e7d32; }
+    .task-tab.active .tab-chip-be { background: #1565c0; color: #fff; }
+    .task-tab.active .tab-chip-fe { background: #2e7d32; color: #fff; }
+    .tab-panel { padding-top: 1rem; }
+    .tab-panel[hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+<div class="layout layout--isler">
+  <nav id="sidebar"></nav>
+  <main class="isler-main" id="isler-main">
+    <h1>Hidromorfolojik Baskı — Jira task metinleri</h1>
+    <p class="subtitle">4 Backend · 2 Frontend — mockup kapsamı için Jira task metinleri</p>
+    <div class="task-tabs" role="tablist">
+      <button type="button" class="task-tab active" data-tab="be" id="tab-be">Backend <span class="tab-chip tab-chip-be" id="chip-be">4</span></button>
+      <button type="button" class="task-tab" data-tab="fe" id="tab-fe">Frontend <span class="tab-chip tab-chip-fe" id="chip-fe">2</span></button>
+    </div>
+    <div class="tab-panel" id="panel-be" data-tab-panel="be">
+
+      <div class="issue" id="be-baski-listesi">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/hidromorfolojik-baski-liste.html" target="_blank" rel="noopener">mockup/hidromorfolojik-baski-liste.html</a></div>
+        <h4>[BE] Hidromorfolojik Baskı Listesi Endpoint'i</h4>
+        <div class="issue-meta">
+          <span><strong>Method:</strong> getHidromorfolojikBaskiListesi</span>
+          <span><strong>Tablo:</strong> hidromorfolojik_baski, hidromorfolojik_kalite_sinif</span>
+        </div>
+        <h5>Bağlı Olduğu İşler</h5>
+        <ul class="criteria issue-veri">
+          <li><strong>Frontend:</strong> [FE] Hidromorfolojik Baskılar Listesi</li>
+          <li><strong>Backend:</strong> [BE] Hidromorfolojik Baskı Listesi Endpoint'i</li>
+        </ul>
+        <h5>İster</h5>
+        <p class="desc">Hidromorfolojik Baskılar liste ekranı için baskı kayıtlarının kalite sınıfı bilgisiyle birlikte listelenmesi.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Dönüş alanları: yil, su_kutlesi_kodu, havza, alt_havza, il, baskiSinifId, baskiSinifAdi</li>
+          <li><strong>baskiSinifAdi</strong> değeri hidromorfolojik_kalite_sinif tablosundaki sınıf alanından gelir (sınıf_id ile join)</li>
+          <li>Baskı sınıfı metni yalnızca: İyi, Orta, Zayıf, Kötü değerlerinden biri olur</li>
+          <li>Sıralama ve filtreleme baskı sınıfı için desteklenir</li>
+          <li>Kayıtlar sayfalı döner (varsayılan 10 kayıt)</li>
+        </ul>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="be-baski-detay">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/hidromorfolojik-baski-form.html" target="_blank" rel="noopener">mockup/hidromorfolojik-baski-form.html</a></div>
+        <h4>[BE] Hidromorfolojik Baskı Detay Endpoint'i</h4>
+        <div class="issue-meta">
+          <span><strong>Method:</strong> getHidromorfolojikBaskiById</span>
+          <span><strong>Tablo:</strong> hidromorfolojik_baski, hidromorfolojik_kalite_sinif</span>
+        </div>
+        <h5>Bağlı Olduğu İşler</h5>
+        <ul class="criteria issue-veri">
+          <li><strong>Frontend:</strong> [FE] Hidromorfolojik Baskı Formu</li>
+          <li><strong>Backend:</strong> [BE] Hidromorfolojik Baskı Detay Endpoint'i</li>
+        </ul>
+        <h5>İster</h5>
+        <p class="desc">Hidromorfolojik Baskı düzenleme formu için tek kaydın detayının getirilmesi.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>id ile tek kayıt döner, kayıt yoksa uygun hata mesajı üretilir</li>
+          <li>Dönüşte konum alanları, anket yanıtları, baskiSinifId ve baskiSinifAdi birlikte gelir</li>
+          <li>baskiSinifAdi değeri hidromorfolojik_kalite_sinif tablosundaki sınıf alanından döner</li>
+          <li>Su kütlesi türü (nehir/göl) bilgi amaçlı döner; kullanıcı tarafından sınıf seçimi yapılmaz</li>
+        </ul>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="be-baski-kaydet">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/hidromorfolojik-baski-form.html" target="_blank" rel="noopener">mockup/hidromorfolojik-baski-form.html</a></div>
+        <h4>[BE] Hidromorfolojik Baskı Kaydet Endpoint'i</h4>
+        <div class="issue-meta">
+          <span><strong>Method:</strong> saveHidromorfolojikBaski</span>
+          <span><strong>Tablo:</strong> hidromorfolojik_baski, hidromorfolojik_baski_anket_cevap</span>
+        </div>
+        <h5>Bağlı Olduğu İşler</h5>
+        <ul class="criteria issue-veri">
+          <li><strong>Frontend:</strong> [FE] Hidromorfolojik Baskı Formu; [FE] Hidromorfolojik Baskılar Listesi</li>
+          <li><strong>Backend:</strong> [BE] Hidromorfolojik Baskı Kaydet Endpoint'i; [BE] Hidromorfolojik Kalite Sınıfı Hesaplama Servisi</li>
+        </ul>
+        <h5>İster</h5>
+        <p class="desc">Yeni hidromorfolojik baskı oluşturma ve mevcut kaydı güncelleme işlemlerinin yapılması.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Zorunlu alanlar: yil, geometri, su_kutlesi_kodu, havza, alt_havza, il, tur, anket yanıtları</li>
+          <li>Kullanıcıdan baskı sınıfı alınmaz; istek payload'ında sınıf alanı yoktur</li>
+          <li>Kaydetme sırasında kalite sınıfı hesaplama servisi çağrılır ve dönen sınıf_id kayda yazılır</li>
+          <li>Başarılı yanıtta baskiSinifId ve baskiSinifAdi birlikte döner</li>
+        </ul>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="be-baski-sinif-servis">
+        <h4>[BE] Hidromorfolojik Kalite Sınıfı Hesaplama Servisi</h4>
+        <div class="issue-meta">
+          <span><strong>Method:</strong> calculateHidromorfolojikKaliteSinifi</span>
+          <span><strong>Tablo:</strong> hidromorfolojik_kalite_sinif</span>
+        </div>
+        <h5>Bağlı Olduğu İşler</h5>
+        <ul class="criteria issue-veri">
+          <li><strong>Frontend:</strong> [FE] Hidromorfolojik Baskı Formu; [FE] Hidromorfolojik Baskılar Listesi</li>
+          <li><strong>Backend:</strong> [BE] Hidromorfolojik Kalite Sınıfı Hesaplama Servisi; [BE] Hidromorfolojik Baskı Kaydet Endpoint'i</li>
+        </ul>
+        <h5>İster</h5>
+        <p class="desc">Hidromorfolojik formülizasyona göre kalite sınıfının hesaplanıp sınıf tablosundan uygun sınıf_id'nin bulunması.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Girdi: su kütlesi türü ve anket sorularına verilen yanıtlar</li>
+          <li>İş kuralı: hidromorfolojik formülizasyon ile kalite skoru hesaplanır</li>
+          <li>Skor aralığına göre hidromorfolojik_kalite_sinif tablosundan sınıf_id seçilir</li>
+          <li>Çıktı: sinifId, sinifAdi, hesaplamaOzeti</li>
+          <li>Geçersiz/anlamsız veri için açıklayıcı hata döner</li>
+        </ul>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+    </div>
+    <div class="tab-panel" id="panel-fe" data-tab-panel="fe" hidden>
+
+      <div class="issue" id="fe-baski-listesi">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/hidromorfolojik-baski-liste.html" target="_blank" rel="noopener">mockup/hidromorfolojik-baski-liste.html</a></div>
+        <h4>[FE] Hidromorfolojik Baskılar Listesi</h4>
+        <div class="issue-meta">
+          <span><strong>Menü:</strong> Havza Bilgi Sistemi › Baskılar › Hidromorfolojik Baskılar</span>
+        </div>
+        <h5>Bağlı Olduğu İşler</h5>
+        <ul class="criteria issue-veri">
+          <li><strong>Frontend:</strong> [FE] Hidromorfolojik Baskılar Listesi; [FE] Hidromorfolojik Baskı Formu — güncelleme ve kayıt sonrası listeye dönüş</li>
+          <li><strong>Backend:</strong> [BE] Hidromorfolojik Baskı Listesi Endpoint'i</li>
+        </ul>
+        <h5>İster</h5>
+        <p class="desc">Hidromorfolojik baskı kayıtlarının listelenmesi ve baskı sınıfının tabloda gösterilmesi.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Kolonlar mockup ile uyumludur: yıl, su kütlesi kodu, havza, alt havza, il, baskı sınıfı, işlemler</li>
+          <li>Baskı sınıfı alanı backend'den gelen baskiSinifAdi ile gösterilir (İyi, Orta, Zayıf, Kötü)</li>
+          <li>Baskı sınıfı kullanıcı tarafından düzenlenmez; salt okunur gösterilir</li>
+          <li>Filtre ve sıralama butonları baskı sınıfı için çalışır</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="fe-baski-form">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/hidromorfolojik-baski-form.html" target="_blank" rel="noopener">mockup/hidromorfolojik-baski-form.html</a></div>
+        <h4>[FE] Hidromorfolojik Baskı Formu</h4>
+        <div class="issue-meta">
+          <span><strong>Menü:</strong> Havza Bilgi Sistemi › Baskılar › Hidromorfolojik Baskılar › Hidromorfolojik Baskı Ekleme</span>
+        </div>
+        <h5>Bağlı Olduğu İşler</h5>
+        <ul class="criteria issue-veri">
+          <li><strong>Frontend:</strong> [FE] Hidromorfolojik Baskı Formu; [FE] Hidromorfolojik Baskılar Listesi — kayıt sonrası dönüş</li>
+          <li><strong>Backend:</strong> [BE] Hidromorfolojik Baskı Detay Endpoint'i; [BE] Hidromorfolojik Baskı Kaydet Endpoint'i</li>
+        </ul>
+        <h5>İster</h5>
+        <p class="desc">Konum, anket ve ölçüm bilgileriyle hidromorfolojik baskı kaydının eklenmesi/güncellenmesi.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Formda yıl, harita/polygon, konum alanları ve anket soruları bulunur</li>
+          <li>Konum sonrası su kütlesi türü otomatik doldurulur ve ilgili anket grubu gösterilir</li>
+          <li>Baskı sınıfı için kullanıcıya seçim alanı açılmaz</li>
+          <li>Kaydet sonrası backend'den dönen baskiSinifAdi liste ekranında görünür</li>
+          <li>Formda kalite sınıfı hesaplama kural metni gösterilmez (yalnızca task kapsamı)</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+    </div>
+  </main>
+  <aside class="isler-toc-wrap" id="isler-toc" aria-label="Task listesi"></aside>
+</div>
+<script>
+window.TASK_HUB = {
+  taskRoot: '../..',
+  page: 'calisma-isler',
+  calisma: {
+    id: 'hidromorfolojik_baski',
+    label: 'Hidromorfolojik Baskı',
+    base: '.',
+    mockups: [
+      { id: 'mock-hidromorfolojik-baski-liste', label: 'Hidromorfolojik Baskılar', href: 'mockup/hidromorfolojik-baski-liste.html' },
+      { id: 'mock-hidromorfolojik-baski-form', label: 'Hidromorfolojik Baskı Ekleme', href: 'mockup/hidromorfolojik-baski-form.html' }
+    ],
+    islerHref: 'isler.html'
+  }
+};
+(function () {
+  function switchTab(name) {
+    document.querySelectorAll('.task-tab').forEach(function (btn) {
+      var on = btn.getAttribute('data-tab') === name;
+      btn.classList.toggle('active', on);
+    });
+    document.querySelectorAll('[data-tab-panel]').forEach(function (panel) {
+      panel.hidden = panel.getAttribute('data-tab-panel') !== name;
+    });
+    if (location.hash !== '#' + name) location.hash = name;
+  }
+  document.querySelectorAll('.task-tab').forEach(function (btn) {
+    btn.addEventListener('click', function () { switchTab(btn.getAttribute('data-tab')); });
+  });
+  var hash = (location.hash || '').replace('#', '');
+  if (hash === 'fe' || hash === 'be') switchTab(hash);
+})();
+</script>
+<script src="../../js/sunum-query.js"></script>
+<script src="../../js/isler-mockups.js"></script>
+<script src="../../js/isler-copy.js"></script>
+<script src="../../js/isler-task-edit.js"></script>
+<script src="../../js/isler-toc.js"></script>
+<script src="../../js/nav.js"></script>
+</body>
+</html>

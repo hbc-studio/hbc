@@ -251,11 +251,15 @@
   function ensureModal() {
     var existing = document.getElementById('ekran-wizard-modal');
     if (existing) {
-      if (document.getElementById('ekran-wizard-nav') && document.getElementById('ekran-wizard-close')) return;
+      if (existing.classList.contains('hbc-dialog-backdrop') &&
+          document.getElementById('ekran-wizard-nav') &&
+          document.getElementById('ekran-wizard-close')) {
+        return;
+      }
       existing.remove();
     }
     var html =
-      '<div class="modal-backdrop" id="ekran-wizard-modal" hidden>' +
+      '<div class="hbc-dialog-backdrop" id="ekran-wizard-modal" hidden>' +
       '  <div class="modal-card modal-card--wizard" role="dialog" aria-labelledby="ekran-wizard-title">' +
       '    <div class="wizard-shell">' +
       '      <nav class="wizard-nav" id="ekran-wizard-nav" aria-label="Sihirbaz adımları"></nav>' +

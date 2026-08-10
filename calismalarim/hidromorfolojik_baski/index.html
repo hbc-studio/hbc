@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hidromorfolojik Baskı | Çalışmalarım</title>
+  <link rel="stylesheet" href="../../css/style.css" />
+  <style>
+    .tile { display: block; background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; text-decoration: none; color: inherit; margin-bottom: 0.5rem; }
+    .tile:hover { border-color: var(--accent); }
+    .tile strong { color: var(--accent); }
+    .tile span { display: block; font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; }
+    .empty-note { font-size: 0.88rem; color: var(--muted); background: #f5f7fa; border: 1px dashed var(--border); border-radius: 8px; padding: 1rem; }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <nav id="sidebar"></nav>
+  <main>
+    <h1>Hidromorfolojik Baskı</h1>
+
+    <div class="calisma-amac-panel" id="calisma-amac-panel">
+      <h2 class="calisma-amac-heading">Amaç</h2>
+      <p class="calisma-amac" id="calisma-amac">Hidromorfolojik Baskı</p>
+    </div>
+
+    <div class="calisma-durum-bar" id="calisma-durum-bar"></div>
+
+    <div class="lead">
+      Menü: <strong>Havza Bilgi Sistemi › Baskılar › Hidromorfolojik Baskılar</strong> — liste ve ekleme formu (harita + anket).
+    </div>
+    <h2>FE Mockup'lar</h2>
+    <div class="tile-panel">
+      <p class="tile-panel__lead">Wireframe ekranlar — geliştirme öncesi onay.</p>
+      <div class="tile-grid tile-grid--mock">
+        <a class="tile-card tile-card--fe" href="mockup/hidromorfolojik-baski-liste.html">
+          <span class="tile-card__badge">1</span>
+          <div class="tile-card__body">
+            <strong>Hidromorfolojik Baskılar</strong>
+            <span>Havza Bilgi Sistemi › Baskılar — liste</span>
+          </div>
+        </a>
+        <a class="tile-card tile-card--fe" href="mockup/hidromorfolojik-baski-form.html">
+          <span class="tile-card__badge">2</span>
+          <div class="tile-card__body">
+            <strong>Hidromorfolojik Baskı Ekleme</strong>
+            <span>Harita polygon — konumdan türe göre anket</span>
+          </div>
+        </a>
+      </div>
+    </div>
+    <h2>Jira</h2>
+    <a class="tile" href="isler.html"><strong>Task metinleri</strong><span>Mockup onayından sonra doldurulacak</span></a>
+  </main>
+</div>
+<script>
+window.TASK_HUB = {
+  taskRoot: '../..',
+  page: 'calisma-ozet',
+  calisma: {
+    id: "hidromorfolojik_baski",
+    label: "Hidromorfolojik Baskı",
+    base: '.',
+    menuYer: "sol",
+    mockups: [
+      { id: 'mock-hidromorfolojik-baski-liste', label: 'Hidromorfolojik Baskılar', href: 'mockup/hidromorfolojik-baski-liste.html' },
+      { id: 'mock-hidromorfolojik-baski-form', label: 'Hidromorfolojik Baskı Ekleme', href: 'mockup/hidromorfolojik-baski-form.html' }
+    ],
+    islerHref: 'isler.html'
+  }
+};
+</script>
+<script src="../../js/sunum-query.js"></script>
+<script src="../../js/calismalar-meta.js"></script>
+<script src="../../js/calisma-ozet.js"></script>
+<script src="../../js/rapor-widgets.js"></script>
+<script src="../../js/calisma-cursor.js"></script>
+<script src="../../js/nav.js"></script>
+</body>
+</html>

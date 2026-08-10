@@ -1,4 +1,4 @@
-﻿/* Taslak Demo mockup — uygulama kabuğu */
+/* Taslak Demo mockup — uygulama kabuğu */
 .mock-app-shell {
   max-width: none;
   width: 100%;
@@ -257,6 +257,37 @@ table.mock-table td.num { text-align: right; font-variant-numeric: tabular-nums;
 }
 button.mock-btn { cursor: pointer; font: inherit; }
 .mock-btn-primary { background: #1a5fb4; color: #fff; border-color: #1a5fb4; }
+/* Bootstrap a:hover link rengi birincil butonlarda okunabilirliği bozar */
+a.mock-btn:hover,
+a.mock-btn:focus,
+a.mock-btn:active {
+  text-decoration: none;
+}
+a.mock-btn:hover,
+a.mock-btn:focus {
+  color: inherit;
+}
+.mock-btn-primary:hover,
+.mock-btn-primary:focus,
+.mock-btn-primary:active,
+a.mock-btn-primary:hover,
+a.mock-btn-primary:focus,
+a.mock-btn-primary:active {
+  background: #1557a8;
+  border-color: #1557a8;
+  color: #fff;
+}
+.mock-btn--success { background: #2e7d32; border-color: #2e7d32; color: #fff; }
+.mock-btn--success:hover,
+.mock-btn--success:focus,
+.mock-btn--success:active,
+a.mock-btn--success:hover,
+a.mock-btn--success:focus,
+a.mock-btn--success:active {
+  background: #27632a;
+  border-color: #27632a;
+  color: #fff;
+}
 .mock-row-actions {
   display: inline-flex;
   align-items: center;
@@ -430,6 +461,38 @@ textarea.mock-input {
 }
 .mock-duzelt-btn:hover { background: #ffe0b2; border-color: #bf360c; color: #bf360c; }
 .mock-dev-bar-hint { color: #888; font-size: 0.75rem; }
+.mock-sunum-controls {
+  display: none;
+  position: fixed;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  z-index: 2000;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+body.mock-sunum .mock-sunum-controls { display: flex; }
+.mock-sunum-fe-toggle {
+  padding: 0.45rem 0.85rem;
+  border: 1px solid #90a4ae;
+  border-radius: 6px;
+  background: #eceff1;
+  color: #455a64;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  line-height: 1.25;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  white-space: nowrap;
+  text-align: center;
+}
+.mock-sunum-fe-toggle:hover { background: #dfe6eb; border-color: #78909c; color: #37474f; }
+body.mock-fe-warnings-on .mock-sunum-fe-toggle {
+  background: #fff8e1;
+  border-color: #e6c200;
+  color: #946800;
+}
 .mock-sunum-exit {
   display: none;
   position: fixed;
@@ -445,13 +508,21 @@ textarea.mock-input {
   font-weight: 700;
   text-decoration: none;
   box-shadow: 0 2px 10px rgba(230, 81, 0, 0.28);
+  white-space: nowrap;
+  text-align: center;
 }
 .mock-sunum-exit:hover { background: #ffe0b2; border-color: #bf360c; color: #bf360c; }
+body.mock-sunum .mock-sunum-controls .mock-sunum-exit {
+  position: static;
+  display: inline-block;
+  box-shadow: 0 2px 10px rgba(230, 81, 0, 0.28);
+}
 body.mock-sunum #sidebar { display: none !important; }
 body.mock-sunum { background: #fff; overflow: hidden; height: 100vh; }
 body.mock-sunum .layout { display: block; min-height: 100vh; height: 100vh; }
 body.mock-sunum main { max-width: none; padding: 0; margin: 0; min-height: 100vh; height: 100%; }
 body.mock-sunum .mock-dev-only { display: none !important; }
+body.mock-sunum:not(.mock-fe-warnings-on) .mock-fe-warning { display: none !important; }
 body.mock-sunum .mock-sunum-exit { display: inline-block; }
 body.mock-sunum .mock-app-shell {
   max-width: none;

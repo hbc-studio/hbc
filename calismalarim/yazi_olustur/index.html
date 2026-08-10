@@ -10,6 +10,7 @@
     .tile:hover { border-color: var(--accent); }
     .tile strong { color: var(--accent); }
     .tile span { display: block; font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; }
+    .tile--muted { opacity: 0.85; }
   </style>
 </head>
 <body>
@@ -26,8 +27,9 @@
     <div class="calisma-durum-bar" id="calisma-durum-bar"></div>
 
     <div class="lead">
-      Kurumun Excel tabanlı <strong>Yazı hazırlama programı</strong>nın web karşılığı.
-      <strong>Yazı listesi</strong> ve <strong>adımlı form</strong> mockup olarak hazırlandı; referans veri için <strong>Hükümler Tablosu</strong> yönetim ekranı eklendi.
+      Kurumun Excel tabanlı <strong>yazı hazırlama programı</strong>nın web karşılığı — <strong>İçme Suyu Bilgi Sistemi › İçme Suyu Denetimleri</strong> menü yolu altında.
+      <strong>Yazı listesi</strong>, <strong>adımlı form</strong> ve <strong>Özel Hüküm</strong> listesi / formu mockup olarak hazırlandı.
+      Mockup onaylandı; Jira task metinleri yazıldı.
     </div>
 
     <h2>FE Mockup'lar</h2>
@@ -38,7 +40,7 @@
           <span class="tile-card__badge">1</span>
           <div class="tile-card__body">
             <strong>Yazı Listesi</strong>
-            <span>Görüş Yazısı › Yazılar — oluşturma / güncelleme tarihi</span>
+            <span>İçme Suyu Bilgi Sistemi › İçme Suyu Denetimleri › Dashboard › Yazı Oluştur</span>
           </div>
         </a>
         <a class="tile-card tile-card--fe" href="mockup/yazi-form.html">
@@ -51,21 +53,21 @@
         <a class="tile-card tile-card--fe" href="mockup/hukumler-liste.html">
           <span class="tile-card__badge">3</span>
           <div class="tile-card__body">
-            <strong>Hükümler Tablosu</strong>
-            <span>Koruma alanı + sektör → madde — liste / düzenle</span>
+            <strong>Özel Hüküm Listesi</strong>
+            <span>İçme Suyu Bilgi Sistemi › İçme Suyu Denetimleri › Özel Hükümler</span>
           </div>
         </a>
         <a class="tile-card tile-card--fe" href="mockup/hukumler-form.html">
           <span class="tile-card__badge">4</span>
           <div class="tile-card__body">
-            <strong>Hüküm Kaydı</strong>
-            <span>Hükümler tablosu › yeni / düzenle formu</span>
+            <strong>Özel Hüküm Kaydı</strong>
+            <span>Yönetmelik — sistem mevzuat listesinden; konum, harita, madde</span>
           </div>
         </a>
       </div>
     </div>
     <h2>Jira</h2>
-    <a class="tile" href="isler.html"><strong>Task metinleri</strong><span>10 Backend · 4 Frontend — mockup onaylandı</span></a>
+    <a class="tile" href="isler.html"><strong>Task metinleri</strong><span>9 Backend · 4 Frontend — Jira'ya kopyala</span></a>
   </main>
 </div>
 <script>
@@ -79,8 +81,8 @@ window.TASK_HUB = {
     mockups: [
       { id: 'mock-yazi-liste', label: 'Yazı Listesi', href: 'mockup/yazi-liste.html' },
       { id: 'mock-yazi-form', label: 'Yazı Formu', href: 'mockup/yazi-form.html' },
-      { id: 'mock-hukumler-liste', label: 'Hükümler Tablosu', href: 'mockup/hukumler-liste.html' },
-      { id: 'mock-hukumler-form', label: 'Hüküm Kaydı', href: 'mockup/hukumler-form.html' }
+      { id: 'mock-hukumler-liste', label: 'Özel Hüküm Listesi', href: 'mockup/hukumler-liste.html' },
+      { id: 'mock-hukumler-form', label: 'Özel Hüküm Kaydı', href: 'mockup/hukumler-form.html' }
     ],
     islerHref: 'isler.html'
   }

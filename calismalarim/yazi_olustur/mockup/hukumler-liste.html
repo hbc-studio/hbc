@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mockup: Hükümler Tablosu</title>
+  <title>Mockup: Özel Hüküm Listesi</title>
   <link rel="stylesheet" href="../../../css/style.css" />
   <link rel="stylesheet" href="mock-shell.css" />
   <link rel="stylesheet" href="../../../css/mock-bootstrap.css" />
@@ -12,51 +12,82 @@
 <div class="layout">
   <nav id="sidebar"></nav>
   <main>
-    <h1 class="mock-dev-only">Mockup: Hükümler tablosu</h1>
-    <p class="subtitle mock-dev-only">Koruma alanı + sektör → madde metni referans verisi</p>
+    <h1 class="mock-dev-only">Mockup: Özel Hüküm Listesi</h1>
+    <p class="subtitle mock-dev-only">Sadece özel hüküm kayıtları — yönetmelik seçimi formda yapılır</p>
     <div class="mock-app-shell">
       <nav class="mock-app-menu" aria-label="Uygulama menüsü">
-        <div class="menu-app">Görüş Yazısı</div>
-        <button class="mock-menu-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#mock-menu-yazi" aria-expanded="true" aria-controls="mock-menu-yazi">Görüş Yazısı</button>
-        <div class="collapse show mock-menu-collapse" id="mock-menu-yazi">
+        <div class="menu-app">İçme Suyu Bilgi Sistemi</div>
+        <button class="mock-menu-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#mock-menu-isd" aria-expanded="true" aria-controls="mock-menu-isd">İçme Suyu Denetimleri</button>
+        <div class="collapse show mock-menu-collapse" id="mock-menu-isd">
           <div class="mock-menu-sub">
-            <a href="yazi-liste.html">Yazılar</a>
-            <a href="hukumler-liste.html" class="active">Hükümler Tablosu</a>
+            <button
+              class="mock-menu-toggle mock-menu-toggle--nested collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#mock-menu-dashboard"
+              aria-expanded="false"
+              aria-controls="mock-menu-dashboard"
+            >
+              Dashboard
+            </button>
+            <div class="collapse mock-menu-collapse" id="mock-menu-dashboard">
+              <div class="mock-menu-sub mock-menu-sub--nested">
+                <a href="yazi-liste.html">Yazı Oluştur</a>
+              </div>
+            </div>
+            <a href="hukumler-liste.html" class="active">Özel Hükümler</a>
           </div>
         </div>
       </nav>
       <div class="mock-app-body">
         <div class="mock-header">
-          <div class="mock-breadcrumb">Görüş Yazısı › Hükümler Tablosu</div>
-          <strong>Hükümler Tablosu</strong>
+          <div class="mock-breadcrumb">İçme Suyu Bilgi Sistemi › İçme Suyu Denetimleri › Özel Hükümler</div>
+          <strong>Özel Hüküm Listesi</strong>
         </div>
+        <div class="mock-list-map-panel" id="mock-list-map-panel" hidden aria-hidden="true">
+          <div class="mock-list-map-panel__head">
+            <strong>Seçilen kayıtlar haritada gösteriliyor</strong>
+            <button type="button" class="mock-btn-map-close" id="mock-list-map-close">× Haritayı Kapat</button>
+          </div>
+          <div class="mock-list-map-panel__body">
+            <aside class="mock-list-map-aside" id="mock-list-map-aside"></aside>
+            <div class="mock-list-map-canvas-wrap">
+              <div class="mock-list-map-canvas" id="mock-list-map-canvas">
+                <span class="mock-list-map-canvas__label mock-list-map-canvas__label--tr">TÜRKİYE</span>
+              </div>
+              <div class="mock-map-draw__zoom" aria-hidden="true">
+                <button type="button" disabled>‹</button>
+                <button type="button" disabled>+</button>
+                <button type="button" disabled>−</button>
+                <button type="button" disabled title="Ana görünüm">⌂</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mock-list-area">
         <div class="mock-toolbar">
-          <a href="hukumler-form.html" class="mock-btn mock-btn-primary">+ Yeni Kayıt</a>
-          <label class="mock-toolbar-filter">
-            <span>Kaynak</span>
-            <select id="hukumler-filter-kaynak" class="form-select form-select-sm">
-              <option value="">Tümü</option>
-              <option value="Yönetmelik">Yönetmelik</option>
-              <option value="Özel Hüküm">Özel Hüküm</option>
-            </select>
-          </label>
+          <a href="hukumler-form.html" class="mock-btn mock-btn-primary">+ Özel Hüküm Ekle</a>
+          <div class="mock-toolbar-end">
+            <button type="button" class="mock-btn mock-btn-map" id="mock-list-map-show" disabled>
+              <svg class="mock-icon-svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+              Haritada Göster
+            </button>
+          </div>
         </div>
         <div class="mock-content">
-          <div class="mock-data-note" role="note">
-            <p><strong>Aşağıdakiler kurumdan alınan gerçek verilerdir.</strong> Liste, <strong>hükümler_tablosu.xlsx</strong> dosyasındaki kayıtların tamamını içerir (59 kayıt).</p>
-          </div>
-          <div class="mock-fe-warning mock-fe-warning--compact" role="note">
-            <span class="mock-fe-warning__title">Frontend İçin Uyarı</span>
-            <p>Yazı formunda hüküm metni bu tablodan üretilir; yetkili kullanıcılar canlı uygulamada buradan günceller.</p>
-          </div>
           <div class="mock-list-wrap">
-            <table class="mock-table mock-table--hukumler">
+            <table class="mock-table mock-table--hukumler mock-list-map-table" id="mock-list-map-table">
               <thead>
                 <tr>
-                  <th>Kaynak</th>
+                  <th class="mock-th-check"><input type="checkbox" class="form-check-input mock-row-check-all" id="mock-select-all" aria-label="Tümünü seç" /></th>
+                  <th>Yönetmelik</th>
+                  <th>İçme Suyu Havzası</th>
+                  <th>İl</th>
+                  <th>Ada/Parsel</th>
                   <th>Koruma Alanı</th>
                   <th>Sektör</th>
-                  <th>İlgili Madde</th>
+                  <th>Madde No</th>
+                  <th>Madde İçeriği</th>
                   <th class="mock-th-tools mock-th-tools--action"></th>
                 </tr>
               </thead>
@@ -71,6 +102,7 @@
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </div>
@@ -87,16 +119,24 @@ window.TASK_HUB = {
     mockups: [
       { id: 'mock-yazi-liste', label: 'Yazı Listesi', href: 'mockup/yazi-liste.html' },
       { id: 'mock-yazi-form', label: 'Yazı Formu', href: 'mockup/yazi-form.html' },
-      { id: 'mock-hukumler-liste', label: 'Hükümler Tablosu', href: 'mockup/hukumler-liste.html' },
-      { id: 'mock-hukumler-form', label: 'Hüküm Kaydı', href: 'mockup/hukumler-form.html' }
+      { id: 'mock-hukumler-liste', label: 'Özel Hüküm Listesi', href: 'mockup/hukumler-liste.html' },
+      { id: 'mock-hukumler-form', label: 'Özel Hüküm Kaydı', href: 'mockup/hukumler-form.html' }
     ],
     islerHref: 'isler.html'
   }
 };
 </script>
 <script src="../../../assets/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
-<script src="mock-hukumler-tablosu.js"></script>
+<script src="mock-mevzuat-data.js"></script>
+<script src="mock-ozel-hukum-data.js"></script>
+<script src="mock-list-map.js"></script>
 <script src="mock-hukumler-liste.js"></script>
+<script>
+  MOCK_LIST_MAP.init({
+    listTitle: 'Özel Hükümler',
+    tableSelector: '#mock-list-map-table'
+  });
+</script>
 <script src="../../../js/calismalar-meta.js"></script>
 <script src="../../../js/rapor-widgets.js"></script>
 <script src="../../../js/calisma-cursor.js"></script>

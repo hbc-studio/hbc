@@ -163,12 +163,23 @@
   var state = { mode: 'iptal', item: null, mockup: null, raporWidgetlari: [] };
 
   function ensureModal() {
-    if (document.getElementById('calisma-cursor-modal')) return;
+    var existing = document.getElementById('calisma-cursor-modal');
+    if (existing && !document.getElementById('calisma-cursor-restore-mini')) {
+      existing.remove();
+      existing = null;
+    }
+    if (existing) return;
 
     var html =
-      '<div class="modal-backdrop" id="calisma-cursor-modal" hidden>' +
-      '  <div class="modal-card modal-card--cursor" role="dialog" aria-labelledby="calisma-cursor-title">' +
-      '    <h3 id="calisma-cursor-title"></h3>' +
+      '<div class="hbc-dialog-backdrop" id="calisma-cursor-modal" hidden>' +
+      '  <div class="modal-card modal-card--cursor" role="dialog" aria-labelledby="calisma-cursor-title" aria-modal="true">' +
+      '    <div class="modal-card__head">' +
+      '      <h3 id="calisma-cursor-title"></h3>' +
+      '      <div class="modal-card__head-actions">' +
+      '        <button type="button" class="modal-icon-btn" id="calisma-cursor-minimize" title="Aşağı indir" aria-label="Dialogu aşağı indir">−</button>' +
+      '      </div>' +
+      '    </div>' +
+      '    <div class="modal-card__body" id="calisma-cursor-body">' +
       '    <p class="modal-hint" id="calisma-cursor-hint"></p>' +
       '    <label class="modal-field modal-field--hidden" id="calisma-cursor-kim-wrap">' +
       '      <span id="calisma-cursor-kim-label">İsim</span>' +
@@ -194,6 +205,14 @@
       '      <button type="button" class="modal-btn" id="calisma-cursor-close">Kapat</button>' +
       '      <button type="button" class="modal-btn modal-btn-primary" id="calisma-cursor-copy">Panoya kopyala</button>' +
       '    </div>' +
+      '    </div>' +
+      '    <div class="modal-card__minibar" id="calisma-cursor-minibar">' +
+      '      <button type="button" class="modal-btn modal-btn-restore" id="calisma-cursor-restore-mini">Yeniden aç</button>' +
+      '      <div class="modal-minibar-actions">' +
+      '        <button type="button" class="modal-btn" id="calisma-cursor-close-mini">Kapat</button>' +
+      '        <button type="button" class="modal-btn modal-btn-primary" id="calisma-cursor-copy-mini">Panoya kopyala</button>' +
+      '      </div>' +
+      '    </div>' +
       '  </div>' +
       '</div>';
 
@@ -201,8 +220,12 @@
 
     document.getElementById('calisma-cursor-close').addEventListener('click', closeModal);
     document.getElementById('calisma-cursor-copy').addEventListener('click', copyPrompt);
-    document.getElementById('calisma-cursor-modal').addEventListener('click', function (e) {
-      if (e.target.id === 'calisma-cursor-modal') closeModal();
+    document.getElementById('calisma-cursor-close-mini').addEventListener('click', closeModal);
+    document.getElementById('calisma-cursor-copy-mini').addEventListener('click', copyPrompt);
+    document.getElementById('calisma-cursor-minimize').addEventListener('click', minimizeModal);
+    document.getElementById('calisma-cursor-restore-mini').addEventListener('click', restoreModal);
+    document.getElementById('calisma-cursor-title').addEventListener('click', function () {
+      if (document.querySelector('.modal-card--minimized')) restoreModal();
     });
     document.getElementById('calisma-cursor-kim').addEventListener('input', refreshPromptText);
     document.getElementById('calisma-cursor-eknot').addEventListener('input', refreshPromptText);
@@ -302,9 +325,42 @@
     }
   }
 
-  function closeModal() {
+  function getModalNodes() {
     var modal = document.getElementById('calisma-cursor-modal');
-    if (modal) modal.hidden = true;
+    if (!modal) return {};
+    return {
+      modal: modal,
+      card: modal.querySelector('.modal-card')
+    };
+  }
+
+  function setModalLayout(mode) {
+    var nodes = getModalNodes();
+    if (!nodes.modal || !nodes.card) return;
+    var dock = mode === 'mockup-duzelt';
+    nodes.modal.classList.toggle('hbc-dialog-backdrop--dock', dock);
+    nodes.card.classList.toggle('modal-card--dock', dock);
+  }
+
+  function minimizeModal() {
+    var nodes = getModalNodes();
+    if (!nodes.modal || !nodes.card) return;
+    nodes.modal.classList.add('hbc-dialog-backdrop--minimized');
+    nodes.card.classList.add('modal-card--minimized');
+  }
+
+  function restoreModal() {
+    var nodes = getModalNodes();
+    if (!nodes.modal || !nodes.card) return;
+    nodes.modal.classList.remove('hbc-dialog-backdrop--minimized');
+    nodes.card.classList.remove('modal-card--minimized');
+  }
+
+  function closeModal() {
+    var nodes = getModalNodes();
+    if (!nodes.modal) return;
+    nodes.modal.hidden = true;
+    restoreModal();
   }
 
   function setFieldWrap(wrap, visible, labelEl, labelText, hintEl, hintText, inputEl, placeholder) {
@@ -378,6 +434,8 @@
     refreshPromptText();
     document.getElementById('calisma-cursor-copied').hidden = true;
     document.getElementById('calisma-cursor-copy-err').hidden = true;
+    restoreModal();
+    setModalLayout(mode);
     document.getElementById('calisma-cursor-modal').hidden = false;
   }
 

@@ -90,6 +90,20 @@ window.HBC_CALISMALAR = [
     mockupSayisi: 4,
     taskBe: 9,
     taskFe: 4,
+    onay: { tarih: '2026-06-30', kim: 'Hazal' },
     icon: '📝'
+  },
+  {
+    id: 'hidromorfolojik_baski',
+    label: 'Hidromorfolojik Baskı',
+    desc: 'Hidromorfolojik Baskı',
+    eklendi: '2026-07-01',
+    menuYer: 'sol',
+    durum: 'task-hazir',
+    mockupSayisi: 2,
+    taskBe: 4,
+    taskFe: 2,
+    onay: { tarih: '2026-07-01', kim: 'Hazal' },
+    icon: '📁'
   }
 ];

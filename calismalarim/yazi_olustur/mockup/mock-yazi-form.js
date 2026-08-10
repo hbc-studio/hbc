@@ -7,19 +7,29 @@
   var S = window.YAZI_EXCEL_SECENEKLER;
   if (!S) return;
 
-  /** export-yazi-excel-secenekler.py — Seçenekler + Faaliyet sayfalarından gelen anahtarlar */
   var EXCEL_OPTION_KEYS = {
     talep_turu: true,
-    havzada_mi: true,
-    baraj_gol: true,
     koruma_plani_yili: true,
     suki: true,
     tahsis_satis: true,
-    il: true,
     hitap: true,
     koruma_planlari: true,
     taskin_gorusu: true,
     koruma_alani_mesafe: true
+  };
+
+  /** Yeni yazıda Talep adımına standart gelen ilgi yazısı kısa özet şablonu (düzenlenebilir) */
+  var ILGI_OZET_SABLON =
+    '… İli, … İlçesi … sınırları içerisinde yer alan ilgi yazı ekinde gönderilen … adet parselde … uhdesinde bulunan … sayılı … faaliyet için Genel Müdürlüğümüz görüşü';
+
+  var ILGI_OZET_SON =
+    ' sınırları içerisinde yer alan ilgi yazı ekinde gönderilen 32 adet parselde Koza Altın İşletmeleri A.Ş. nin uhdesinde bulunan S.201001197 sayılı IV. Grup maden işletme ruhsatlı sahada yapılacak olan faaliyet için Genel Müdürlüğümüz görüşü';
+
+  window.YAZI_ILGI_OZET = {
+    sablon: ILGI_OZET_SABLON,
+    buildFromKonum: function (il, ilce, koy) {
+      return String(il || '…') + ' İli, ' + String(ilce || '…') + ' İlçesi ' + String(koy || '…') + ILGI_OZET_SON;
+    }
   };
 
   function capitalizeOptionText(s) {
@@ -134,15 +144,12 @@
 
   function init() {
     document.querySelectorAll('[data-yazi-options]').forEach(fillSelect);
+    var ilgiOzet = document.getElementById('f-ilgi-ozet');
+    if (ilgiOzet && !(ilgiOzet.value || '').trim()) ilgiOzet.value = ILGI_OZET_SABLON;
     var defaults = {
       'f-talep-turu': 'Tavuk Kümesi',
       'f-tahsis': 'Hayır',
-      'f-havza': 'Hayır',
-      'f-il': 'Yok',
-      'f-baraj': 'Yok',
       'f-hitap': 'rica',
-      'f-yil': 'Yok',
-      'f-koruma-plani': 'Yok',
       'f-suki': 'Yok',
       'f-taskin': (S.taskin_gorusu && S.taskin_gorusu.length) ? S.taskin_gorusu[0] : ''
     };

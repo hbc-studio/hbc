@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mockup: Hidromorfolojik Baskılar</title>
+  <link rel="stylesheet" href="../../../css/style.css" />
+  <link rel="stylesheet" href="mock-shell.css" />
+  <link rel="stylesheet" href="../../../css/mock-bootstrap.css" />
+  <style>
+    .mock-btn-success { background: #2e7d32; color: #fff; border-color: #2e7d32; }
+    .mock-btn-success:hover, .mock-btn-success:focus { background: #1b5e20; border-color: #1b5e20; color: #fff; }
+    .mock-toolbar-end { margin-left: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.65rem; }
+    .mock-pill { display: inline-block; padding: 0.2rem 0.55rem; border-radius: 4px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; }
+    .mock-pill--iyi { background: #e8f5e9; color: #2e7d32; }
+    .mock-pill--kotu { background: #ffebee; color: #c62828; }
+    .mock-pill--orta { background: #fff8e1; color: #f57f17; }
+    .mock-pill--zayif { background: #eceff1; color: #546e7a; }
+    .hb-list-table {
+      table-layout: fixed;
+      width: 100%;
+      font-size: 0.78rem;
+    }
+    .hb-list-table th,
+    .hb-list-table td {
+      padding: 0.4rem 0.5rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .hb-list-table .mock-th-label { font-size: 0.72rem; }
+    .hb-list-table .mock-col-btn { width: 1.1rem; height: 1.1rem; font-size: 0.52rem; }
+    .hb-list-table .mock-th-btns { gap: 0.08rem; }
+    .hb-list-table .mock-pill { font-size: 0.65rem; padding: 0.15rem 0.4rem; }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <nav id="sidebar"></nav>
+  <main>
+    <h1 class="mock-dev-only">Mockup: Hidromorfolojik baskılar listesi</h1>
+    <p class="subtitle mock-dev-only">Katmanlar ekranı düzeni — sütunlar: Yıl, Su Kütlesi Kodu, Havza, Alt Havza, İl, Baskı Sınıfı</p>
+    <div class="mock-app-shell">
+      <nav class="mock-app-menu" aria-label="Uygulama menüsü">
+        <div class="menu-app">Havza Bilgi Sistemi</div>
+        <button class="mock-menu-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#mock-menu-baskilar" aria-expanded="true" aria-controls="mock-menu-baskilar">Baskılar</button>
+        <div class="collapse show mock-menu-collapse" id="mock-menu-baskilar">
+          <div class="mock-menu-sub">
+            <a href="#">Katmanlar</a>
+            <a href="hidromorfolojik-baski-liste.html" class="active">Hidromorfolojik Baskılar</a>
+          </div>
+        </div>
+      </nav>
+      <div class="mock-app-body">
+        <div class="mock-header">
+          <div class="mock-breadcrumb">Havza Bilgi Sistemi › Baskılar › Hidromorfolojik Baskılar</div>
+          <strong>Hidromorfolojik Baskılar</strong>
+        </div>
+        <div class="mock-toolbar">
+          <a href="hidromorfolojik-baski-form.html" class="mock-btn mock-btn-success">+ Baskı Ekle</a>
+          <div class="mock-toolbar-end">
+            <button type="button" class="mock-btn">Filtreleri Temizle</button>
+            <button type="button" class="mock-btn">Sütun Gizle/Göster</button>
+            <button type="button" class="mock-btn">Dışa Aktar</button>
+          </div>
+        </div>
+        <div class="mock-content">
+          <div class="mock-list-wrap">
+            <table class="mock-table hb-list-table">
+              <colgroup>
+                <col style="width:6%" />
+                <col style="width:14%" />
+                <col style="width:11%" />
+                <col style="width:13%" />
+                <col style="width:9%" />
+                <col style="width:11%" />
+                <col style="width:36%" />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th class="mock-th-tools">
+                    <span class="mock-th-label">Yıl</span>
+                    <span class="mock-th-btns">
+                      <button type="button" class="mock-col-btn mock-col-btn--sort is-active" title="Sırala" aria-label="Yıl sırala">▲</button>
+                      <button type="button" class="mock-col-btn mock-col-btn--filter" title="Filtrele" aria-label="Yıl filtrele">⌕</button>
+                    </span>
+                  </th>
+                  <th class="mock-th-tools">
+                    <span class="mock-th-label">Su Kütlesi Kodu</span>
+                    <span class="mock-th-btns">
+                      <button type="button" class="mock-col-btn mock-col-btn--sort" title="Sırala" aria-label="Su kütlesi kodu sırala">↕</button>
+                      <button type="button" class="mock-col-btn mock-col-btn--filter" title="Filtrele" aria-label="Su kütlesi kodu filtrele">⌕</button>
+                    </span>
+                  </th>
+                  <th class="mock-th-tools">
+                    <span class="mock-th-label">Havza</span>
+                    <span class="mock-th-btns">
+                      <button type="button" class="mock-col-btn mock-col-btn--sort" title="Sırala" aria-label="Havza sırala">↕</button>
+                      <button type="button" class="mock-col-btn mock-col-btn--filter" title="Filtrele" aria-label="Havza filtrele">⌕</button>
+                    </span>
+                  </th>
+                  <th class="mock-th-tools">
+                    <span class="mock-th-label">Alt Havza</span>
+                    <span class="mock-th-btns">
+                      <button type="button" class="mock-col-btn mock-col-btn--sort" title="Sırala" aria-label="Alt havza sırala">↕</button>
+                      <button type="button" class="mock-col-btn mock-col-btn--filter" title="Filtrele" aria-label="Alt havza filtrele">⌕</button>
+                    </span>
+                  </th>
+                  <th class="mock-th-tools">
+                    <span class="mock-th-label">İl</span>
+                    <span class="mock-th-btns">
+                      <button type="button" class="mock-col-btn mock-col-btn--sort" title="Sırala" aria-label="İl sırala">↕</button>
+                      <button type="button" class="mock-col-btn mock-col-btn--filter" title="Filtrele" aria-label="İl filtrele">⌕</button>
+                    </span>
+                  </th>
+                  <th class="mock-th-tools">
+                    <span class="mock-th-label">Baskı Sınıfı</span>
+                    <span class="mock-th-btns">
+                      <button type="button" class="mock-col-btn mock-col-btn--sort" title="Sırala" aria-label="Baskı sınıfı sırala">↕</button>
+                      <button type="button" class="mock-col-btn mock-col-btn--filter" title="Filtrele" aria-label="Baskı sınıfı filtrele">⌕</button>
+                    </span>
+                  </th>
+                  <th class="mock-th-tools mock-th-tools--action mock-th-islemler">
+                    <span class="mock-th-label">İşlemler</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2024</td>
+                  <td>TR00000001</td>
+                  <td>Gediz</td>
+                  <td>Akhisar</td>
+                  <td>Manisa</td>
+                  <td><span class="mock-pill mock-pill--iyi">İyi</span></td>
+                  <td class="mock-td-islemler">
+                    <div class="mock-row-actions">
+                      <a href="hidromorfolojik-baski-form.html" class="mock-icon-btn" title="Güncelleme" aria-label="Güncelleme"><svg class="mock-icon-svg" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></a>
+                      <button type="button" class="mock-icon-btn" title="Öznitelik" aria-label="Öznitelik"><svg class="mock-icon-svg" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></button>
+                      <button type="button" class="mock-icon-btn" title="Stil" aria-label="Stil"><svg class="mock-icon-svg" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.5-.7 1.5-1.5 0-.4-.2-.8-.4-1.1-.2-.3-.4-.6-.4-1 0-.8.7-1.5 1.5-1.5H16c3.3 0 6-2.7 6-6 0-4.4-4.5-8-10-8z"/></svg></button>
+                      <button type="button" class="mock-icon-btn" title="Sil" aria-label="Sil"><svg class="mock-icon-svg" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2023</td>
+                  <td>TR00000002</td>
+                  <td>Ceyhan</td>
+                  <td>Aşağı Ceyhan</td>
+                  <td>Adana</td>
+                  <td><span class="mock-pill mock-pill--kotu">Kötü</span></td>
+                  <td class="mock-td-islemler">
+                    <div class="mock-row-actions">
+                      <a href="hidromorfolojik-baski-form.html" class="mock-icon-btn" title="Güncelleme" aria-label="Güncelleme"><svg class="mock-icon-svg" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></a>
+                      <button type="button" class="mock-icon-btn" title="Öznitelik" aria-label="Öznitelik"><svg class="mock-icon-svg" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></button>
+                      <button type="button" class="mock-icon-btn" title="Stil" aria-label="Stil"><svg class="mock-icon-svg" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.5-.7 1.5-1.5 0-.4-.2-.8-.4-1.1-.2-.3-.4-.6-.4-1 0-.8.7-1.5 1.5-1.5H16c3.3 0 6-2.7 6-6 0-4.4-4.5-8-10-8z"/></svg></button>
+                      <button type="button" class="mock-icon-btn" title="Sil" aria-label="Sil"><svg class="mock-icon-svg" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2024</td>
+                  <td>TR00000003</td>
+                  <td>Sakarya</td>
+                  <td>Orta Sakarya</td>
+                  <td>Sakarya</td>
+                  <td><span class="mock-pill mock-pill--orta">Orta</span></td>
+                  <td class="mock-td-islemler">
+                    <div class="mock-row-actions">
+                      <a href="hidromorfolojik-baski-form.html" class="mock-icon-btn" title="Güncelleme" aria-label="Güncelleme"><svg class="mock-icon-svg" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></a>
+                      <button type="button" class="mock-icon-btn" title="Öznitelik" aria-label="Öznitelik"><svg class="mock-icon-svg" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></button>
+                      <button type="button" class="mock-icon-btn" title="Stil" aria-label="Stil"><svg class="mock-icon-svg" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.5-.7 1.5-1.5 0-.4-.2-.8-.4-1.1-.2-.3-.4-.6-.4-1 0-.8.7-1.5 1.5-1.5H16c3.3 0 6-2.7 6-6 0-4.4-4.5-8-10-8z"/></svg></button>
+                      <button type="button" class="mock-icon-btn" title="Sil" aria-label="Sil"><svg class="mock-icon-svg" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2023</td>
+                  <td>TR00000004</td>
+                  <td>Kızılırmak</td>
+                  <td>Orta Kızılırmak</td>
+                  <td>Ankara</td>
+                  <td><span class="mock-pill mock-pill--zayif">Zayıf</span></td>
+                  <td class="mock-td-islemler">
+                    <div class="mock-row-actions">
+                      <a href="hidromorfolojik-baski-form.html" class="mock-icon-btn" title="Güncelleme" aria-label="Güncelleme"><svg class="mock-icon-svg" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></a>
+                      <button type="button" class="mock-icon-btn" title="Öznitelik" aria-label="Öznitelik"><svg class="mock-icon-svg" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></button>
+                      <button type="button" class="mock-icon-btn" title="Stil" aria-label="Stil"><svg class="mock-icon-svg" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.5-.7 1.5-1.5 0-.4-.2-.8-.4-1.1-.2-.3-.4-.6-.4-1 0-.8.7-1.5 1.5-1.5H16c3.3 0 6-2.7 6-6 0-4.4-4.5-8-10-8z"/></svg></button>
+                      <button type="button" class="mock-icon-btn" title="Sil" aria-label="Sil"><svg class="mock-icon-svg" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="mock-pagination">
+              <span>Toplam 4 kayıt · sayfa başına 10</span>
+              <div class="mock-pagination-pages" aria-label="Sayfalama">
+                <button type="button" disabled aria-label="Önceki">‹</button>
+                <button type="button" class="active">1</button>
+                <button type="button" disabled aria-label="Sonraki">›</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script>
+window.TASK_HUB = {
+  taskRoot: '../../..',
+  page: 'mock-hidromorfolojik-baski-liste',
+  calisma: {
+    id: 'hidromorfolojik_baski',
+    label: 'Hidromorfolojik Baskı',
+    base: '..',
+    menuYer: 'sol',
+    mockups: [
+      { id: 'mock-hidromorfolojik-baski-liste', label: 'Hidromorfolojik Baskılar', href: 'mockup/hidromorfolojik-baski-liste.html' },
+      { id: 'mock-hidromorfolojik-baski-form', label: 'Hidromorfolojik Baskı Ekleme', href: 'mockup/hidromorfolojik-baski-form.html' }
+    ],
+    islerHref: 'isler.html'
+  }
+};
+</script>
+<script src="../../../assets/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
+<script src="../../../js/calismalar-meta.js"></script>
+<script src="../../../js/rapor-widgets.js"></script>
+<script src="../../../js/calisma-cursor.js"></script>
+<script src="../../../js/sunum-query.js"></script>
+<script src="../../../js/mock-sunum.js"></script>
+<script src="../../../js/nav.js"></script>
+</body>
+</html>

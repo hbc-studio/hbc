@@ -23,33 +23,13 @@
   <nav id="sidebar"></nav>
   <main class="isler-main" id="isler-main">
     <h1>Yazı Oluştur — Jira task metinleri</h1>
-    <p class="subtitle">10 Backend · 4 Frontend — mockup onaylandı</p>
+    <p class="subtitle">9 Backend · 4 Frontend — mockup onaylandı</p>
     <div class="task-tabs" role="tablist">
-      <button type="button" class="task-tab active" data-tab="be" id="tab-be">Backend <span class="tab-chip tab-chip-be" id="chip-be">10</span></button>
+      <button type="button" class="task-tab active" data-tab="be" id="tab-be">Backend <span class="tab-chip tab-chip-be" id="chip-be">9</span></button>
       <button type="button" class="task-tab" data-tab="fe" id="tab-fe">Frontend <span class="tab-chip tab-chip-fe" id="chip-fe">4</span></button>
     </div>
 
     <div class="tab-panel" id="panel-be" data-tab-panel="be">
-
-      <div class="issue" id="be-yazi-secenekler">
-        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/yazi-form.html" target="_blank" rel="noopener">mockup/yazi-form.html</a></div>
-        <h4>[BE] Yazı Formu Seçenekleri Endpoint'i</h4>
-        <div class="issue-meta">
-          <span><strong>Method:</strong> getYaziFormSecenekleri</span>
-          <span><strong>Tablo:</strong> yazi_secenek</span>
-          <span><strong>Tüketici:</strong> [FE] Yazı Formu</span>
-        </div>
-        <h5>İster</h5>
-        <p class="desc">Formdaki dropdown seçenekleri ile talep türüne göre faaliyet-tedbir metinlerinin tek yanıtta sunulması.</p>
-        <h5>Kabul kriterleri</h5>
-        <ul class="criteria">
-          <li>Dönüş anahtarları: talepTuru, tahsisSatis, havzadaMi, il, barajGol, taskinGorusu, hitap, korumaPlaniYili, korumaPlanlari, suki, korumaAlaniMesafe, faaliyetTedbir</li>
-          <li>faaliyetTedbir: talep türü → metin (string) haritası</li>
-          <li>Seçenek listeleri string dizisi olarak döner</li>
-          <li>Veriler import ile güncellenir</li>
-        </ul>
-        <button type="button" class="copy-btn">Tümünü kopyala</button>
-      </div>
 
       <div class="issue" id="be-yazi-list">
         <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/yazi-liste.html" target="_blank" rel="noopener">mockup/yazi-liste.html</a></div>
@@ -57,15 +37,20 @@
         <div class="issue-meta">
           <span><strong>Method:</strong> getYaziListesi</span>
           <span><strong>Tablo:</strong> yazi</span>
-          <span><strong>Tüketici:</strong> [FE] Yazı Listesi</span>
         </div>
+        <h5>Bağlı Olduğu İşler</h5>
+        <ul class="criteria issue-veri">
+          <li><strong>Frontend:</strong> [FE] Yazı Listesi</li>
+          <li><strong>Backend:</strong> [BE] Yazı Listesi Endpoint'i</li>
+        </ul>
         <h5>İster</h5>
-        <p class="desc">Oluşturulan görüş yazılarının listelenmesi.</p>
+        <p class="desc">Yazı listesi ekranı için kayıtların sayfalı listelenmesi; haritada gösterim için geometri özeti dönebilir.</p>
         <h5>Kabul kriterleri</h5>
         <ul class="criteria">
-          <li>Dönüş: id, baslik, aciklama, olusturulmaTarihi, guncellemeTarihi</li>
-          <li>Sayfalama ve sıralama (varsayılan: guncellemeTarihi desc)</li>
+          <li>Dönüş: id, baslik, aciklama, icme_suyu_havzasi, il, ada_parsel, olusturulma, guncelleme</li>
+          <li>Sayfalama ve sıralama (varsayılan: guncelleme veya olusturulma, yeniden eskiye)</li>
           <li>İsteğe bağlı arama: baslik veya aciklama</li>
+          <li>Haritada göster için seçili kayıtların polygon geometrisi veya merkez koordinatı istenirse ayrı alanlarda döner</li>
         </ul>
         <button type="button" class="copy-btn">Tümünü kopyala</button>
       </div>
@@ -76,15 +61,19 @@
         <div class="issue-meta">
           <span><strong>Method:</strong> getYaziById</span>
           <span><strong>Tablo:</strong> yazi, yazi_form_alan</span>
-          <span><strong>Tüketici:</strong> [FE] Yazı Formu (düzenle / görüntüle)</span>
         </div>
+        <h5>Bağlı Olduğu İşler</h5>
+        <ul class="criteria issue-veri">
+          <li><strong>Frontend:</strong> [FE] Yazı Formu (Adımlı Sihirbaz) — düzenle / görüntüle</li>
+          <li><strong>Backend:</strong> [BE] Yazı Detay Endpoint'i</li>
+        </ul>
         <h5>İster</h5>
-        <p class="desc">Wizard tüm adımlarındaki alan değerlerinin tek kayıt olarak getirilmesi.</p>
+        <p class="desc">Adımlı yazı formunda tek kaydın ve tüm adım alanlarının getirilmesi.</p>
         <h5>Kabul kriterleri</h5>
         <ul class="criteria">
-          <li>Dönüş: baslik, aciklama ve tüm form alanları (talep, havza, hüküm, taşkın, koruma planı, SUKİ)</li>
-          <li>Çoklu seçim alanları dizi olarak döner (ör. korumaAlani)</li>
-          <li>olusturulmusMetin varsa yazı önizleme adımı için döner</li>
+          <li>id ile tek kayıt döner</li>
+          <li>Genel bilgiler, talep, havza, hükümler, taşkın/ek görüş, SUKİ adımlarındaki alan değerleri birlikte gelir</li>
+          <li>Polygon geometrisi kayıtlıysa döner</li>
           <li>Kayıt yoksa uygun hata</li>
         </ul>
         <button type="button" class="copy-btn">Tümünü kopyala</button>
@@ -96,113 +85,219 @@
         <div class="issue-meta">
           <span><strong>Method:</strong> saveYazi</span>
           <span><strong>Tablo:</strong> yazi, yazi_form_alan</span>
-          <span><strong>Tüketici:</strong> [FE] Yazı Formu</span>
         </div>
+        <h5>Bağlı Olduğu İşler</h5>
+        <ul class="criteria issue-veri">
+          <li><strong>Frontend:</strong> [FE] Yazı Formu (Adımlı Sihirbaz)</li>
+          <li><strong>Backend:</strong> [BE] Yazı Kaydet Endpoint'i</li>
+        </ul>
         <h5>İster</h5>
-        <p class="desc">Wizard adımlarındaki verilerin taslak veya tam kayıt olarak saklanması.</p>
+        <p class="desc">Sihirbaz adımları tamamlandıktan sonra yazı kaydının oluşturulması veya güncellenmesi. Önizleme ve adımlar arası gezinme sırasında zorunlu kayıt yoktur; kalıcı kayıt «Yazıyı Kaydet» ile yapılır.</p>
         <h5>Kabul kriterleri</h5>
         <ul class="criteria">
-          <li>Zorunlu: baslik, aciklama</li>
-          <li>Adım alanları mockup ile uyumlu doğrulanır (zorunlu alanlar)</li>
-          <li>id varsa güncelle, yoksa yeni kayıt; guncellemeTarihi güncellenir</li>
-          <li>Kısmi kayıt (taslak) desteklenebilir</li>
+          <li>Zorunlu alanlar mockup’taki * işaretli alanlarla uyumlu doğrulanır</li>
+          <li>Polygon geometrisi ve mekansal sorgu sonuçları kayda yazılır</li>
+          <li>Büyükşehir olmayan ilde SUKİ alanı boş veya gönderilmez</li>
+          <li>id varsa güncelle, yoksa yeni kayıt</li>
+          <li>Kayıt sonrası liste ekranına yönlendirme için id döner</li>
+        </ul>
+        <h5>Mockup notları</h5>
+        <ul class="criteria">
+          <li><strong>FE:</strong> Sihirbaz adımları ve yazı önizlemesi «Yazıyı Kaydet»’e basılana kadar veritabanına yazılmaz; kayıt sonrası liste ekranına yönlendirilir.</li>
+          <li><strong>BE:</strong> Büyükşehir olmayan ilde SUKİ değeri kayda yazılmaz veya boş kabul edilir.</li>
+          <li><strong>BE:</strong> Kullanıcının ilgi özeti alanında yaptığı düzenlemeler kayıt isteği ile birlikte gönderilir ve saklanır.</li>
         </ul>
         <button type="button" class="copy-btn">Tümünü kopyala</button>
       </div>
 
-      <div class="issue" id="be-hukum-olustur">
+      <div class="issue" id="be-yazi-secenekler">
         <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/yazi-form.html" target="_blank" rel="noopener">mockup/yazi-form.html</a></div>
-        <h4>[BE] Hüküm Metni Oluşturma Endpoint'i</h4>
+        <h4>[BE] Yazı Form Seçenekleri Endpoint'i</h4>
         <div class="issue-meta">
-          <span><strong>Method:</strong> olusturHukumMetni</span>
-          <span><strong>Tablo:</strong> hukumler_tablosu</span>
-          <span><strong>Tüketici:</strong> [FE] Yazı Formu (Hükümler adımı)</span>
+          <span><strong>Method:</strong> getYaziSecenekleri</span>
+          <span><strong>Tablo:</strong> yazi_secenek</span>
         </div>
+        <h5>Bağlı Olduğu İşler</h5>
+        <ul class="criteria issue-veri">
+          <li><strong>Frontend:</strong> [FE] Yazı Formu (Adımlı Sihirbaz)</li>
+          <li><strong>Backend:</strong> [BE] Yazı Form Seçenekleri Endpoint'i</li>
+        </ul>
         <h5>İster</h5>
-        <p class="desc">Koruma alanı ve sektör (talep türü) seçimine göre hükümler tablosundan madde metinlerinin birleştirilmesi.</p>
+        <p class="desc">Excel «Seçenekler» ve «Faaliyet» sayfalarından gelen dropdown listelerinin ve faaliyet-tedbir eşlemesinin sunulması; standart ilgi yazısı kısa özet şablonu.</p>
         <h5>Kabul kriterleri</h5>
         <ul class="criteria">
-          <li>Girdi: korumaAlaniListesi, talepTuru (veya sektör), kaynak (Yönetmelik / Özel Hüküm)</li>
-          <li>Dönüş: hukumMetni, degerlendirmeMetni (varsa)</li>
-          <li>Eşleşme yoksa boş veya «Yok» döner; Excel makro mantığıyla uyumlu</li>
+          <li>Dönüş: talep_turu, tahsis_satis, hitap, suki, taskin_gorusu, koruma_alani_mesafe ve diğer form listeleri</li>
+          <li>faaliyet_tedbir: talep türü anahtarı → metin eşlemesi (talep türü «Diğer» için varsayılan metin)</li>
+          <li>ilgi_ozet_sablon: düzenlenebilir standart şablon metni (polygon öncesi)</li>
+          <li>Seçenek metinleri canlı ekranda görünür olmalıdır</li>
+        </ul>
+        <h5>Mockup notları</h5>
+        <ul class="criteria">
+          <li><strong>FE:</strong> Excel’den alınan dropdown seçenekleri canlı ekranda görünür olmalıdır (talep türü, tahsis, hitap, SUKİ, taşkın görüşü, koruma alanı vb.).</li>
+          <li><strong>BE:</strong> Form ilk yüklendiğinde standart ilgi yazısı kısa özet şablonu döndürülür; polygon öncesi «… İli, … İlçesi …» yer tutuculu metin.</li>
+          <li><strong>BE:</strong> Polygon sonrası şablon kesişen il, ilçe ve köy adlarıyla güncellenmiş metin olarak döndürülür; kullanıcı düzenlemeleri kayıt isteği ile gönderilir.</li>
+          <li><strong>FE:</strong> Talep türü «Diğer» seçildiğinde faaliyet-tedbir alanı varsayılan metinle dolar ve düzenlenebilir olur; diğer talep türlerinde salt okunur.</li>
         </ul>
         <button type="button" class="copy-btn">Tümünü kopyala</button>
       </div>
 
-      <div class="issue" id="be-yazi-olustur">
+      <div class="issue" id="be-yazi-mekansal">
         <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/yazi-form.html" target="_blank" rel="noopener">mockup/yazi-form.html</a></div>
-        <h4>[BE] Görüş Yazısı Metni Oluşturma Endpoint'i</h4>
+        <h4>[BE] Yazı Mekansal Sorgu Endpoint'i</h4>
         <div class="issue-meta">
-          <span><strong>Method:</strong> olusturYaziMetni</span>
-          <span><strong>Tablo:</strong> yazi</span>
-          <span><strong>Tüketici:</strong> [FE] Yazı Formu (Özet → Yazı)</span>
+          <span><strong>Method:</strong> postYaziMekansalSorgu</span>
+          <span><strong>Tablo:</strong> il, ilce, belediye, icme_suyu_havza, su_kaynaklari, koruma_bantlari, sistem_tanim, ozel_hukum</span>
         </div>
+        <h5>Bağlı Olduğu İşler</h5>
+        <ul class="criteria issue-veri">
+          <li><strong>Frontend:</strong> [FE] Yazı Formu (Adımlı Sihirbaz) — Havza Ve Koruma, Hükümler; [FE] Özel Hüküm Kaydı — Konum polygon sorgusu</li>
+          <li><strong>Backend:</strong> [BE] Yazı Mekansal Sorgu Endpoint'i</li>
+        </ul>
         <h5>İster</h5>
-        <p class="desc">Form verilerinden görüş yazısı gövde metninin üretilmesi.</p>
+        <p class="desc">Çizilen veya yüklenen polygon geometrisi ile kesişen coğrafi ve hüküm verilerinin tek istekte döndürülmesi.</p>
         <h5>Kabul kriterleri</h5>
         <ul class="criteria">
-          <li>Girdi: yaziId veya tam form JSON</li>
-          <li>Dönüş: onizlemeHtml veya duzMetin</li>
-          <li>Üretilen metin yazi kaydına yazılır; tekrar çağrıda güncellenebilir</li>
+          <li>Girdi: polygon geometrisi (GeoJSON veya eşdeğeri)</li>
+          <li>Dönüş: il_id, il_adi, ilce_adi, koy_adi, icme_suyu_havzasi (Evet / Hayır / Evet ama protokol yok), ada_parsel, baraj_gol_adi</li>
+          <li>ilgi_ozet_metni: kesişen il, ilçe ve köy adları standart şablona işlenmiş metin (düzenlenebilir olarak FE’ye iletilir)</li>
+          <li>buyuksehir: il_id ile belediye tablosunda belediyetipi = 1 kontrolü; true ise SUKİ alanı sorulur, false ise sorulmaz</li>
+          <li>koruma_kesisimleri: birden fazla kesişimde her kayıt için koruma_bolge_tipi_id, tanim_adi (sistem_tanim), kesisim_yuzdesi</li>
+          <li>ozel_hukum: polygon ile kesişen özel hüküm varsa madde metni; yoksa boş</li>
+          <li>Kesişim yoksa ilgili alanlar boş veya «Yok» döner</li>
+        </ul>
+        <h5>Mockup notları</h5>
+        <ul class="criteria">
+          <li><strong>BE — İlgi özeti:</strong> Polygon ile il, ilce ve köy/belde kaynağında mekansal kesişim; dönen il, ilçe ve köy adları standart ilgi özeti şablonuna işlenir.</li>
+          <li><strong>BE — Havza:</strong> icme_suyu_havza tablosu kesişimi; sonuç Evet / Hayır / Evet ama protokol yok.</li>
+          <li><strong>BE — İl / ilçe / köy / ada-parsel:</strong> Polygon geometrisi ile otomatik doldurma; ilçe ve köy ayrıca ilgi özeti metnine yazılır.</li>
+          <li><strong>BE — Baraj/göl:</strong> su_kaynaklari tablosu polygon kesişimi; eşleşen kaynak adı.</li>
+          <li><strong>BE — Koruma bantları:</strong> koruma_bantlari (cys) kesişim sorgusu; yüzde koruma_bolge_tipi_id ile; koruma bölge adı sistem_tanim.tanim_adi (ortak) ile; birden fazla kesişimde tüm kayıtlar (bölge adı + yüzde) FE’ye iletilir.</li>
+          <li><strong>BE — Büyükşehir / SUKİ:</strong> ilId ile belediye tablosunda (adresgeo) belediyetipi = 1 kontrolü; büyükşehir değilse SUKİ alanı gönderilmez.</li>
+          <li><strong>BE — Özel hüküm:</strong> Polygon ile kesişen özel hüküm kaydı varsa madde metni döner.</li>
         </ul>
         <button type="button" class="copy-btn">Tümünü kopyala</button>
       </div>
 
-      <div class="issue" id="be-yazi-export">
+      <div class="issue" id="be-yazi-belge">
         <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/yazi-form.html" target="_blank" rel="noopener">mockup/yazi-form.html</a></div>
-        <h4>[BE] Yazı Dışa Aktarma Endpoint'i</h4>
+        <h4>[BE] Yazı Belge Oluşturma Endpoint'i</h4>
         <div class="issue-meta">
-          <span><strong>Method:</strong> exportYazi</span>
-          <span><strong>Tablo:</strong> yazi</span>
-          <span><strong>Tüketici:</strong> [FE] Yazı Formu (Yazı adımı)</span>
+          <span><strong>Method:</strong> generateYaziBelge</span>
+          <span><strong>Tablo:</strong> yazi, yazi_form_alan</span>
         </div>
+        <h5>Bağlı Olduğu İşler</h5>
+        <ul class="criteria issue-veri">
+          <li><strong>Frontend:</strong> [FE] Yazı Formu (Adımlı Sihirbaz) — Yazı adımı</li>
+          <li><strong>Backend:</strong> [BE] Yazı Belge Oluşturma Endpoint'i</li>
+        </ul>
         <h5>İster</h5>
-        <p class="desc">Oluşturulan görüş yazısının Word ve PDF olarak indirilmesi.</p>
+        <p class="desc">Özet onayından sonra görüş yazısı metninin oluşturulması ve Word/PDF olarak indirilebilmesi.</p>
         <h5>Kabul kriterleri</h5>
         <ul class="criteria">
-          <li>Girdi: yaziId, format (docx | pdf)</li>
-          <li>Dönüş: dosya stream veya indirme URL'si</li>
-          <li>İçerik önizleme ile aynı; kurumsal şablon uygulanır</li>
+          <li>Girdi: form alanlarının güncel değerleri (kayıt öncesi önizleme için de kullanılabilir)</li>
+          <li>Dönüş: html önizleme metni ve/veya format parametresine göre .docx / .pdf dosyası</li>
+          <li>İlgi özeti, havza, talep türü, faaliyet-tedbir, taşkın görüşü ve hitap metinde yer alır</li>
+          <li>Kalıcı kayıt «Yazıyı Kaydet» ile ayrı endpoint’ten yapılır</li>
+        </ul>
+        <h5>Mockup notları</h5>
+        <ul class="criteria">
+          <li><strong>FE:</strong> Yazı önizlemesi ve belge oluşturma, kayıt öncesi form değerleriyle çalışır; kalıcı kayıt ayrı saveYazi çağrısıdır.</li>
         </ul>
         <button type="button" class="copy-btn">Tümünü kopyala</button>
       </div>
 
-      <div class="issue" id="be-hukumler-list">
+      <div class="issue" id="be-ozel-hukum-list">
         <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/hukumler-liste.html" target="_blank" rel="noopener">mockup/hukumler-liste.html</a></div>
-        <h4>[BE] Hükümler Tablosu Listesi Endpoint'i</h4>
+        <h4>[BE] Özel Hüküm Listesi Endpoint'i</h4>
         <div class="issue-meta">
-          <span><strong>Method:</strong> getHukumlerTablosuListesi</span>
-          <span><strong>Tablo:</strong> hukumler_tablosu</span>
-          <span><strong>Tüketici:</strong> [FE] Hükümler Tablosu</span>
+          <span><strong>Method:</strong> getOzelHukumListesi</span>
+          <span><strong>Tablo:</strong> ozel_hukum</span>
         </div>
+        <h5>Bağlı Olduğu İşler</h5>
+        <ul class="criteria issue-veri">
+          <li><strong>Frontend:</strong> [FE] Özel Hüküm Listesi</li>
+          <li><strong>Backend:</strong> [BE] Özel Hüküm Listesi Endpoint'i</li>
+        </ul>
         <h5>İster</h5>
-        <p class="desc">Referans hüküm kayıtlarının listelenmesi.</p>
+        <p class="desc">Özel hüküm kayıtlarının listelenmesi.</p>
         <h5>Kabul kriterleri</h5>
         <ul class="criteria">
-          <li>Dönüş: id, kaynak, korumaAlani, sektor, madde (liste için kısaltılmış veya tam)</li>
-          <li>İsteğe bağlı filtre: kaynak (Yönetmelik / Özel Hüküm)</li>
-          <li>Sayfalama ve sıralama (varsayılan: korumaAlani, sektor)</li>
-          <li>İsteğe bağlı arama: korumaAlani, sektor, madde metni</li>
+          <li>Dönüş: id, yonetmelik, icme_suyu_havzasi, il, ada_parsel, koruma_alani, sektor, madde_no, madde_icerik</li>
+          <li>Sayfalama ve sıralama</li>
+          <li>Haritada göster için geometri özeti istenirse döner</li>
         </ul>
         <button type="button" class="copy-btn">Tümünü kopyala</button>
       </div>
 
-      <div class="issue" id="be-hukumler-kaydet">
+      <div class="issue" id="be-ozel-hukum-detay">
         <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/hukumler-form.html" target="_blank" rel="noopener">mockup/hukumler-form.html</a></div>
-        <h4>[BE] Hüküm Kaydı Kaydet Endpoint'i</h4>
+        <h4>[BE] Özel Hüküm Detay Endpoint'i</h4>
         <div class="issue-meta">
-          <span><strong>Method:</strong> saveHukumKaydi</span>
-          <span><strong>Tablo:</strong> hukumler_tablosu</span>
-          <span><strong>Tüketici:</strong> [FE] Hüküm Kaydı</span>
+          <span><strong>Method:</strong> getOzelHukumById</span>
+          <span><strong>Tablo:</strong> ozel_hukum, ozel_hukum_lokasyon</span>
         </div>
+        <h5>Bağlı Olduğu İşler</h5>
+        <ul class="criteria issue-veri">
+          <li><strong>Frontend:</strong> [FE] Özel Hüküm Kaydı — düzenle</li>
+          <li><strong>Backend:</strong> [BE] Özel Hüküm Detay Endpoint'i</li>
+        </ul>
         <h5>İster</h5>
-        <p class="desc">Hükümler tablosuna yeni kayıt ekleme ve mevcut kaydı güncelleme.</p>
+        <p class="desc">Özel hüküm formunda tek kayıt, konum bilgileri ve polygon geometrisinin getirilmesi.</p>
         <h5>Kabul kriterleri</h5>
         <ul class="criteria">
-          <li>Zorunlu: kaynak, korumaAlani, sektor, madde</li>
-          <li>kaynak: Yönetmelik veya Özel Hüküm</li>
+          <li>Dönüş: yonetmelik_id, havza, il, ada_parsel, koruma_alani, sektor, madde_no, madde_icerik, geometri</li>
+          <li>Kayıt yoksa uygun hata</li>
+        </ul>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="be-ozel-hukum-kaydet">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/hukumler-form.html" target="_blank" rel="noopener">mockup/hukumler-form.html</a></div>
+        <h4>[BE] Özel Hüküm Kaydet Endpoint'i</h4>
+        <div class="issue-meta">
+          <span><strong>Method:</strong> saveOzelHukum</span>
+          <span><strong>Tablo:</strong> ozel_hukum, ozel_hukum_lokasyon</span>
+        </div>
+        <h5>Bağlı Olduğu İşler</h5>
+        <ul class="criteria issue-veri">
+          <li><strong>Frontend:</strong> [FE] Özel Hüküm Kaydı</li>
+          <li><strong>Backend:</strong> [BE] Özel Hüküm Kaydet Endpoint'i</li>
+        </ul>
+        <h5>İster</h5>
+        <p class="desc">Özel hüküm kaydı; yönetmelik seçimi, konum polygon’u ve madde bilgilerinin saklanması.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Zorunlu: yonetmelik, koruma_alani, sektor, madde_no, madde_icerik</li>
+          <li>Polygon geometrisi ve mekansal sorgu ile doldurulan havza, il, ada/parsel kayda yazılır</li>
+          <li>Geometri lokasyon satırında veya eşdeğer yapıda saklanır</li>
           <li>id varsa güncelle, yoksa ekle</li>
-          <li>İsteğe bağlı silme endpoint'i veya pasif alan</li>
+        </ul>
+        <h5>Mockup notları</h5>
+        <ul class="criteria">
+          <li><strong>FE:</strong> Polygon çizildiğinde içme suyu havzası, il ve ada/parsel otomatik dolar.</li>
+          <li><strong>BE:</strong> Geometri kayıtla birlikte saklanır; lokasyon satırı ayrı tabloda (ozel_hukum_lokasyon) tutulur.</li>
+        </ul>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="be-ozel-hukum-referans">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/hukumler-form.html" target="_blank" rel="noopener">mockup/hukumler-form.html</a></div>
+        <h4>[BE] Özel Hüküm Referans Listeleri Endpoint'i</h4>
+        <div class="issue-meta">
+          <span><strong>Method:</strong> getOzelHukumReferanslari</span>
+          <span><strong>Tablo:</strong> yonetmelik, koruma_alani_tipi, hukumler_tablosu</span>
+        </div>
+        <h5>Bağlı Olduğu İşler</h5>
+        <ul class="criteria issue-veri">
+          <li><strong>Frontend:</strong> [FE] Özel Hüküm Kaydı</li>
+          <li><strong>Backend:</strong> [BE] Özel Hüküm Referans Listeleri Endpoint'i</li>; seçime göre örnek madde metni önerisi.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>yonetmelik_listesi: sistem mevzuat / yönetmelik kayıtları</li>
+          <li>koruma_alani_tipleri: CYS koruma alanı tipleri</li>
+          <li>sektor_listesi: hükümler tablosundan sektörler</li>
+          <li>koruma_alani + sektor seçilince önerilen madde_no ve madde_icerik dönebilir</li>
+          <li>Özel hüküm formu polygon sorgusu için [BE] Yazı Mekansal Sorgu veya paylaşılan mekansal servis kullanılabilir</li>
         </ul>
         <button type="button" class="copy-btn">Tümünü kopyala</button>
       </div>
@@ -215,17 +310,23 @@
         <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/yazi-liste.html" target="_blank" rel="noopener">mockup/yazi-liste.html</a></div>
         <h4>[FE] Yazı Listesi</h4>
         <div class="issue-meta">
-          <span><strong>Menü:</strong> Görüş Yazısı › Yazılar</span>
-          <span><strong>Veri:</strong> [BE] Yazı Listesi Endpoint'i</span>
+          <span><strong>Menü:</strong> İçme Suyu Bilgi Sistemi › İçme Suyu Denetimleri › Dashboard › Yazı Oluştur</span>
         </div>
+        <h5>Bağlı Olduğu İşler</h5>
+        <ul class="criteria issue-veri">
+          <li><strong>Frontend:</strong> [FE] Yazı Listesi; [FE] Yazı Formu (Adımlı Sihirbaz) — yeni yazı / düzenle geçişi</li>
+          <li><strong>Backend:</strong> [BE] Yazı Listesi Endpoint'i</li>
+        </ul>
         <h5>İster</h5>
-        <p class="desc">Oluşturulan görüş yazılarının tabloda listelenmesi ve yeni yazıya geçiş.</p>
+        <p class="desc">Oluşturulan görüş yazılarının listelenmesi; yeni yazı ve düzenleme akışı.</p>
         <h5>Kabul kriterleri</h5>
         <ul class="criteria">
-          <li>Sütunlar: Başlık, Açıklama, Oluşturulma, Güncelleme</li>
-          <li>«+ Yeni Yazı» ile adımlı forma gider (sol menüde ayrı link yok)</li>
-          <li>Satırda görüntüle ikonu → yazı adımına; düzenle ikonu → forma</li>
-          <li>Sol menü: Yazılar, Hükümler Tablosu</li>
+          <li>Menü yolu: İçme Suyu Bilgi Sistemi › İçme Suyu Denetimleri › <strong>Dashboard</strong> altında <strong>Yazı Oluştur</strong> menü öğesi; liste bu menüden açılır</li>
+          <li>Sütunlar: Başlık, İçme Suyu Havzası, İl, Ada/Parsel, Açıklama, Oluşturulma, Güncelleme</li>
+          <li>«+ Yeni Yazı» ile adımlı forma gider</li>
+          <li>Satırda görüntüle ve düzenle ikonları (title ile metin)</li>
+          <li>Sayfalama tablonun hemen altında</li>
+          <li>Çoklu seçim ile «Haritada Göster» — seçili kayıtların polygon’ları harita panelinde</li>
         </ul>
         <br>
         <p class="desc issue-fe-theme-note"><strong>Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
@@ -234,64 +335,102 @@
 
       <div class="issue" id="fe-yazi-form">
         <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/yazi-form.html" target="_blank" rel="noopener">mockup/yazi-form.html</a></div>
-        <h4>[FE] Yazı Formu (Adımlı Wizard)</h4>
+        <h4>[FE] Yazı Formu (Adımlı Sihirbaz)</h4>
         <div class="issue-meta">
-          <span><strong>Menü:</strong> Görüş Yazısı › Yazılar › Yeni / Düzenle</span>
-          <span><strong>Veri:</strong> [BE] Yazı Formu Seçenekleri, Hüküm Metni Oluşturma, Yazı Kaydet, Görüş Yazısı Metni Oluşturma, Yazı Dışa Aktarma</span>
+          <span><strong>Menü:</strong> İçme Suyu Bilgi Sistemi › İçme Suyu Denetimleri › Dashboard › Yazı Oluştur › Yeni / Düzenle</span>
         </div>
+        <h5>Bağlı Olduğu İşler</h5>
+        <ul class="criteria issue-veri">
+          <li><strong>Frontend:</strong> [FE] Yazı Formu (Adımlı Sihirbaz); [FE] Yazı Listesi — giriş ve kayıt sonrası dönüş</li>
+          <li><strong>Backend:</strong> [BE] Yazı Detay Endpoint'i; [BE] Yazı Kaydet Endpoint'i; [BE] Yazı Form Seçenekleri Endpoint'i; [BE] Yazı Mekansal Sorgu Endpoint'i; [BE] Yazı Belge Oluşturma Endpoint'i</li>
+        </ul>
         <h5>İster</h5>
-        <p class="desc">9 adımlı wizard ile görüş yazısı veri girişi, özet, metin oluşturma ve indirme. <strong>Not:</strong> Adımlı form yapısı için mevcut uygulamada Havza Bilgi Sistemi › Yas › Karakterizasyon formuna bakılabilir.</p>
+        <p class="desc">Excel makro programının web karşılığı — sekiz adımlı sihirbaz: Genel Bilgiler → Talep → Havza Ve Koruma → Hükümler → Taşkın, Tarım Ve Ek Görüş → SUKİ → Özet → Yazı.</p>
         <h5>Kabul kriterleri</h5>
         <ul class="criteria">
-          <li>Adımlar: Genel Bilgiler → Talep → Havza Ve Koruma → Hükümler → Taşkın, Tarım Ve Ek Görüş → Koruma Planı → SUKİ → Özet → Yazı</li>
-          <li>Stepper: her adımda «X / Y dolduruldu»; alan dolduruldukça güncellenir</li>
-          <li>Excel kaynaklı dropdown altında uyarı: «Excel'den alınan seçeneklerdir…»</li>
-          <li>Koruma alanı çoklu seçim; «Diğer (Yazınız)» seçilince açıklama alanı (canlıda koşullu; mockup'ta her zaman görünür + Frontend uyarısı)</li>
-          <li>Talep türü değişince faaliyet-tedbir metin alanı faaliyetTedbir haritasından varsayılan metinle doldurulur; «Diğer» seçiliyken düzenlenebilir, diğer türlerde salt okunur</li>
-          <li>Faaliyet-tedbir Frontend uyarısı: canlıda yalnızca talep türü «Diğer» iken görünür; diğer türlerde gizli. Mockup'ta uyarı her zaman görünür (SS)</li>
-          <li>Özet adımında tüm seçimler; «Yazı Oluştur» ile metin üretilir</li>
-          <li>Yazı adımında önizleme; Word (mavi) ve PDF (kırmızı) indir butonları</li>
+          <li>Menü yolu: İçme Suyu Bilgi Sistemi › İçme Suyu Denetimleri › <strong>Dashboard</strong> altında <strong>Yazı Oluştur</strong>; yeni ve düzenleme bu menü grubundan açılır</li>
+          <li><strong>Genel Bilgiler:</strong> Başlık *, Açıklama *</li>
+          <li><strong>Talep:</strong> Talep Türü *, Tahsis / Satış / Kiralama / Tescil / İfraz Yazısı Mı *</li>
+          <li><strong>Havza Ve Koruma:</strong> Polygon çiz / geometri yükle / sil; Konum — Polygon altında Talebin (İlgi Yazının) Kısa Özeti * — standart şablon, polygon sonrası il/ilçe/köy ile güncellenir, düzenlenebilir</li>
+          <li>Mekansal otomatik alanlar: havzada mı, yeraltı suyu koruma (Evet/Hayır), il, ilçe, köy, ada/parsel, ilgide SUKİ, baraj/göl, koruma alanı (çoklu), koruma açıklaması (Diğer seçilince görünür)</li>
+          <li>Birden fazla koruma bandı kesişiminde liste: koruma bölge adı + kesişim yüzdesi; çoklu seçim alanı otomatik dolar</li>
+          <li><strong>Hükümler:</strong> Hüküm Yazıyor Muyuz *; polygon ile özel hüküm bulunursa otomatik Evet ve metin dolar; Hayır seçilince bilgi mesajı ve maddeler geçersiz</li>
+          <li><strong>Taşkın, Tarım Ve Ek Görüş:</strong> taşkın görüşü, koordinasyon ihtiyacı, ek kurum, ilgide kurum, ek kanun, hitap</li>
+          <li><strong>SUKİ:</strong> yalnızca büyükşehir belediyesi (belediyetipi = 1) ise SUKİ * sorulur; değilse alan gizli ve seçilemez; faaliyet-tedbir talep türü «Diğer» ise düzenlenebilir</li>
+          <li><strong>Özet:</strong> tüm seçimlerin özeti; «Yazı Oluştur» ile belge adımına geçiş</li>
+          <li><strong>Yazı:</strong> metin önizleme, Word/PDF indir, «Yazıyı Kaydet» — kayıt öncesi DB’ye yazılmaz; kayıt sonrası listeye dönüş</li>
+          <li>Stepper’da adım başına doldurulma sayacı; İleri / Geri gezinme</li>
+        </ul>
+        <h5>Mockup notları</h5>
+        <ul class="criteria">
+          <li><strong>İlgi özeti (FE):</strong> Alan Konum — Polygon bölümünün hemen altında; polygon sonrası standart şablon ile doldurulur (il, ilçe, köy işlenir); metin düzenlenebilir, salt okunur değil. Polygon silinirse standart şablona döner; yazı önizlemesi ve belge bu alandaki güncel metni kullanır.</li>
+          <li><strong>Havza (FE):</strong> icme_suyu_havza kesişim sonucu Evet / Hayır / Evet ama protokol yok olarak salt okunur dolar.</li>
+          <li><strong>İl / ilçe / köy / ada-parsel (FE):</strong> Polygon ile mekansal sorgu sonucu salt okunur dolar; ilçe ve köy ayrıca ilgi özeti metnine yazılır.</li>
+          <li><strong>Baraj/göl (FE):</strong> su_kaynaklari kesişiminden kaynak adı set edilir.</li>
+          <li><strong>Koruma alanları (FE):</strong> Polygon sonrası haritada koruma geometrileri gösterilir; haritadan seçimle çoklu seçim alanı doldurulabilir. Birden fazla koruma bandı kesişiminde tüm geometriler listelenir, her biri için kesişim yüzdesi gösterilir; liste ve seçim alanı otomatik dolar, kullanıcı güncelleyebilir.</li>
+          <li><strong>Koruma açıklaması (FE):</strong> Varsayılan gizli; koruma alanı listesinde «Diğer (Yazınız)» seçilince görünür.</li>
+          <li><strong>Hükümler (FE):</strong> Polygon ile özel hüküm bulunursa Hüküm Yazıyor Muyuz otomatik Evet ve metin dolar. Hayır seçilince bilgi kutusu: «polygon ile bulunan özel hüküm maddeleri geçersiz sayılacaktır»; metin temizlenir.</li>
+          <li><strong>SUKİ (FE):</strong> Büyükşehir belediyesi değilse alan gizli ve seçilemez; bilgi kutusu: «Seçilen polygon büyükşehir belediyesi olmayan bir ilde kaldığı için SUKİ alanı sorulmaz.»</li>
+          <li><strong>Faaliyet-tedbir (FE):</strong> Talep türü «Diğer» seçildiğinde varsayılan metinle dolar ve düzenlenebilir; diğer talep türlerinde salt okunur.</li>
+          <li><strong>Excel seçenekleri (FE):</strong> Talep türü, tahsis, hitap, SUKİ, taşkın görüşü, koruma alanı vb. dropdown seçenekleri canlı ekranda görünür olmalıdır.</li>
+          <li><strong>Yazı adımı (FE):</strong> Sihirbaz adımları ve yazı önizlemesi «Yazıyı Kaydet»’e basılana kadar veritabanına yazılmaz; kayıt sonrası liste ekranına yönlendirilir.</li>
         </ul>
         <br>
         <p class="desc issue-fe-theme-note"><strong>Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
         <button type="button" class="copy-btn">Tümünü kopyala</button>
       </div>
 
-      <div class="issue" id="fe-hukumler-liste">
+      <div class="issue" id="fe-ozel-hukum-liste">
         <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/hukumler-liste.html" target="_blank" rel="noopener">mockup/hukumler-liste.html</a></div>
-        <h4>[FE] Hükümler Tablosu</h4>
+        <h4>[FE] Özel Hüküm Listesi</h4>
         <div class="issue-meta">
-          <span><strong>Menü:</strong> Görüş Yazısı › Hükümler Tablosu</span>
-          <span><strong>Veri:</strong> [BE] Hükümler Tablosu Listesi Endpoint'i</span>
+          <span><strong>Menü:</strong> İçme Suyu Bilgi Sistemi › İçme Suyu Denetimleri › Özel Hükümler</span>
         </div>
+        <h5>Bağlı Olduğu İşler</h5>
+        <ul class="criteria issue-veri">
+          <li><strong>Frontend:</strong> [FE] Özel Hüküm Listesi; [FE] Özel Hüküm Kaydı — ekle / düzenle geçişi</li>
+          <li><strong>Backend:</strong> [BE] Özel Hüküm Listesi Endpoint'i</li>
+        </ul>
         <h5>İster</h5>
-        <p class="desc">Kurumdan alınan referans hüküm kayıtlarının yönetimi.</p>
+        <p class="desc">Özel hüküm kayıtlarının tabloda listelenmesi.</p>
         <h5>Kabul kriterleri</h5>
         <ul class="criteria">
-          <li>Üst bilgi: kurumdan alınan gerçek veri notu</li>
-          <li>Sütunlar: Kaynak, Koruma Alanı, Sektör, İlgili Madde (kısaltılmış)</li>
-          <li>Kaynak filtresi: Tümü / Yönetmelik / Özel Hüküm</li>
-          <li>«+ Yeni Kayıt» ve satır düzenle ikonu ile forma gider</li>
+          <li>Sütunlar: Yönetmelik, İçme Suyu Havzası, İl, Ada/Parsel, Koruma Alanı, Sektör, Madde No, Madde İçeriği</li>
+          <li>«+ Özel Hüküm Ekle» ile forma gider</li>
+          <li>Satırda düzenle ikonu</li>
+          <li>Çoklu seçim ile «Haritada Göster»</li>
         </ul>
         <br>
         <p class="desc issue-fe-theme-note"><strong>Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
         <button type="button" class="copy-btn">Tümünü kopyala</button>
       </div>
 
-      <div class="issue" id="fe-hukumler-form">
+      <div class="issue" id="fe-ozel-hukum-form">
         <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/hukumler-form.html" target="_blank" rel="noopener">mockup/hukumler-form.html</a></div>
-        <h4>[FE] Hüküm Kaydı</h4>
+        <h4>[FE] Özel Hüküm Kaydı</h4>
         <div class="issue-meta">
-          <span><strong>Menü:</strong> Görüş Yazısı › Hükümler Tablosu › Yeni / Düzenle</span>
-          <span><strong>Veri:</strong> [BE] Hüküm Kaydı Kaydet</span>
+          <span><strong>Menü:</strong> İçme Suyu Bilgi Sistemi › İçme Suyu Denetimleri › Özel Hükümler › Kayıt</span>
         </div>
+        <h5>Bağlı Olduğu İşler</h5>
+        <ul class="criteria issue-veri">
+          <li><strong>Frontend:</strong> [FE] Özel Hüküm Kaydı; [FE] Özel Hüküm Listesi — giriş ve kayıt sonrası dönüş</li>
+          <li><strong>Backend:</strong> [BE] Özel Hüküm Detay Endpoint'i; [BE] Özel Hüküm Kaydet Endpoint'i; [BE] Özel Hüküm Referans Listeleri Endpoint'i; [BE] Yazı Mekansal Sorgu Endpoint'i — konum polygon sorgusu</li>
+        </ul>
         <h5>İster</h5>
-        <p class="desc">Tek hüküm kaydının eklenmesi veya düzenlenmesi.</p>
+        <p class="desc">Yönetmelik seçimi, konum polygon’u ve özel hüküm madde bilgilerinin girilmesi.</p>
         <h5>Kabul kriterleri</h5>
         <ul class="criteria">
-          <li>Alanlar: Kaynak * (Yönetmelik / Özel Hüküm), Koruma Alanı * (dropdown), Sektör * (dropdown), İlgili Madde * (textarea)</li>
-          <li>Koruma alanı ve sektör seçenekleri hükümler tablosundaki tanımlı değerlerden gelir; koruma alanı değişince sektör listesi filtrelenir</li>
-          <li>Kaydet ve Listeye Dön butonları çalışır</li>
+          <li>Yönetmelik * — sistem mevzuat listesinden</li>
+          <li>Konum: polygon çiz / yükle / sil; havza, il, ada/parsel otomatik dolar</li>
+          <li>Koruma Alanı *, Sektör *, Madde Numarası *, İlgili Madde (içerik) *</li>
+          <li>Koruma alanı + sektör seçimine göre madde alanı önerisi</li>
+          <li>Kaydet ve listeye dön</li>
+        </ul>
+        <h5>Mockup notları</h5>
+        <ul class="criteria">
+          <li><strong>FE:</strong> Polygon çizildiğinde içme suyu havzası, il ve ada/parsel otomatik dolar; geometri kayıtla birlikte saklanır.</li>
+          <li><strong>FE:</strong> Koruma alanı listesi CYS veritabanı koruma alanı tiplerinden gelir.</li>
+          <li><strong>FE:</strong> Excel’den alınan sektör seçenekleri canlı ekranda görünür olmalıdır.</li>
         </ul>
         <br>
         <p class="desc issue-fe-theme-note"><strong>Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
@@ -313,8 +452,8 @@ window.TASK_HUB = {
     mockups: [
       { id: 'mock-yazi-liste', label: 'Yazı Listesi', href: 'mockup/yazi-liste.html' },
       { id: 'mock-yazi-form', label: 'Yazı Formu', href: 'mockup/yazi-form.html' },
-      { id: 'mock-hukumler-liste', label: 'Hükümler Tablosu', href: 'mockup/hukumler-liste.html' },
-      { id: 'mock-hukumler-form', label: 'Hüküm Kaydı', href: 'mockup/hukumler-form.html' }
+      { id: 'mock-hukumler-liste', label: 'Özel Hüküm Listesi', href: 'mockup/hukumler-liste.html' },
+      { id: 'mock-hukumler-form', label: 'Özel Hüküm Kaydı', href: 'mockup/hukumler-form.html' }
     ],
     islerHref: 'isler.html'
   }

@@ -29,10 +29,15 @@
   }
 
   function ensureModal() {
-    if (document.getElementById('yeni-calisma-modal')) return;
+    var existing = document.getElementById('yeni-calisma-modal');
+    if (existing && !existing.classList.contains('hbc-dialog-backdrop')) {
+      existing.remove();
+      existing = null;
+    }
+    if (existing) return;
 
     var html =
-      '<div class="modal-backdrop" id="yeni-calisma-modal" hidden>' +
+      '<div class="hbc-dialog-backdrop" id="yeni-calisma-modal" hidden>' +
       '  <div class="modal-card" role="dialog" aria-labelledby="yeni-calisma-title">' +
       '    <h3 id="yeni-calisma-title">Yeni çalışma</h3>' +
       '    <p class="modal-hint">Çalışma adı ve amacını girin. Klasör sizin için oluşturulur; amaç özet sayfasında görünür.</p>' +
@@ -64,11 +69,9 @@
 
     document.body.insertAdjacentHTML('beforeend', html);
 
-    var modal = document.getElementById('yeni-calisma-modal');
     var form = document.getElementById('yeni-calisma-form');
     var labelInput = document.getElementById('yc-label');
     var slugInput = document.getElementById('yc-slug');
-    var descInput = document.getElementById('yc-desc');
     var slugTouched = false;
 
     labelInput.addEventListener('input', function () {
@@ -78,10 +81,6 @@
 
     document.getElementById('yc-cancel').addEventListener('click', closeModal);
     document.getElementById('yc-close').addEventListener('click', closeModal);
-    modal.addEventListener('click', function (e) {
-      if (e.target === modal) closeModal();
-    });
-
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       submitForm();

@@ -5,14 +5,13 @@
     { id: 'havza', label: 'Havza Ve Koruma', icon: '📍', panel: 2, countable: true },
     { id: 'hukum', label: 'Hükümler', icon: '§', panel: 3, countable: true },
     { id: 'taskin', label: 'Taşkın, Tarım Ve Ek Görüş', icon: '💧', panel: 4, countable: true },
-    { id: 'koruma-plani', label: 'Koruma Planı', icon: '📑', panel: 5, countable: true },
-    { id: 'suki', label: 'SUKİ', icon: '🏛', panel: 6, countable: true },
-    { id: 'ozet', label: 'Özet', icon: '☑', panel: 7, countable: false },
-    { id: 'yazi', label: 'Yazı', icon: '📄', panel: 8, countable: false }
+    { id: 'suki', label: 'SUKİ', icon: '🏛', panel: 5, countable: true },
+    { id: 'ozet', label: 'Özet', icon: '☑', panel: 6, countable: false },
+    { id: 'yazi', label: 'Yazı', icon: '📄', panel: 7, countable: false }
   ];
 
-  var OZET_INDEX = 7;
-  var YAZI_INDEX = 8;
+  var OZET_INDEX = 6;
+  var YAZI_INDEX = 7;
 
   var current = 0;
   var root = document.getElementById('yazi-wizard');
@@ -85,7 +84,7 @@
       var meta = btn.querySelector('.yazi-step-meta');
       if (!step.countable) {
         if (idx === OZET_INDEX) meta.textContent = idx <= current ? 'Gözden Geçir' : '—';
-        else if (idx === YAZI_INDEX) meta.textContent = idx <= current ? 'Oluşturuldu' : '—';
+        else if (idx === YAZI_INDEX) meta.textContent = idx <= current ? 'Önizleme' : '—';
         return;
       }
       var c = countPanel(step.panel);
@@ -108,13 +107,13 @@
     var back = document.getElementById('yazi-btn-back');
     var next = document.getElementById('yazi-btn-next');
     var create = document.getElementById('yazi-btn-create');
-    var finish = document.getElementById('yazi-btn-finish');
+    var save = document.getElementById('yazi-btn-save');
     var dlWord = document.getElementById('yazi-btn-download-word');
     var dlPdf = document.getElementById('yazi-btn-download-pdf');
     if (back) back.hidden = current === 0;
     if (next) next.hidden = current >= OZET_INDEX;
     if (create) create.hidden = current !== OZET_INDEX;
-    if (finish) finish.hidden = current !== YAZI_INDEX;
+    if (save) save.hidden = current !== YAZI_INDEX;
     if (dlWord) dlWord.hidden = current !== YAZI_INDEX;
     if (dlPdf) dlPdf.hidden = current !== YAZI_INDEX;
     updateStepperMeta();
@@ -150,12 +149,11 @@
     if (!box) return;
     var sections = [
       { title: 'Genel Bilgiler', rows: [['Başlık', val('f-baslik')], ['Açıklama', val('f-aciklama')]] },
-      { title: 'Talep', rows: [['İlgi Yazı Özeti', val('f-ilgi-ozet')], ['Talep Türü', val('f-talep-turu')], ['Tahsis / Satış Yazısı', val('f-tahsis')]] },
-      { title: 'Havza Ve Koruma', rows: [['Havzada Mı', val('f-havza')], ['Yeraltı Suyu Koruma', radioVal('f-yeralti')], ['İl', val('f-il')], ['İlgide SUKİ', radioVal('f-ilgide-suki')], ['Baraj / Göl', val('f-baraj')], ['Koruma Alanı', val('f-koruma-alani')], ['Koruma Açıklaması', val('f-koruma-acik')]] },
+      { title: 'Talep', rows: [['Talep Türü', val('f-talep-turu')], ['Tahsis / Satış Yazısı', val('f-tahsis')]] },
+      { title: 'Havza Ve Koruma', rows: [['İlgi Yazı Özeti', val('f-ilgi-ozet')], ['Havzada Mı', val('f-havza')], ['Yeraltı Suyu Koruma', radioVal('f-yeralti')], ['İl', val('f-il')], ['İlçe', val('f-ilce')], ['Köy', val('f-koy')], ['Ada / Parsel', val('f-ada-parsel')], ['İlgide SUKİ', radioVal('f-ilgide-suki')], ['Baraj / Göl', val('f-baraj')], ['Koruma Alanı', val('f-koruma-alani')], ['Koruma Açıklaması', val('f-koruma-acik')]] },
       { title: 'Hükümler', rows: [['Hüküm Yazıyoruz', radioVal('f-hukum-yaz')], ['Hükümler', val('f-hukumler')], ['Değerlendirme', val('f-degerlendirme')]] },
-      { title: 'Taşkın, Tarım Ve Ek Görüş', rows: [['Taşkın Görüşü', val('f-taskin')], ['Tarım Müdürlüğü', radioVal('f-tarim')], ['Ek Kurum', val('f-ek-kurum')], ['İlgide Kurum', radioVal('f-ilgide-kurum')], ['Ek Kanun', val('f-ek-kanun')], ['Hitap', val('f-hitap')]] },
-      { title: 'Koruma Planı', rows: [['Plan Yılı', val('f-yil')], ['Koruma Planı', val('f-koruma-plani')]] },
-      { title: 'SUKİ', rows: [['SUKİ', val('f-suki')], ['Büyükşehir Yönetmelik', radioVal('f-suki-yon')], ['Faaliyet Tedbiri', val('f-faaliyet-tedbir')]] }
+      { title: 'Taşkın, Tarım Ve Ek Görüş', rows: [['Taşkın Görüşü', val('f-taskin')], ['Koordinasyon İhtiyacı', radioVal('f-tarim')], ['Ek Kurum', val('f-ek-kurum')], ['İlgide Kurum', radioVal('f-ilgide-kurum')], ['Ek Kanun', val('f-ek-kanun')], ['Hitap', val('f-hitap')]] },
+      { title: 'SUKİ', rows: [['SUKİ', val('f-suki')], ['Faaliyet Tedbiri', val('f-faaliyet-tedbir')]] }
     ];
     box.innerHTML = sections.map(function (sec) {
       var rows = sec.rows.map(function (r) {
@@ -184,6 +182,17 @@
       '<p>Gereğini ' + escapeHtml(val('f-hitap')) + ' ederim.</p>';
   }
 
+  function listHref() {
+    var href = 'yazi-liste.html';
+    var sunum = window.HBC_SUNUM;
+    if (sunum && sunum.appendToHref) return sunum.appendToHref(href);
+    return href;
+  }
+
+  function saveYazi() {
+    window.location.href = listHref();
+  }
+
   function initNav() {
     root.querySelectorAll('.yazi-step').forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -208,6 +217,8 @@
     if (dlPdf) dlPdf.addEventListener('click', function () {
       alert('Mockup: .pdf indirilecek.');
     });
+    var save = document.getElementById('yazi-btn-save');
+    if (save) save.addEventListener('click', saveYazi);
   }
 
   function bindTomSelectListeners() {

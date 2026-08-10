@@ -87,18 +87,35 @@
     wireDuzeltBtn(bar.querySelector('.mock-duzelt-btn'));
   }
 
-  function ensureExit() {
-    if (document.querySelector('.mock-sunum-exit')) return;
-    var exit = document.createElement('a');
-    exit.className = 'mock-sunum-exit';
-    exit.href = window.location.pathname;
-    exit.textContent = 'Sunumdan çık';
-    document.body.appendChild(exit);
+  function ensureSunumControls() {
+    if (document.querySelector('.mock-sunum-controls')) return;
+    var wrap = document.createElement('div');
+    wrap.className = 'mock-sunum-controls';
+    wrap.innerHTML =
+      '<button type="button" class="mock-sunum-fe-toggle" id="mock-sunum-fe-toggle">FE uyarılarını göster</button>' +
+      '<a class="mock-sunum-exit" href="' + window.location.pathname + '">Sunumdan çık</a>';
+    document.body.appendChild(wrap);
+    var toggle = document.getElementById('mock-sunum-fe-toggle');
+    if (toggle) {
+      toggle.addEventListener('click', function () {
+        var on = document.body.classList.toggle('mock-fe-warnings-on');
+        toggle.textContent = on ? 'FE uyarılarını gizle' : 'FE uyarılarını göster';
+        toggle.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    }
   }
 
   function apply() {
     var on = isActive();
     document.body.classList.toggle('mock-sunum', on);
+    if (!on) {
+      document.body.classList.remove('mock-fe-warnings-on');
+      var toggle = document.getElementById('mock-sunum-fe-toggle');
+      if (toggle) {
+        toggle.textContent = 'FE uyarılarını göster';
+        toggle.setAttribute('aria-pressed', 'false');
+      }
+    }
     document.title = document.title.replace(/^Sunum: /, '');
     if (on) {
       document.title = 'Sunum: ' + document.title;
@@ -108,6 +125,6 @@
 
   markDevOnly();
   ensureBar();
-  ensureExit();
+  ensureSunumControls();
   apply();
 })();
