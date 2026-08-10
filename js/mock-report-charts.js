@@ -50,15 +50,44 @@
     });
   }
 
-  function initLine(canvasId, labels, data) {
+  function initBarV(canvasId, labels, data, datasetLabel) {
     var el = document.getElementById(canvasId);
     if (!el || typeof Chart === 'undefined') return;
+    return new Chart(el, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: datasetLabel || 'Değer',
+          data: data,
+          backgroundColor: '#42a5f5',
+          borderRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: true, grid: { color: '#eef2f7' } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+  }
+
+  function initLine(canvasId, labels, data, opts) {
+    var el = document.getElementById(canvasId);
+    if (!el || typeof Chart === 'undefined') return;
+    var yScale = (opts && opts.openY)
+      ? { beginAtZero: true, grid: { color: '#eef2f7' } }
+      : { min: 0, max: 100, grid: { color: '#eef2f7' } };
     return new Chart(el, {
       type: 'line',
       data: {
         labels: labels,
         datasets: [{
-          label: 'Not Ortalaması',
+          label: (opts && opts.label) || 'Not Ortalaması',
           data: data,
           borderColor: '#1a5fb4',
           backgroundColor: 'rgba(26, 95, 180, 0.08)',
@@ -74,7 +103,7 @@
         maintainAspectRatio: false,
         plugins: { legend: { display: false } },
         scales: {
-          y: { min: 0, max: 100, grid: { color: '#eef2f7' } },
+          y: yScale,
           x: { grid: { display: false }, ticks: { maxRotation: 45, minRotation: 0, font: { size: 10 } } }
         }
       }
@@ -91,18 +120,34 @@
     );
   }
 
+  function initIklimDashboard() {
+    initPie('chart-iklim-pie', ['Sakarya', 'Kızılırmak', 'Yeşilırmak', 'Gediz', 'Fırat-Dicle'], [20, 9, 6, 7, 6]);
+    initBarV('chart-iklim-bar', ['Ankara', 'Bursa', 'Konya', 'İzmir', 'Adana', 'Antalya'], [13.2, 14.8, 15.1, 16.4, 17.8, 18.2], 'Ort. Sıcaklık (‘C)');
+    initLine(
+      'chart-iklim-line',
+      ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'],
+      [98, 86, 112, 145, 168, 92, 48, 36, 74, 128, 156, 134],
+      { openY: true, label: 'Yağış (m3 ×1000)' }
+    );
+  }
+
   window.MOCK_REPORT_CHARTS = {
     initPie: initPie,
     initBarH: initBarH,
+    initBarV: initBarV,
     initLine: initLine,
-    initOgrenciRaporlari: initOgrenciRaporlari
+    initOgrenciRaporlari: initOgrenciRaporlari,
+    initIklimDashboard: initIklimDashboard
   };
 
-  if (document.getElementById('chart-sinif-pie')) {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initOgrenciRaporlari);
-    } else {
-      initOgrenciRaporlari();
-    }
+  function boot() {
+    if (document.getElementById('chart-sinif-pie')) initOgrenciRaporlari();
+    if (document.getElementById('chart-iklim-pie')) initIklimDashboard();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
   }
 })();

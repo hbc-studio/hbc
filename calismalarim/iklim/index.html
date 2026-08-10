@@ -10,7 +10,6 @@
     .tile:hover { border-color: var(--accent); }
     .tile strong { color: var(--accent); }
     .tile span { display: block; font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; }
-    .empty-note { font-size: 0.88rem; color: var(--muted); background: #f5f7fa; border: 1px dashed var(--border); border-radius: 8px; padding: 1rem; }
   </style>
 </head>
 <body>
@@ -21,20 +20,20 @@
 
     <div class="calisma-amac-panel" id="calisma-amac-panel">
       <h2 class="calisma-amac-heading">Amaç</h2>
-      <p class="calisma-amac" id="calisma-amac">IKLIM</p>
+      <p class="calisma-amac" id="calisma-amac">İklim Yönetimi Dashboard — salt okunur rapor</p>
     </div>
 
     <div class="calisma-durum-bar" id="calisma-durum-bar"></div>
 
     <div class="lead">
-      Yeni çalışma. Mockup uygulama menüsü <strong>sol</strong> konumda planlandı.
-      Sol menüden <strong>Ekranlar</strong> sayfasında <strong>+ Yeni ekran</strong> sihirbazını kullanarak
-      <strong>mockup</strong> oluşturun; onay sonrası <strong>task metinleri</strong> eklenecek.
+      Menü: <strong>İklim Bilgi Sistemi › İklim Yönetimi Dashboard</strong>.
+      İlk açılış: <strong>Türkiye Ölçeği · MPI-ESM-MR · RCP8.5 · 2071–2100</strong>.
+      Akış: bilgi kartları + sorgu → harita (lejant) → liste → grafikler; harita↔liste↔grafik senkron.
     </div>
     <h2>Mockup'lar</h2>
-    <p class="empty-note">Henüz mockup yok. Sol menüden <strong>Ekranlar</strong> sayfasında <strong>+ Yeni ekran</strong> sihirbazını kullanın.</p>
+    <a class="tile" href="mockup/dashboard.html"><strong>İklim Yönetimi Dashboard</strong><span>KPI · sorgu · harita · liste · grafikler</span></a>
     <h2>Jira</h2>
-    <a class="tile" href="isler.html"><strong>Task metinleri</strong><span>Mockup onayından sonra doldurulacak</span></a>
+    <a class="tile" href="isler.html"><strong>Task metinleri</strong><span>8 Backend · 7 Frontend</span></a>
   </main>
 </div>
 <script>
@@ -46,7 +45,9 @@ window.TASK_HUB = {
     label: "IKLIM",
     base: '.',
     menuYer: "sol",
-    mockups: [],
+    mockups: [
+      { id: 'mock-dashboard', label: 'İklim Yönetimi Dashboard', href: 'mockup/dashboard.html', rapor: true }
+    ],
     islerHref: 'isler.html'
   }
 };

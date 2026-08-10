@@ -28,13 +28,14 @@ window.HBC_CALISMALAR = [
   {
     id: 'iklim',
     label: 'IKLIM',
-    desc: 'IKLIM',
+    desc: 'İklim Yönetimi Dashboard',
     eklendi: '2026-07-30',
     menuYer: 'sol',
-    durum: 'mockup-taslak',
-    mockupSayisi: 0,
-    taskBe: 0,
-    taskFe: 0,
+    durum: 'task-hazir',
+    mockupSayisi: 1,
+    taskBe: 8,
+    taskFe: 7,
+    onay: { tarih: '2026-08-10', kim: 'Hazal' },
     icon: '📁'
   },
   {

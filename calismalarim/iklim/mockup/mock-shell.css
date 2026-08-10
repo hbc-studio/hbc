@@ -120,6 +120,14 @@ table.mock-table td.num { text-align: right; font-variant-numeric: tabular-nums;
   gap: 0.65rem;
   margin-bottom: 1rem;
 }
+.mock-report-kpis--4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+@media (max-width: 960px) {
+  .mock-report-kpis--4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 .mock-report-kpi {
   background: #f8fafc;
   border: 1px solid #e2e8f0;

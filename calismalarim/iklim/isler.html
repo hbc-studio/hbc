@@ -16,7 +16,6 @@
     .task-tab.active .tab-chip-fe { background: #2e7d32; color: #fff; }
     .tab-panel { padding-top: 1rem; }
     .tab-panel[hidden] { display: none !important; }
-    .empty-note { font-size: 0.88rem; color: var(--muted); background: #f5f7fa; border: 1px dashed var(--border); border-radius: 8px; padding: 1rem; }
   </style>
 </head>
 <body>
@@ -24,16 +23,374 @@
   <nav id="sidebar"></nav>
   <main class="isler-main" id="isler-main">
     <h1>IKLIM — Jira task metinleri</h1>
-    <p class="subtitle">Mockup onaylandıktan sonra task kutuları buraya eklenecek.</p>
+    <p class="subtitle">8 Backend · 7 Frontend — İklim Yönetimi Dashboard / Grafik</p>
     <div class="task-tabs" role="tablist">
-      <button type="button" class="task-tab active" data-tab="be" id="tab-be">Backend <span class="tab-chip tab-chip-be" id="chip-be">0</span></button>
-      <button type="button" class="task-tab" data-tab="fe" id="tab-fe">Frontend <span class="tab-chip tab-chip-fe" id="chip-fe">0</span></button>
+      <button type="button" class="task-tab active" data-tab="be" id="tab-be">Backend <span class="tab-chip tab-chip-be" id="chip-be">8</span></button>
+      <button type="button" class="task-tab" data-tab="fe" id="tab-fe">Frontend <span class="tab-chip tab-chip-fe" id="chip-fe">7</span></button>
     </div>
+
     <div class="tab-panel" id="panel-be" data-tab-panel="be">
-      <p class="empty-note">Henüz task yok. Önce mockup'ları tarayıcıda kontrol edip onaylayın; ardından Cursor'a «mockup'ları onaylıyorum, Jira task metinlerini yaz» deyin. <a href="../../module-creator/is-analisti.html#prompt-onay">Başlangıç rehberi</a></p>
+
+      <div class="issue" id="be-dashboard-ozet">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[BE] İklim Dashboard Özet ve Filtre Endpoint'i</h4>
+        <div class="issue-meta">
+          <span><strong>Method:</strong> getIklimDashboardOzet</span>
+          <span><strong>Tablo / kaynak:</strong> Servis Entegrasyonu Sağlanacaktır</span>
+          <span><strong>Tüketici:</strong> [FE] İklim Yönetimi Dashboard Kabuğu</span>
+          <span><strong>Bağımlılık:</strong> [FE] İklim Yönetimi Dashboard Kabuğu, [FE] Harita↔Liste↔Grafik Senkronu, [BE] İklim Detaylı Sorgu Endpoint'i, [BE] İklim Grafik Veri Endpoint'i</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Dashboard üst bilgi kartları (referans dönem: sıcaklık, yağış, ardışık kurak günler, tesis sayısı) ve global filtre sonucuna göre özet sayıların getirilmesi.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Filtreler: havza, altHavza, il, ilce — tek veya çoklu seçim</li>
+          <li>İlk açılış varsayılanı: Türkiye Ölçeği · model MPI-ESM-MR · senaryo kodu RCP8.5 · dönem 2071–2100</li>
+          <li>KPI: ortalamaSicaklik, toplamYagis, ardisikKurakGun, tesisSayisi</li>
+          <li>Sorgu sonrası yalnızca filtreye uyan özet döner; harita/liste/grafik aynı filtre bağlamını kullanır</li>
+          <li>«Drenaj Alanı» filtre/parametre alanı olmamalıdır</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="be-detayli-sorgu">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[BE] İklim Detaylı Sorgu Endpoint'i</h4>
+        <div class="issue-meta">
+          <span><strong>Method:</strong> postIklimDetayliSorgu / getIklimDetayliSorgu</span>
+          <span><strong>Tablo / kaynak:</strong> Servis Entegrasyonu Sağlanacaktır</span>
+          <span><strong>Tüketici:</strong> [FE] Detaylı Sorgu Penceresi</span>
+          <span><strong>Bağımlılık:</strong> [FE] Detaylı Sorgu Penceresi, [FE] Harita↔Liste↔Grafik Senkronu, [BE] İklim Dashboard Özet ve Filtre Endpoint'i, [BE] İklim Harita Katmanları Endpoint'i, [BE] İklim Grafik Veri Endpoint'i, [BE] İklim Liste / Tablo Endpoint'leri</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Detaylı Sorgu alanlarına göre harita, tablo ve grafiklerin dinamik güncellenmesi için sorgu sonucunun üretilmesi.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Alanlar: sorguAlani, sorguTuru, senaryo, projeksiyonDonemi, sorgulamaDonemi, model, parametre, yillikAylikMevsimlikOrtalama, baslangicYili, bitisYili, frekans, referansVerisiniDahilEt (boolean)</li>
+          <li>FE ekranında bu alanlar combobox (tek seçim); Referans Verisini Dahil Et checkbox — ekran görüntüsü / mockup ile uyumlu</li>
+          <li>Senaryo değerleri kod olarak kalır (RCP4.5, RCP8.5)</li>
+          <li>Harita gösteriminde tek dönem: bitiş = başlangıç + frekans (ör. 2040 + 30 → 2070); çoklu 30 yıllık periyot tek harita döneminde birleştirilmez</li>
+          <li>Aylık ve mevsimlik ortalama sorgu üretilebilmeli; harita üretimi desteklenmeli</li>
+          <li>Vatandaş tarafında projeksiyon yılı 2025 sonrası seçilebilir olmalı (validasyon buna engel olmamalı)</li>
+          <li>Havza/Alt Havza/İl/İlçe bazında sorgu; çoklu havzada her havza ayrı sonuç seti</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="be-harita-katman">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[BE] İklim Harita Katmanları Endpoint'i</h4>
+        <div class="issue-meta">
+          <span><strong>Method:</strong> getIklimHaritaKatmanlari</span>
+          <span><strong>Tablo / kaynak:</strong> Servis Entegrasyonu Sağlanacaktır (geo / tematik)</span>
+          <span><strong>Tüketici:</strong> [FE] Harita, Lejant ve Harita Araçları</span>
+          <span><strong>Bağımlılık:</strong> [FE] Harita, Lejant ve Harita Araçları, [FE] Harita↔Liste↔Grafik Senkronu, [BE] İklim Detaylı Sorgu Endpoint'i, [BE] İklim Dashboard Özet ve Filtre Endpoint'i, [BE] İklim Dışa Aktar / Çıktı Endpoint'i</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Dashboard haritasında tematik katmanlar, poligon seçim sonucu ve il–havza kapsama oranının filtrelenerek getirilmesi.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Katmanlar: sıcaklık, yağış, ardışık kurak günler, projeksiyon, RCP4.5, RCP8.5; vatandaş arayüzünde İklim/Hidrolojik Projeksiyon katman menüsü dönmemeli / gizlenebilir bayrak</li>
+          <li>Alan seçimi poligon seçime uygun geometri/özellik döner (Grid Seç yerine Poligon Seç)</li>
+          <li>Havza sınırını aşan illerde ilin havzaya giren kapsama oranı (%) döner</li>
+          <li>İl bazlı shp yükleme desteklenir; sonuç hatasız üretilir</li>
+          <li>Tematik harita sorgu sonucu shp indirmeye uygun veri/servis sağlanır</li>
+          <li>Grid çizgi kalınlığı istemci ayarıdır; sunucu zorunlu kalın grid dayatmaz</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="be-liste-tablolar">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[BE] İklim Liste / Tablo Endpoint'leri</h4>
+        <div class="issue-meta">
+          <span><strong>Method:</strong> getIklimHavzaSonuclari, getIklimProjeksiyonReferans, getIklimMeteorolojiIstasyon, getIklimHidrolojikSorgu</span>
+          <span><strong>Tablo / kaynak:</strong> Servis Entegrasyonu Sağlanacaktır</span>
+          <span><strong>Tüketici:</strong> [FE] Dashboard Listeleri ve Tablo Araçları</span>
+          <span><strong>Bağımlılık:</strong> [FE] Dashboard Listeleri ve Tablo Araçları, [FE] Harita↔Liste↔Grafik Senkronu, [BE] İklim Detaylı Sorgu Endpoint'i, [BE] İklim Dışa Aktar / Çıktı Endpoint'i</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Dashboard sekmelerindeki listelerin (havza sonuçları, projeksiyon/referans, meteorolojik istasyon, hidrolojik sorgu) sayfalanabilir ve filtrelenebilir getirilmesi; satır detayının sağlanması.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Tüm tablolarda Tarih, Başlangıç Tarihi, Bitiş Tarihi alanları bulunur</li>
+          <li>Referans dönem parametreleri: Sıcaklık, Yağış, Ardışık Kurak Günler</li>
+          <li>Meteorolojik gözlem: istasyon çoklu seçim; «Tüm İstasyonlar» ile seçili havza/il/ilçe kapsamındaki tüm istasyonlar; zamansal değişim ve havza–il–parametre toplu indirmeye uygun veri</li>
+          <li>Hidrolojik sorgu yalnızca drenaj alanı ile sınırlı olmamalı; Havza/Alt Havza/İl kapsamı desteklenmeli</li>
+          <li>Detay isteği ile kayıt detay bilgisi döner</li>
+          <li>Çoklu havza seçiminde her havza ayrı satır; ortalama satırı istemci isteğine bağlı olabilir</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="be-grafik-veri">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[BE] İklim Grafik Veri Endpoint'i</h4>
+        <div class="issue-meta">
+          <span><strong>Method:</strong> getIklimGrafikVerisi</span>
+          <span><strong>Tablo / kaynak:</strong> Servis Entegrasyonu Sağlanacaktır</span>
+          <span><strong>Tüketici:</strong> [FE] Dashboard Grafikleri</span>
+          <span><strong>Bağımlılık:</strong> [FE] Dashboard Grafikleri, [FE] Harita↔Liste↔Grafik Senkronu, [BE] İklim Detaylı Sorgu Endpoint'i, [BE] İklim Dashboard Özet ve Filtre Endpoint'i</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">İklim başlıklarına göre (sıcaklık, yağış, su potansiyeli, RCP senaryoları, brüt/net, toplam/yüzeysel/YAS) grafik serilerinin dinamik getirilmesi.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Tarih aralıkları 2026 başlangıçlı (ör. 2026–2056, 2026–2028, 2026–2100, 30’ar yıllık 2026–2055 / 2056–2085 / 2086–2100)</li>
+          <li>Senaryo serileri kod ile etiketlenir (RCP4.5, RCP8.5); modeller: HadGEM2-ES, MPI-ESM-MR, CNRM-CM5.1</li>
+          <li>Çoklu havza seçiminde her havza ayrı seri; filtre/değişken seçimine göre veri güncellenir</li>
+          <li>İlk açılış: MPI-ESM-MR · RCP8.5 · 2071–2100 Türkiye Ölçeği</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="be-disa-aktar">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[BE] İklim Dışa Aktar / Çıktı Endpoint'i</h4>
+        <div class="issue-meta">
+          <span><strong>Method:</strong> exportIklimDashboard</span>
+          <span><strong>Tablo / kaynak:</strong> Servis Entegrasyonu Sağlanacaktır</span>
+          <span><strong>Tüketici:</strong> [FE] Çıktı ve Rapor, [FE] Dashboard Grafikleri, [FE] Harita, Lejant ve Harita Araçları</span>
+          <span><strong>Bağımlılık:</strong> [FE] Çıktı ve Rapor, [FE] Dashboard Grafikleri, [FE] Harita, Lejant ve Harita Araçları, [BE] İklim Harita Katmanları Endpoint'i, [BE] İklim Liste / Tablo Endpoint'leri, [BE] İklim Grafik Veri Endpoint'i</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Harita, tablo ve grafik bilgilerinin uygun formatlarda elektronik çıktısının sağlanması.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Desteklenen formatlar: xlsx, shp, pdf, jpeg, csv (uygun olanlar)</li>
+          <li>Tematik harita sonucu shp indirilebilir</li>
+          <li>Meteorolojik toplu indirme: havza / il / parametre kapsamı</li>
+          <li>Aktif sorgu / filtre bağlamı çıktıya yansır</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="be-kayit-detay">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[BE] İklim Kayıt Detay Endpoint'i</h4>
+        <div class="issue-meta">
+          <span><strong>Method:</strong> getIklimKayitDetay</span>
+          <span><strong>Tablo / kaynak:</strong> Servis Entegrasyonu Sağlanacaktır</span>
+          <span><strong>Tüketici:</strong> [FE] Dashboard Listeleri ve Tablo Araçları</span>
+          <span><strong>Bağımlılık:</strong> [FE] Dashboard Listeleri ve Tablo Araçları, [BE] İklim Liste / Tablo Endpoint'leri</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Listelerdeki Detay aksiyonu için kayıt detay bilgisinin getirilmesi.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>İstek: kayıt türü + iş anahtarı (havza/istasyon/parametre vb.)</li>
+          <li>Yanıtta kullanıcıya gösterilecek alanlar; teknik id’ler ayrı tutulabilir</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="be-yazdir-not">
+        <h4>[BE] Sistem Geneli Yazdır Desteği (Not)</h4>
+        <div class="issue-meta">
+          <span><strong>Tüketici:</strong> [FE] Dashboard Grafikleri, [FE] Harita, Lejant ve Harita Araçları, [FE] Çıktı ve Rapor</span>
+          <span><strong>Bağımlılık:</strong> [FE] Dashboard Grafikleri, [FE] Harita, Lejant ve Harita Araçları, [BE] İklim Dışa Aktar / Çıktı Endpoint'i</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Dashboard grafik ve harita yazdırma akışının sistem geneli yazdır altyapısı ile uyumlu olması.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li><strong>Not: Sistem geneli yazdır özelliği olmalıdır.</strong></li>
+          <li>Grafik Yazdır ve harita Yazdır/İndir bu ortak özelliği kullanır veya onunla entegre olur</li>
+        </ul>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
     </div>
+
     <div class="tab-panel" id="panel-fe" data-tab-panel="fe" hidden>
-      <p class="empty-note">Henüz task yok. Mockup onayından sonra task metinleri buraya eklenecek.</p>
+
+      <div class="issue" id="fe-dashboard-kabuk">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[FE] İklim Yönetimi Dashboard Kabuğu</h4>
+        <div class="issue-meta">
+          <span><strong>Menü:</strong> İklim Bilgi Sistemi › İklim Yönetimi Dashboard</span>
+          <span><strong>Veri:</strong> [BE] İklim Dashboard Özet ve Filtre Endpoint'i</span>
+          <span><strong>Bağımlılık:</strong> [BE] İklim Dashboard Özet ve Filtre Endpoint'i, [FE] Detaylı Sorgu Penceresi, [FE] Harita, Lejant ve Harita Araçları, [FE] Dashboard Listeleri ve Tablo Araçları, [FE] Dashboard Grafikleri, [FE] Harita↔Liste↔Grafik Senkronu</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">İklim Yönetimi Dashboard/Grafik ekranının sol menü, KPI, filtreler ve içerik iskeleti ile sunulması.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Menü ilk gösteriminde Türkiye Ölçeği dashboard açılır</li>
+          <li>Üstte bilgi kartları (referans: sıcaklık, yağış, ardışık kurak günler) + sorgu filtreleri; altında harita → liste → grafikler</li>
+          <li>Filtreler: Havza, Alt Havza, İl, İlçe — Tom Select çoklu (tek veya çoklu seçim); ayrı «çoklu havza» kontrolü yok</li>
+          <li>İstasyon: Tom Select çoklu seçim; en üstte «Tüm İstasyonlar» — seçilince seçili Havza / İl / İlçe kapsamındaki tüm istasyonlar seçilir (önce kapsam, sonra istasyon)</li>
+          <li>Başlık yanında bilgilendirme ikonu/pop-up ve basit sorgu kısayolları</li>
+          <li>«Drenaj Alanı Seç» yoktur</li>
+          <li>Aktif sorgu özeti görünür (model, senaryo kodu, dönem)</li>
+          <li>Temizle / Yenile / Tablo-Grafik Oluştur / Çıktı-Rapor</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="fe-detayli-sorgu">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[FE] Detaylı Sorgu Penceresi</h4>
+        <div class="issue-meta">
+          <span><strong>Menü:</strong> İklim Bilgi Sistemi › İklim Yönetimi Dashboard › Harita › Detaylı Sorgu</span>
+          <span><strong>Veri:</strong> [BE] İklim Detaylı Sorgu Endpoint'i</span>
+          <span><strong>Bağımlılık:</strong> [BE] İklim Detaylı Sorgu Endpoint'i, [FE] İklim Yönetimi Dashboard Kabuğu, [FE] Harita↔Liste↔Grafik Senkronu</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Harita üzerindeki Detaylı Sorgu butonu ile sorgu penceresinin açılması ve Sorgula ile dashboard’un güncellenmesi.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Harita üzerindeki «Detaylı Sorgu» butonu ile modal/pencere açılır; Sorgula ile dashboard güncellenir</li>
+          <li>Alanlar ve kontrol türleri (ekran görüntüsü / mockup):
+            <ul>
+              <li><strong>Combobox (tek seçim dropdown):</strong> Sorgu Alanı, Sorgu Türü, Senaryo, Projeksiyon Dönemi, Sorgulama Dönemi, Model, Parametre, Yıllık/Aylık/Mevsimlik Ortalama, Başlangıç Yılı, Bitiş Yılı, Frekans</li>
+              <li><strong>Checkbox:</strong> Referans Verisini Dahil Et</li>
+              <li><strong>Buton:</strong> Sorgula</li>
+            </ul>
+          </li>
+          <li>Senaryo adları kod olarak gösterilir (RCP4.5, RCP8.5)</li>
+          <li>Frekans ile bitiş yılı tek dönem kuralına göre hesaplanır</li>
+          <li>Başlık yanında bilgilendirme ikonları ve basit sorgu kısayolları</li>
+          <li>Sorgula sonrası harita, liste ve grafikler dinamik güncellenir</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="fe-harita">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[FE] Harita, Lejant ve Harita Araçları</h4>
+        <div class="issue-meta">
+          <span><strong>Menü:</strong> İklim Bilgi Sistemi › İklim Yönetimi Dashboard › Harita</span>
+          <span><strong>Veri:</strong> [BE] İklim Harita Katmanları Endpoint'i</span>
+          <span><strong>Bağımlılık:</strong> [BE] İklim Harita Katmanları Endpoint'i, [BE] İklim Dışa Aktar / Çıktı Endpoint'i, [BE] Sistem Geneli Yazdır Desteği (Not), [FE] Detaylı Sorgu Penceresi, [FE] Harita↔Liste↔Grafik Senkronu</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Harita üzerinde lejant, tüm harita araçları, Poligon Seç, İndir/Yazdır ve ayarlanabilir grid kalınlığının sunulması.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Lejant harita alanında sol tarafta (örnek dashboard’daki gibi harita üzerinde)</li>
+          <li>Poligon Seç (Grid Seç yerine); Detaylı Sorgu butonu haritada</li>
+          <li>İndir ve Yazdır seçenekleri</li>
+          <li><strong>Not: Sistem geneli yazdır özelliği olmalıdır.</strong></li>
+          <li>Grid çizgi kalınlığı müdahale edilebilir</li>
+          <li>İl–havza kapsama % bilgi kartı/haritada gösterilir</li>
+          <li>Vatandaş arayüzünde İklim/Hidrolojik Projeksiyon katman alanı gösterilmez</li>
+          <li>Harita tek dönem; frekans–son tarih kuralına uygun</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="fe-listeler">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[FE] Dashboard Listeleri ve Tablo Araçları</h4>
+        <div class="issue-meta">
+          <span><strong>Menü:</strong> İklim Bilgi Sistemi › İklim Yönetimi Dashboard › Listeler</span>
+          <span><strong>Veri:</strong> [BE] İklim Liste / Tablo Endpoint'leri, [BE] İklim Kayıt Detay Endpoint'i</span>
+          <span><strong>Bağımlılık:</strong> [BE] İklim Liste / Tablo Endpoint'leri, [BE] İklim Kayıt Detay Endpoint'i, [BE] İklim Dışa Aktar / Çıktı Endpoint'i, [FE] Harita↔Liste↔Grafik Senkronu</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Dashboard listelerinde kolon filtre/sıralama, araç çubuğu ve Detay aksiyonunun çalışması.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Kolon başlıklarında filtreleme ve sıralama</li>
+          <li>Filtreleri Temizle: başlık filtrelerini iptal eder</li>
+          <li>Sütun Gizle/Göster: kolon ekleme ve gizleme</li>
+          <li>Dışa Aktar</li>
+          <li>Detay butonu ile kayıt detayı</li>
+          <li>Tablolarda Tarih, Başlangıç Tarihi, Bitiş Tarihi kolonları</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="fe-grafikler">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[FE] Dashboard Grafikleri</h4>
+        <div class="issue-meta">
+          <span><strong>Menü:</strong> İklim Bilgi Sistemi › İklim Yönetimi Dashboard › Grafikler</span>
+          <span><strong>Veri:</strong> [BE] İklim Grafik Veri Endpoint'i</span>
+          <span><strong>Bağımlılık:</strong> [BE] İklim Grafik Veri Endpoint'i, [BE] Sistem Geneli Yazdır Desteği (Not), [BE] İklim Dışa Aktar / Çıktı Endpoint'i, [FE] Harita↔Liste↔Grafik Senkronu, [FE] Çıktı ve Rapor</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">İklim başlıklarına ait grafiklerin eklenmesi, kaldırılması, yer değiştirilmesi, değişken seçimi ve yazdırılması.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Grafikler kaldırılabilir / yeniden eklenebilir; yerleri değiştirilebilir</li>
+          <li>Açılır kutu ile değişken / havza seçimi; filtrelerle dinamik güncelleme</li>
+          <li>Her grafikte Yazdır aksiyonu</li>
+          <li><strong>Not: Sistem geneli yazdır özelliği olmalıdır.</strong></li>
+          <li>Tarih aralıkları 2026+ (sıcaklık/yağış 2026–2056; senaryo grafikleri 2026–2100 vb.)</li>
+          <li>Senaryo kodları: RCP4.5 / RCP8.5</li>
+          <li>İklim Başlıkları menüsünden ilgili grafiklere erişim</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="fe-senkron">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[FE] Harita↔Liste↔Grafik Senkronu</h4>
+        <div class="issue-meta">
+          <span><strong>Menü:</strong> İklim Bilgi Sistemi › İklim Yönetimi Dashboard</span>
+          <span><strong>Veri:</strong> [BE] İklim Dashboard Özet ve Filtre Endpoint'i, [BE] İklim Detaylı Sorgu Endpoint'i, [BE] İklim Harita Katmanları Endpoint'i, [BE] İklim Liste / Tablo Endpoint'leri, [BE] İklim Grafik Veri Endpoint'i</span>
+          <span><strong>Bağımlılık:</strong> [FE] İklim Yönetimi Dashboard Kabuğu, [FE] Harita, Lejant ve Harita Araçları, [FE] Dashboard Listeleri ve Tablo Araçları, [FE] Dashboard Grafikleri, [BE] İklim Detaylı Sorgu Endpoint'i</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Harita, liste ve grafiklerin aynı filtre/seçim bağlamında senkron çalışması.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Harita pin / satır seçimi bilgi kartı ve ilgili grafik/liste vurgusunu günceller</li>
+          <li>Sorgula / Yenile sonrası KPI, harita, liste ve grafikler birlikte yenilenir</li>
+          <li>İlk açılış MPI-ESM-MR · RCP8.5 · 2071–2100; sorgu sonrası tüm bileşenler sorgu sonucuna göre filtrelenir</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="fe-cikti">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[FE] Çıktı ve Rapor</h4>
+        <div class="issue-meta">
+          <span><strong>Menü:</strong> İklim Bilgi Sistemi › İklim Yönetimi Dashboard › Çıktı / Rapor</span>
+          <span><strong>Veri:</strong> [BE] İklim Dışa Aktar / Çıktı Endpoint'i</span>
+          <span><strong>Bağımlılık:</strong> [BE] İklim Dışa Aktar / Çıktı Endpoint'i, [BE] Sistem Geneli Yazdır Desteği (Not), [FE] Dashboard Grafikleri, [FE] Harita, Lejant ve Harita Araçları, [FE] Dashboard Listeleri ve Tablo Araçları</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Harita, tablo ve grafik çıktılarının xlsx, shp, pdf, jpeg, csv vb. formatlarda alınması; yazdırma akışının sistem geneli yazdır ile uyumu.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Çıktı Al / Dışa Aktar menüsünden uygun format seçimi</li>
+          <li>Harita İndir / Yazdır; grafik Yazdır</li>
+          <li><strong>Not: Sistem geneli yazdır özelliği olmalıdır.</strong></li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
     </div>
   </main>
   <aside class="isler-toc-wrap" id="isler-toc" aria-label="Task listesi"></aside>
@@ -42,7 +399,16 @@
 window.TASK_HUB = {
   taskRoot: '../..',
   page: 'calisma-isler',
-  calisma: { label: "IKLIM", base: '.', mockups: [], islerHref: 'isler.html' }
+  calisma: {
+    id: 'iklim',
+    label: 'IKLIM',
+    base: '.',
+    menuYer: 'sol',
+    mockups: [
+      { id: 'mock-dashboard', label: 'İklim Yönetimi Dashboard', href: 'mockup/dashboard.html', rapor: true }
+    ],
+    islerHref: 'isler.html'
+  }
 };
 (function () {
   function switchTab(name) {

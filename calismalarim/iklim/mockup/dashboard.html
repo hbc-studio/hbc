@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mockup: İklim Yönetimi Dashboard</title>
+  <link rel="stylesheet" href="../../../css/style.css" />
+  <link rel="stylesheet" href="mock-shell.css" />
+  <link rel="stylesheet" href="../../../css/mock-bootstrap.css" />
+  <link rel="stylesheet" href="dashboard-iklim.css" />
+</head>
+<body>
+<div class="layout">
+  <nav id="sidebar"></nav>
+  <main>
+    <h1 class="mock-dev-only">Mockup: İklim Yönetimi Dashboard / Grafik</h1>
+    <p class="subtitle mock-dev-only">İlk açılış: Türkiye Ölçeği · MPI-ESM-MR · RCP8.5 · 2071–2100 · harita↔liste↔grafik senkron</p>
+    <div class="mock-app-shell mock-app-shell--wide">
+      <nav class="mock-app-menu" aria-label="Uygulama menüsü">
+        <div class="menu-app">IKLIM</div>
+        <button class="mock-menu-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#mock-menu-ibs" aria-expanded="true" aria-controls="mock-menu-ibs">İklim Bilgi Sistemi</button>
+        <div class="collapse show mock-menu-collapse" id="mock-menu-ibs">
+          <div class="mock-menu-sub">
+            <a href="dashboard.html" class="active">İklim Yönetimi Dashboard</a>
+          </div>
+        </div>
+      </nav>
+      <div class="mock-app-body">
+        <div class="td-sticky-chrome">
+          <div class="mock-header td-dash-header">
+            <div>
+              <div class="mock-breadcrumb">IKLIM › İklim Bilgi Sistemi › İklim Yönetimi Dashboard</div>
+              <strong>İklim Yönetimi Dashboard / Grafik</strong>
+              <div class="id-aktif-sorgu" id="id-aktif-sorgu" aria-live="polite">
+                Aktif sorgu: <strong>Türkiye Ölçeği</strong> · Model <code>MPI-ESM-MR</code> · Senaryo <code>RCP8.5</code> · Dönem <strong>2071–2100</strong>
+              </div>
+            </div>
+            <div class="td-header-actions">
+              <button type="button" class="mock-btn" id="btn-temizle">Temizle</button>
+              <button type="button" class="mock-btn" id="btn-yenile">Yenile</button>
+              <button type="button" class="mock-btn mock-btn-primary" id="btn-tablo-grafik">Tablo/Grafik Oluştur</button>
+              <div class="dropdown">
+                <button type="button" class="mock-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Çıktı / Rapor</button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><span class="dropdown-item-text text-muted small">xlsx · shp · pdf · jpeg · csv</span></li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li><button type="button" class="dropdown-item">Excel (.xlsx)</button></li>
+                  <li><button type="button" class="dropdown-item">Shapefile (.shp)</button></li>
+                  <li><button type="button" class="dropdown-item">PDF rapor</button></li>
+                  <li><button type="button" class="dropdown-item">JPEG</button></li>
+                  <li><button type="button" class="dropdown-item">CSV</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="td-top-row">
+            <!-- Referans dönem KPI -->
+            <div class="mock-report-widget mock-report-widget--kpis td-kpis">
+              <div class="id-kpi-caption">
+                Referans Dönem
+                <button type="button" class="id-info-tip" title="Referans dönemde Sıcaklık, Yağış ve Ardışık Kurak Günler gösterilir." aria-label="Bilgi">i</button>
+              </div>
+              <div class="mock-report-kpis td-kpi-grid">
+                <div class="mock-report-kpi td-kpi td-kpi--orange"><strong id="kpi-sicaklik">17,1</strong><span>Ortalama Sıcaklık (°C)</span></div>
+                <div class="mock-report-kpi td-kpi td-kpi--blue"><strong id="kpi-yagis">860K</strong><span>Toplam Yağış (m3/yıl)</span></div>
+                <div class="mock-report-kpi td-kpi td-kpi--red"><strong id="kpi-kurak">31</strong><span>Ardışık Kurak Günler (Gün)</span></div>
+                <div class="mock-report-kpi td-kpi td-kpi--purple"><strong id="kpi-tesis">48</strong><span>Tesis Sayısı</span></div>
+              </div>
+            </div>
+
+            <div class="td-filters mock-toolbar">
+              <div class="mock-field-inline">
+                <label for="f-havza">Havza <button type="button" class="id-info-tip" title="Tek veya çoklu havza seçilebilir (Tom Select)." aria-label="Bilgi">i</button></label>
+                <select class="form-select mock-tom-select" id="f-havza" multiple data-placeholder="Havza seçin…">
+                  <option value="sakarya">Sakarya</option>
+                  <option value="kizilirmak">Kızılırmak</option>
+                  <option value="yesilirmak">Yeşilırmak</option>
+                  <option value="firat">Fırat-Dicle</option>
+                  <option value="akarcay">Akarçay</option>
+                  <option value="gediz">Gediz</option>
+                </select>
+              </div>
+              <div class="mock-field-inline">
+                <label for="f-alt-havza">Alt Havza</label>
+                <select class="form-select mock-tom-select" id="f-alt-havza" multiple data-placeholder="Alt havza…">
+                  <option value="a">A Alt Havza</option>
+                  <option value="b">B Alt Havza</option>
+                  <option value="c">C Alt Havza</option>
+                </select>
+              </div>
+              <div class="mock-field-inline">
+                <label for="f-il">İl</label>
+                <select class="form-select mock-tom-select" id="f-il" multiple data-placeholder="İl seçin…">
+                  <option value="06">Ankara</option>
+                  <option value="34">İstanbul</option>
+                  <option value="35">İzmir</option>
+                  <option value="16">Bursa</option>
+                  <option value="42">Konya</option>
+                  <option value="07">Antalya</option>
+                  <option value="01">Adana</option>
+                </select>
+              </div>
+              <div class="mock-field-inline">
+                <label for="f-ilce">İlçe</label>
+                <select class="form-select mock-tom-select" id="f-ilce" multiple data-placeholder="İlçe seçin…">
+                  <option value="cankaya">Çankaya</option>
+                  <option value="kecioren">Keçiören</option>
+                  <option value="yenimahalle">Yenimahalle</option>
+                  <option value="polatli">Polatlı</option>
+                  <option value="ayas">Ayaş</option>
+                </select>
+              </div>
+              <div class="mock-field-inline">
+                <label for="f-istasyon">İstasyon <button type="button" class="id-info-tip" title="Çoklu seçim. En üstteki «Tüm İstasyonlar» ile seçili Havza / İl / İlçe kapsamındaki tüm istasyonlar seçilir. Önce havza, il veya ilçe seçilir; sonra istasyon(lar)." aria-label="Bilgi">i</button></label>
+                <select class="form-select mock-tom-select" id="f-istasyon" multiple data-placeholder="İstasyon seçin…" data-select-all="tum">
+                  <option value="tum">Tüm İstasyonlar</option>
+                  <option value="ank-01">ANK-01</option>
+                  <option value="ank-02">ANK-02</option>
+                  <option value="ays-02">AYS-02</option>
+                  <option value="kon-04">KON-04</option>
+                  <option value="izm-03">IZM-03</option>
+                </select>
+              </div>
+              <div class="id-shortcuts" aria-label="Basit sorgu kısayolları">
+                <span class="id-shortcuts-label">Kısayol</span>
+                <button type="button" class="mock-btn mock-btn-sm id-shortcut" data-shortcut="turkiye">Türkiye Ölçeği</button>
+                <button type="button" class="mock-btn mock-btn-sm id-shortcut" data-shortcut="rcp85">RCP8.5 · 2071–2100</button>
+                <button type="button" class="mock-btn mock-btn-sm id-shortcut" data-shortcut="sicaklik">Sıcaklık</button>
+                <button type="button" class="mock-btn mock-btn-sm id-shortcut" data-shortcut="yagis">Yağış</button>
+              </div>
+              <p class="mock-hint" id="id-sync-tip" hidden style="flex-basis:100%;margin:0.25rem 0 0"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="td-map-panel">
+          <!-- Harita -->
+          <div class="mock-report-widget td-map-widget">
+            <div class="td-map-head">
+              <h3>Harita <button type="button" class="id-info-tip" title="Harita gösteriminde tek dönem seçilir. Frekans ile son tarih buna göre hesaplanır (ör. 2040 + 30 yıl → 2070)." aria-label="Bilgi">i</button></h3>
+              <p class="mock-report-hint">Drenaj Alanı Seç yoktur · alan seçimi: <strong>Poligon Seç</strong> · grid kalınlığı ayarlanabilir</p>
+              <div class="td-map-tools" aria-label="Harita işlemleri">
+                <button type="button" class="mock-btn mock-btn-sm mock-btn-primary" id="btn-detayli-sorgu" data-bs-toggle="modal" data-bs-target="#modal-detayli-sorgu">Detaylı Sorgu</button>
+                <button type="button" class="mock-btn mock-btn-sm" id="btn-poligon">Poligon Seç</button>
+                <button type="button" class="mock-btn mock-btn-sm">İndir ▾</button>
+                <button type="button" class="mock-btn mock-btn-sm">Yazdır</button>
+                <label class="id-grid-ctrl" for="f-grid">Grid
+                  <input type="range" id="f-grid" min="0" max="8" value="1" title="Grid çizgi kalınlığı" />
+                </label>
+              </div>
+            </div>
+            <div class="td-map-stage td-map-stage--full">
+              <div class="td-map-canvas-wrap">
+                <div id="harita-iklim" class="mock-report-chart mock-report-chart--map td-map-canvas" aria-label="Türkiye ölçeği iklim haritası"></div>
+
+                <!-- Lejant: harita içinde sol (yüzen panel) -->
+                <aside class="td-legend td-legend--float-left" aria-label="Harita lejantı" id="id-legend">
+                  <div class="td-legend-title">Lejant</div>
+                  <label class="td-layer"><input type="checkbox" checked data-layer="sicaklik" /> <span class="td-swatch td-swatch--heat"></span> Sıcaklık</label>
+                  <label class="td-layer"><input type="checkbox" checked data-layer="yagis" /> <span class="td-swatch" style="background:#1e88e5"></span> Yağış</label>
+                  <label class="td-layer"><input type="checkbox" checked data-layer="kurak" /> <span class="td-swatch" style="background:#ef6c00"></span> Ardışık Kurak Günler</label>
+                  <label class="td-layer"><input type="checkbox" checked data-layer="havza-oran" /> <span class="td-swatch" style="background:#6a1b9a"></span> İl–havza kapsama %</label>
+                  <label class="td-layer"><input type="checkbox" data-layer="rcp85" checked /> <span class="td-swatch" style="background:#c62828"></span> RCP8.5</label>
+                  <label class="td-layer"><input type="checkbox" data-layer="rcp45" /> <span class="td-swatch" style="background:#1565c0"></span> RCP4.5</label>
+                  <p class="td-legend-note">Vatandaş arayüzünde İklim/Hidrolojik Projeksiyon katman menüsü gösterilmez</p>
+                </aside>
+
+                <div class="td-map-sys-tools td-map-sys-tools--top" aria-label="Harita araçları">
+                  <button type="button" class="td-map-sys-btn" title="İndir" aria-label="İndir"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>İndir</span></button>
+                  <button type="button" class="td-map-sys-btn" title="Yazdır" aria-label="Yazdır"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span>Yazdır</span></button>
+                  <button type="button" class="td-map-sys-btn" title="Altlık harita" aria-label="Altlık"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7l9-4 9 4-9 4-9-4Z"/><path d="M3 12l9 4 9-4"/><path d="M3 17l9 4 9-4"/></svg><span>Altlık</span></button>
+                  <button type="button" class="td-map-sys-btn" title="Kuzey oku" aria-label="Kuzey">N</button>
+                  <button type="button" class="td-map-sys-btn" title="Ölçüm" aria-label="Ölçüm">⌖</button>
+                </div>
+                <div class="td-map-sys-nav" aria-label="Harita gezinme">
+                  <button type="button" class="td-map-sys-btn" title="Sola" aria-label="Sola">‹</button>
+                  <button type="button" class="td-map-sys-btn" title="Sağa" aria-label="Sağa">›</button>
+                  <button type="button" class="td-map-sys-btn" title="Uzaklaş" aria-label="Uzaklaş">−</button>
+                  <button type="button" class="td-map-sys-btn" title="Yakınlaş" aria-label="Yakınlaş">+</button>
+                  <button type="button" class="td-map-sys-btn" title="Ev / Türkiye" aria-label="Ev">⌂</button>
+                  <button type="button" class="td-map-sys-btn" title="Tam ekran" aria-label="Tam ekran">⛶</button>
+                </div>
+                <div class="td-map-sys-scale">Ölçek: 1:9.244.600 · Grid: <span id="id-grid-val">1</span>px</div>
+
+                <div class="td-map-markers" aria-hidden="true">
+                  <button type="button" class="td-map-pin is-active" data-feature="havza-sakarya" style="left:48%;top:42%" title="Sakarya — %62 kapsama">S</button>
+                  <button type="button" class="td-map-pin td-map-pin--yagis" data-feature="havza-kizilirmak" style="left:55%;top:38%" title="Kızılırmak">K</button>
+                  <button type="button" class="td-map-pin td-map-pin--kurak" data-feature="havza-ort" style="left:50%;top:55%" title="Havza ortalaması">Ø</button>
+                </div>
+
+                <div class="td-info-cards" id="id-info-cards">
+                  <article class="td-info-card" data-feature="havza-sakarya">
+                    <header><strong>Sakarya Havzası</strong><button type="button" class="td-card-close" aria-label="Kapat">×</button></header>
+                    <dl>
+                      <div><dt>Model</dt><dd>MPI-ESM-MR</dd></div>
+                      <div><dt>Senaryo</dt><dd><code>RCP8.5</code></dd></div>
+                      <div><dt>Dönem</dt><dd>2071–2100</dd></div>
+                      <div><dt>Ort. Sıcaklık</dt><dd>17,4 °C</dd></div>
+                      <div><dt>İl kapsama</dt><dd>Ankara %62</dd></div>
+                    </dl>
+                  </article>
+                  <article class="td-info-card" data-feature="havza-kizilirmak" hidden>
+                    <header><strong>Kızılırmak Havzası</strong><button type="button" class="td-card-close" aria-label="Kapat">×</button></header>
+                    <dl>
+                      <div><dt>Senaryo</dt><dd><code>RCP8.5</code></dd></div>
+                      <div><dt>Ort. Sıcaklık</dt><dd>16,8 °C</dd></div>
+                      <div><dt>İl kapsama</dt><dd>Konya %41</dd></div>
+                    </dl>
+                  </article>
+                  <article class="td-info-card" data-feature="havza-ort" hidden>
+                    <header><strong>Seçili havza ortalaması</strong><button type="button" class="td-card-close" aria-label="Kapat">×</button></header>
+                    <dl>
+                      <div><dt>Ort. Sıcaklık</dt><dd>17,1 °C</dd></div>
+                      <div><dt>Yağış</dt><dd>860.000 m3/yıl</dd></div>
+                      <div><dt>Kurak gün</dt><dd>31</dd></div>
+                    </dl>
+                  </article>
+                </div>
+
+                <div class="td-time-slider" aria-label="Tek dönem — frekans ilişkili">
+                  <span>2071</span>
+                  <input type="range" min="2071" max="2100" value="2100" id="id-time-range" disabled title="Haritada tek dönem; frekans ile kilitli" />
+                  <span class="td-time-label" id="id-time-label">2071–2100</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Listeler -->
+          <div class="mock-report-widget td-lists-widget">
+            <div class="td-list-tabs" role="tablist">
+              <button type="button" class="td-list-tab active" data-tab="havza-sonuc">Havza Sonuçları</button>
+              <button type="button" class="td-list-tab" data-tab="projeksiyon">Projeksiyon / Referans</button>
+              <button type="button" class="td-list-tab" data-tab="istasyon">Meteorolojik İstasyonlar</button>
+              <button type="button" class="td-list-tab" data-tab="hidroloji">Hidrolojik Sorgu</button>
+            </div>
+
+            <div class="td-list-panel" data-panel="havza-sonuc">
+              <div class="td-panel-head">
+                <h3>Havza bazlı sonuçlar <button type="button" class="id-info-tip" title="Havza filtresinde tek veya çoklu seçim; her seçilen havza ayrı satır/seri olarak listelenir." aria-label="Bilgi">i</button></h3>
+                <div class="dropdown">
+                  <button type="button" class="mock-btn mock-btn-sm dropdown-toggle" data-bs-toggle="dropdown">Çıktı Al</button>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li><button type="button" class="dropdown-item">xlsx</button></li>
+                    <li><button type="button" class="dropdown-item">shp</button></li>
+                    <li><button type="button" class="dropdown-item">csv</button></li>
+                    <li><button type="button" class="dropdown-item">pdf</button></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="td-table-toolbar">
+                <button type="button" class="mock-btn mock-btn-sm" id="btn-filtre-temizle">Filtreleri Temizle</button>
+                <button type="button" class="mock-btn mock-btn-sm" id="btn-sutun">Sütun Gizle/Göster</button>
+                <button type="button" class="mock-btn mock-btn-sm">Dışa Aktar</button>
+              </div>
+              <div class="mock-list-wrap">
+                <table class="mock-table" data-link="map" id="tbl-havza">
+                  <thead>
+                    <tr>
+                      <th class="mock-th-tools"><span class="mock-th-label">Havza</span><span class="mock-th-btns"><button type="button" class="mock-col-btn mock-col-btn--sort" title="Sırala">⇅</button><button type="button" class="mock-col-btn mock-col-btn--filter" title="Filtrele">▾</button></span></th>
+                      <th class="mock-th-tools"><span class="mock-th-label">İl (kapsama %)</span><span class="mock-th-btns"><button type="button" class="mock-col-btn mock-col-btn--sort" title="Sırala">⇅</button><button type="button" class="mock-col-btn mock-col-btn--filter" title="Filtrele">▾</button></span></th>
+                      <th class="mock-th-tools"><span class="mock-th-label">Tarih</span><span class="mock-th-btns"><button type="button" class="mock-col-btn mock-col-btn--sort" title="Sırala">⇅</button></span></th>
+                      <th class="mock-th-tools"><span class="mock-th-label">Başlangıç Tarihi</span><span class="mock-th-btns"><button type="button" class="mock-col-btn mock-col-btn--sort" title="Sırala">⇅</button></span></th>
+                      <th class="mock-th-tools"><span class="mock-th-label">Bitiş Tarihi</span><span class="mock-th-btns"><button type="button" class="mock-col-btn mock-col-btn--sort" title="Sırala">⇅</button></span></th>
+                      <th class="mock-th-tools"><span class="mock-th-label">Sıcaklık (°C)</span><span class="mock-th-btns"><button type="button" class="mock-col-btn mock-col-btn--sort" title="Sırala">⇅</button></span></th>
+                      <th class="mock-th-tools"><span class="mock-th-label">Yağış</span><span class="mock-th-btns"><button type="button" class="mock-col-btn mock-col-btn--sort" title="Sırala">⇅</button></span></th>
+                      <th class="mock-th-tools"><span class="mock-th-label">Kurak Gün</span><span class="mock-th-btns"><button type="button" class="mock-col-btn mock-col-btn--sort" title="Sırala">⇅</button></span></th>
+                      <th class="mock-th-tools--action">İşlemler</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-feature="havza-sakarya" class="is-map-linked is-selected">
+                      <td>Sakarya</td><td>Ankara %62</td><td>2026-03-10</td><td>2071-01-01</td><td>2100-12-31</td><td class="num">17,4</td><td class="num">820K</td><td class="num">29</td>
+                      <td><span class="mock-row-actions"><button type="button" class="mock-icon-btn" title="Detay" aria-label="Detay"><svg class="mock-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg></button></span></td>
+                    </tr>
+                    <tr data-feature="havza-kizilirmak">
+                      <td>Kızılırmak</td><td>Konya %41</td><td>2026-03-10</td><td>2071-01-01</td><td>2100-12-31</td><td class="num">16,8</td><td class="num">900K</td><td class="num">33</td>
+                      <td><span class="mock-row-actions"><button type="button" class="mock-icon-btn" title="Detay" aria-label="Detay"><svg class="mock-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg></button></span></td>
+                    </tr>
+                    <tr data-feature="havza-ort" class="id-row-ortalama">
+                      <td><em>Ortalama (seçili)</em></td><td>—</td><td>2026-03-10</td><td>2071-01-01</td><td>2100-12-31</td><td class="num">17,1</td><td class="num">860K</td><td class="num">31</td>
+                      <td><span class="mock-row-actions"><button type="button" class="mock-icon-btn" title="Detay" aria-label="Detay"><svg class="mock-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg></button></span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="td-list-panel" data-panel="projeksiyon" hidden>
+              <div class="td-panel-head">
+                <h3>Referans dönem · Sıcaklık / Yağış / Ardışık Kurak Günler</h3>
+              </div>
+              <div class="td-table-toolbar">
+                <button type="button" class="mock-btn mock-btn-sm">Filtreleri Temizle</button>
+                <button type="button" class="mock-btn mock-btn-sm">Sütun Gizle/Göster</button>
+                <button type="button" class="mock-btn mock-btn-sm">Dışa Aktar</button>
+              </div>
+              <div class="mock-list-wrap">
+                <table class="mock-table" data-link="map">
+                  <thead>
+                    <tr>
+                      <th>Parametre</th>
+                      <th>Senaryo</th>
+                      <th>Tarih</th>
+                      <th>Başlangıç Tarihi</th>
+                      <th>Bitiş Tarihi</th>
+                      <th class="num">Değer</th>
+                      <th class="mock-th-tools--action">İşlemler</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-feature="havza-sakarya"><td>Ortalama Sıcaklık (°C)</td><td><code>RCP8.5</code></td><td>2026-03-10</td><td>2071-01-01</td><td>2100-12-31</td><td class="num">17,1</td><td><span class="mock-row-actions"><button type="button" class="mock-icon-btn" title="Detay" aria-label="Detay"><svg class="mock-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg></button></span></td></tr>
+                    <tr data-feature="havza-kizilirmak"><td>Toplam Yağış (m3/yıl)</td><td><code>RCP8.5</code></td><td>2026-03-10</td><td>2071-01-01</td><td>2100-12-31</td><td class="num">860.000</td><td><span class="mock-row-actions"><button type="button" class="mock-icon-btn" title="Detay" aria-label="Detay"><svg class="mock-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg></button></span></td></tr>
+                    <tr data-feature="havza-ort"><td>Ardışık Kurak Günler</td><td><code>RCP8.5</code></td><td>2026-03-10</td><td>2071-01-01</td><td>2100-12-31</td><td class="num">31</td><td><span class="mock-row-actions"><button type="button" class="mock-icon-btn" title="Detay" aria-label="Detay"><svg class="mock-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg></button></span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="td-list-panel" data-panel="istasyon" hidden>
+              <div class="td-panel-head">
+                <h3>Meteorolojik gözlem — zamansal değişim</h3>
+                <button type="button" class="mock-btn mock-btn-sm">Toplu indir (havza / il / parametre)</button>
+              </div>
+              <div class="td-table-toolbar">
+                <button type="button" class="mock-btn mock-btn-sm">Filtreleri Temizle</button>
+                <button type="button" class="mock-btn mock-btn-sm">Sütun Gizle/Göster</button>
+                <button type="button" class="mock-btn mock-btn-sm">Dışa Aktar</button>
+              </div>
+              <div class="mock-list-wrap">
+                <table class="mock-table" data-link="map">
+                  <thead>
+                    <tr>
+                      <th>İstasyon</th>
+                      <th>Havza</th>
+                      <th>İl</th>
+                      <th>Tarih</th>
+                      <th>Başlangıç Tarihi</th>
+                      <th>Bitiş Tarihi</th>
+                      <th class="num">Sıcaklık</th>
+                      <th class="num">Yağış</th>
+                      <th class="mock-th-tools--action">İşlemler</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-feature="havza-sakarya"><td>ANK-01</td><td>Sakarya</td><td>Ankara</td><td>2026-03-10</td><td>2026-01-01</td><td>2055-12-31</td><td class="num">14,2</td><td class="num">68</td><td><span class="mock-row-actions"><button type="button" class="mock-icon-btn" title="Detay" aria-label="Detay"><svg class="mock-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg></button></span></td></tr>
+                    <tr data-feature="havza-kizilirmak"><td>KON-04</td><td>Kızılırmak</td><td>Konya</td><td>2026-03-10</td><td>2026-01-01</td><td>2055-12-31</td><td class="num">13,8</td><td class="num">54</td><td><span class="mock-row-actions"><button type="button" class="mock-icon-btn" title="Detay" aria-label="Detay"><svg class="mock-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg></button></span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="td-list-panel" data-panel="hidroloji" hidden>
+              <div class="td-panel-head">
+                <h3>Hidrolojik sorgu <button type="button" class="id-info-tip" title="Hidrolojik sorgu Havza / Alt Havza / İl bazında sonuç verir. Drenaj Alanı Seç bulunmaz." aria-label="Bilgi">i</button></h3>
+              </div>
+              <div class="td-table-toolbar">
+                <button type="button" class="mock-btn mock-btn-sm">Filtreleri Temizle</button>
+                <button type="button" class="mock-btn mock-btn-sm">Sütun Gizle/Göster</button>
+                <button type="button" class="mock-btn mock-btn-sm">Dışa Aktar (shp dahil)</button>
+              </div>
+              <div class="mock-list-wrap">
+                <table class="mock-table" data-link="map">
+                  <thead>
+                    <tr>
+                      <th>Kapsam</th>
+                      <th>Havza / İl</th>
+                      <th>Tarih</th>
+                      <th>Başlangıç Tarihi</th>
+                      <th>Bitiş Tarihi</th>
+                      <th class="num">Su potansiyeli</th>
+                      <th class="mock-th-tools--action">İşlemler</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-feature="havza-sakarya"><td>Havza</td><td>Sakarya</td><td>2026-03-10</td><td>2071-01-01</td><td>2100-12-31</td><td class="num">128.000</td><td><span class="mock-row-actions"><button type="button" class="mock-icon-btn" title="Detay" aria-label="Detay"><svg class="mock-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg></button></span></td></tr>
+                    <tr data-feature="havza-kizilirmak"><td>İl</td><td>Konya</td><td>2026-03-10</td><td>2071-01-01</td><td>2100-12-31</td><td class="num">96.400</td><td><span class="mock-row-actions"><button type="button" class="mock-icon-btn" title="Detay" aria-label="Detay"><svg class="mock-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg></button></span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Grafikler — tarih aralıkları 2026+ -->
+          <div class="mock-report-widget td-charts-widget">
+            <div class="td-charts-head">
+              <h3>Grafikler <button type="button" class="id-info-tip" title="Tarih aralıkları 2026’dan başlar. Senaryo kodları: RCP4.5 / RCP8.5." aria-label="Bilgi">i</button></h3>
+              <p class="mock-report-hint">İklim başlıkları · kaldır / ekle / yer değiştir · değişken seçimi · <strong>2026–2100</strong></p>
+              <div class="dropdown">
+                <button type="button" class="mock-btn mock-btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">İklim Başlıkları</button>
+                <ul class="dropdown-menu dropdown-menu-end id-baslik-menu">
+                  <li><button type="button" class="dropdown-item" data-add-chart="sicaklik">Yıllık Ortalama Sıcaklık (2026–2056)</button></li>
+                  <li><button type="button" class="dropdown-item" data-add-chart="yagis">Yıllık Ortalama Yağış (2026–2056)</button></li>
+                  <li><button type="button" class="dropdown-item" data-add-chart="su-pot">İklim Su Potansiyeli (Havza Geneli)</button></li>
+                  <li><button type="button" class="dropdown-item" data-add-chart="degisim">Su Potansiyeli Değişimi</button></li>
+                  <li><button type="button" class="dropdown-item" data-add-chart="rcp45">Türkiye Geneli RCP4.5 Senaryosu</button></li>
+                  <li><button type="button" class="dropdown-item" data-add-chart="rcp85">Türkiye Geneli RCP8.5 Senaryosu</button></li>
+                  <li><button type="button" class="dropdown-item" data-add-chart="brut-net">Brüt &amp; Net Su Potansiyelleri (30’ar yıl)</button></li>
+                  <li><button type="button" class="dropdown-item" data-add-chart="toplam">Türkiye Havzası Toplam Su Potansiyeli</button></li>
+                  <li><button type="button" class="dropdown-item" data-add-chart="yuzey">Türkiye Havzası Yüzeysel Su Potansiyeli</button></li>
+                  <li><button type="button" class="dropdown-item" data-add-chart="yas">Türkiye Havzası YAS Potansiyeli</button></li>
+                </ul>
+              </div>
+              <button type="button" class="mock-btn mock-btn-sm" id="btn-add-chart">+ Grafik ekle</button>
+            </div>
+            <div class="td-charts-grid" id="id-charts-grid">
+              <div class="td-chart-card" data-chart="sicaklik" draggable="true">
+                <div class="td-chart-card-head">
+                  <strong>Yıllık Ortalama Sıcaklık Grafiği (2026–2056)</strong>
+                  <select class="form-select form-select-sm id-chart-var" aria-label="Havza / Alt Havza">
+                    <option selected>Havza / Alt Havza</option>
+                    <option>Sakarya</option>
+                    <option>Akarçay</option>
+                    <option>Kızılırmak</option>
+                  </select>
+                  <button type="button" class="mock-btn mock-btn-sm td-chart-print" title="Yazdır">Yazdır</button>
+                  <button type="button" class="mock-btn mock-btn-sm td-chart-remove">Kaldır</button>
+                </div>
+                <div class="mock-report-chart mock-report-chart--bar mock-report-chart--full">
+                  <canvas id="chart-sicaklik" aria-label="Yıllık ortalama sıcaklık 2026-2056"></canvas>
+                </div>
+              </div>
+              <div class="td-chart-card" data-chart="yagis" draggable="true">
+                <div class="td-chart-card-head">
+                  <strong>Yıllık Ortalama Yağış Grafiği (2026–2056)</strong>
+                  <select class="form-select form-select-sm id-chart-var" aria-label="Havza / Alt Havza">
+                    <option selected>Havza / Alt Havza</option>
+                    <option>Sakarya</option>
+                    <option>Akarçay</option>
+                    <option>Kızılırmak</option>
+                  </select>
+                  <button type="button" class="mock-btn mock-btn-sm td-chart-print" title="Yazdır">Yazdır</button>
+                  <button type="button" class="mock-btn mock-btn-sm td-chart-remove">Kaldır</button>
+                </div>
+                <div class="mock-report-chart mock-report-chart--bar mock-report-chart--full">
+                  <canvas id="chart-yagis" aria-label="Yıllık ortalama yağış 2026-2056"></canvas>
+                </div>
+              </div>
+              <div class="td-chart-card" data-chart="su-pot" draggable="true">
+                <div class="td-chart-card-head">
+                  <strong>İklim Su Potansiyeli (Havza Geneli) · 2026–2028</strong>
+                  <span class="id-chip">Akarçay</span>
+                  <select class="form-select form-select-sm id-chart-var" aria-label="Havza Seç">
+                    <option selected>Havza Seç</option>
+                    <option>Akarçay</option>
+                    <option>Sakarya</option>
+                    <option>Marmara</option>
+                  </select>
+                  <button type="button" class="mock-btn mock-btn-sm td-chart-print" title="Yazdır">Yazdır</button>
+                  <button type="button" class="mock-btn mock-btn-sm td-chart-remove">Kaldır</button>
+                </div>
+                <div class="mock-report-chart mock-report-chart--bar mock-report-chart--full">
+                  <canvas id="chart-su-pot" aria-label="İklim su potansiyeli havza geneli"></canvas>
+                </div>
+              </div>
+              <div class="td-chart-card" data-chart="gauge" draggable="true">
+                <div class="td-chart-card-head">
+                  <strong>İklim Su Potansiyeli · <code>RCP4.5</code> / <code>RCP8.5</code></strong>
+                  <button type="button" class="mock-btn mock-btn-sm td-chart-print" title="Yazdır">Yazdır</button>
+                  <button type="button" class="mock-btn mock-btn-sm td-chart-remove">Kaldır</button>
+                </div>
+                <div class="id-gauge-row" aria-label="RCP gösterge">
+                  <div class="id-gauge"><canvas id="chart-gauge-45" aria-label="RCP4.5 yüzde"></canvas><span><code>RCP4.5</code><strong>77%</strong></span></div>
+                  <div class="id-gauge"><canvas id="chart-gauge-85" aria-label="RCP8.5 yüzde"></canvas><span><code>RCP8.5</code><strong>56%</strong></span></div>
+                </div>
+              </div>
+              <div class="td-chart-card" data-chart="degisim" draggable="true">
+                <div class="td-chart-card-head">
+                  <strong>Su Potansiyeli Değişimi (2026–2028)</strong>
+                  <button type="button" class="mock-btn mock-btn-sm">Tarih Seç</button>
+                  <button type="button" class="mock-btn mock-btn-sm">Başlangıç 2026</button>
+                  <button type="button" class="mock-btn mock-btn-sm">Bitiş 2028</button>
+                  <button type="button" class="mock-btn mock-btn-sm td-chart-print" title="Yazdır">Yazdır</button>
+                  <button type="button" class="mock-btn mock-btn-sm td-chart-remove">Kaldır</button>
+                </div>
+                <div class="mock-report-chart mock-report-chart--bar mock-report-chart--full">
+                  <canvas id="chart-degisim" aria-label="Su potansiyeli değişimi modeller"></canvas>
+                </div>
+              </div>
+              <div class="td-chart-card td-chart-card--wide" data-chart="rcp45" draggable="true">
+                <div class="td-chart-card-head">
+                  <strong>Türkiye Geneli <code>RCP4.5</code> Senaryosu (2026–2100)</strong>
+                  <select class="form-select form-select-sm id-chart-var" aria-label="Gösterim">
+                    <option selected>Rezerv + ihtiyaç</option>
+                    <option>Yalnız rezerv</option>
+                  </select>
+                  <button type="button" class="mock-btn mock-btn-sm td-chart-print" title="Yazdır">Yazdır</button>
+                  <button type="button" class="mock-btn mock-btn-sm td-chart-remove">Kaldır</button>
+                </div>
+                <div class="mock-report-chart mock-report-chart--bar mock-report-chart--full id-chart-tall">
+                  <canvas id="chart-rcp45" aria-label="Türkiye geneli RCP4.5"></canvas>
+                </div>
+              </div>
+              <div class="td-chart-card td-chart-card--wide" data-chart="rcp85" draggable="true">
+                <div class="td-chart-card-head">
+                  <strong>Türkiye Geneli <code>RCP8.5</code> Senaryosu (2026–2100)</strong>
+                  <select class="form-select form-select-sm id-chart-var" aria-label="Gösterim">
+                    <option selected>Rezerv + ihtiyaç</option>
+                    <option>Yalnız rezerv</option>
+                  </select>
+                  <button type="button" class="mock-btn mock-btn-sm td-chart-print" title="Yazdır">Yazdır</button>
+                  <button type="button" class="mock-btn mock-btn-sm td-chart-remove">Kaldır</button>
+                </div>
+                <div class="mock-report-chart mock-report-chart--bar mock-report-chart--full id-chart-tall">
+                  <canvas id="chart-rcp85" aria-label="Türkiye geneli RCP8.5"></canvas>
+                </div>
+              </div>
+              <div class="td-chart-card td-chart-card--wide" data-chart="brut-net" draggable="true">
+                <div class="td-chart-card-head">
+                  <strong><code>RCP4.5</code> &amp; <code>RCP8.5</code> — Brüt &amp; Net Su Potansiyelleri</strong>
+                  <span class="mock-hint">2026–2055 · 2056–2085 · 2086–2100</span>
+                  <button type="button" class="mock-btn mock-btn-sm td-chart-print" title="Yazdır">Yazdır</button>
+                  <button type="button" class="mock-btn mock-btn-sm td-chart-remove">Kaldır</button>
+                </div>
+                <div class="mock-report-chart mock-report-chart--bar mock-report-chart--full id-chart-tall">
+                  <canvas id="chart-brut-net" aria-label="Brüt net 30 yıllık karşılaştırma"></canvas>
+                </div>
+              </div>
+              <div class="td-chart-card td-chart-card--wide" data-chart="toplam" draggable="true">
+                <div class="td-chart-card-head">
+                  <strong>Türkiye Havzası Toplam Su Potansiyeli (2026–2100)</strong>
+                  <button type="button" class="mock-btn mock-btn-sm td-chart-print" title="Yazdır">Yazdır</button>
+                  <button type="button" class="mock-btn mock-btn-sm td-chart-remove">Kaldır</button>
+                </div>
+                <div class="mock-report-chart mock-report-chart--line mock-report-chart--full id-chart-tall">
+                  <canvas id="chart-toplam" aria-label="Toplam su potansiyeli"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detaylı Sorgu -->
+    <div class="modal fade" id="modal-detayli-sorgu" tabindex="-1" aria-labelledby="modal-detayli-sorgu-title" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title fs-5" id="modal-detayli-sorgu-title">Detaylı Sorgu</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+          </div>
+          <div class="modal-body">
+            <div class="id-shortcuts id-shortcuts--modal mb-3" aria-label="Basit sorgu kısayolları">
+              <span class="id-shortcuts-label">Kısayol</span>
+              <button type="button" class="mock-btn mock-btn-sm id-shortcut" data-shortcut="turkiye">Türkiye Ölçeği</button>
+              <button type="button" class="mock-btn mock-btn-sm id-shortcut" data-shortcut="ay">Aylık ortalama</button>
+              <button type="button" class="mock-btn mock-btn-sm id-shortcut" data-shortcut="mevsim">Mevsimlik</button>
+            </div>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label" for="q-alan">Sorgu Alanı <button type="button" class="id-info-tip" title="Türkiye / Havza / Alt Havza / İl. Drenaj Alanı seçeneği yoktur." aria-label="Bilgi">i</button></label>
+                <select class="form-select" id="q-alan">
+                  <option selected>Türkiye Geneli</option>
+                  <option>Havza</option>
+                  <option>Alt Havza</option>
+                  <option>İl</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="q-donem">Sorgulama Dönemi</label>
+                <select class="form-select" id="q-donem">
+                  <option>Yıllık</option>
+                  <option selected>30 yıllık</option>
+                  <option>Aylık</option>
+                  <option>Mevsimlik</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="q-tur">Sorgu Türü</label>
+                <select class="form-select" id="q-tur"><option selected>Projeksiyon</option><option>Referans</option><option>Meteorolojik gözlem</option></select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="q-model">Model</label>
+                <select class="form-select" id="q-model">
+                  <option selected>MPI-ESM-MR</option>
+                  <option>HadGEM2-ES</option>
+                  <option>CNRM-CM5.1</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="q-senaryo">Senaryo <button type="button" class="id-info-tip" title="Senaryo adları kod olarak gösterilir (RCP4.5, RCP8.5)." aria-label="Bilgi">i</button></label>
+                <select class="form-select" id="q-senaryo">
+                  <option>RCP4.5</option>
+                  <option selected>RCP8.5</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="q-param">Parametre</label>
+                <select class="form-select" id="q-param">
+                  <option selected>Ortalama Sıcaklık</option>
+                  <option>Toplam Yağış</option>
+                  <option>Ardışık Kurak Günler</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="q-projeksiyon">Projeksiyon Dönemi</label>
+                <select class="form-select" id="q-projeksiyon">
+                  <option>2016–2040</option>
+                  <option>2041–2070</option>
+                  <option selected>2071–2100</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="q-ortalama">Yıllık / Aylık / Mevsimlik Ortalama</label>
+                <select class="form-select" id="q-ortalama">
+                  <option selected>Yıllık</option>
+                  <option>Aylık</option>
+                  <option>Mevsimlik</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="q-baslangic">Başlangıç Yılı <button type="button" class="id-info-tip" title="Vatandaş ekranında 2025 sonrası yıllar seçilebilir." aria-label="Bilgi">i</button></label>
+                <select class="form-select" id="q-baslangic">
+                  <option>2016</option>
+                  <option>2041</option>
+                  <option selected>2071</option>
+                  <option>2026</option>
+                  <option>2030</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="q-frekans">Frekans <button type="button" class="id-info-tip" title="Haritada tek dönem: başlangıç + frekans = bitiş (ör. 2040 + 30 → 2070)." aria-label="Bilgi">i</button></label>
+                <select class="form-select" id="q-frekans">
+                  <option value="1">1 yıl</option>
+                  <option value="10">10 yıl</option>
+                  <option value="30" selected>30 yıl</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="q-bitis">Bitiş Yılı</label>
+                <select class="form-select" id="q-bitis">
+                  <option>2040</option>
+                  <option>2070</option>
+                  <option selected>2100</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="q-referans" checked />
+                  <label class="form-check-label" for="q-referans">Referans Verisini Dahil Et</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="mock-btn" data-bs-dismiss="modal">Vazgeç</button>
+            <button type="button" class="mock-btn mock-btn-primary" id="btn-sorgula" data-bs-dismiss="modal">Sorgula</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="mock-prompt mock-dev-only" aria-label="Gereksinim özeti">
+      <h2>Gereksinimler (olmalıdır / olmamalıdır)</h2>
+      <div class="mock-prompt-note">
+        Eski sistem (USBS) referans alınarak «kaldırılmalı / problem çözülmeli» ifadeleri aşağıdaki gibi yazıldı. Jira task yazılmadı.
+      </div>
+      <ul class="id-req-list">
+        <li>İklim Yönetimi Dashboard/Grafik ekranı olmalıdır.</li>
+        <li>Harita üzerinde «Detaylı Sorgu» ile sorgulama yapılabilmelidir; Sorgula sonrası harita, grafik ve tablolar dinamik güncellenmelidir.</li>
+        <li>Detaylı Sorgu’da: Sorgu Alanı, Sorgu Türü, Senaryo, Projeksiyon Dönemi, Sorgulama Dönemi, Model, Parametre, Yıllık/Aylık/Mevsimlik Ortalama, Başlangıç Yılı, Bitiş Yılı, Frekans, Referans Verisini Dahil Et bulunmalıdır.</li>
+        <li>Senaryo adları kod olarak kalmalıdır (<code>RCP4.5</code>, <code>RCP8.5</code>).</li>
+        <li>İstasyon filtresi çoklu seçim olmalıdır; listenin başında «Tüm İstasyonlar» seçeneği bulunur — seçilince seçili Havza / İl / İlçe kapsamındaki tüm istasyonlar seçilir. Havza, il veya ilçe seçilip ardından istasyon(lar) veya tüm istasyonlar seçilebilir.</li>
+        <li>Havza / Alt Havza / İl / İlçe filtreleri tek veya çoklu seçim (Tom Select) desteklemelidir; seçilen her havza grafik ve tabloda ayrı gösterilmelidir.</li>
+        <li>Başlık yanında bilgilendirme ikonu/pop-up ve basit sorgu kısayolları olmalıdır.</li>
+        <li>«Drenaj Alanı Seç» olmamalıdır (eski USBS özelliği yeni sistemde yer almaz).</li>
+        <li>Harita grid çizgi kalınlığı kullanıcı tarafından ayarlanabilir olmalıdır.</li>
+        <li>Havza / Alt Havza / İl bazında sorgulama yapılabilmelidir.</li>
+        <li>Projeksiyonda ay ve mevsim özelinde sorgu yapılabilmeli ve harita üretilebilmelidir.</li>
+        <li>Alan seçimi «Poligon Seç» olmalıdır («Grid Seç» yerine).</li>
+        <li>Vatandaş ekranında projeksiyon yılı 2025 sonrası seçilebilmelidir.</li>
+        <li>Vatandaş arayüzünde Katmanlar › İklim Projeksiyon / Hidrolojik Projeksiyon menüsü olmamalıdır.</li>
+        <li>İl bazlı shp yüklemesi desteklenmeli ve sonuç hatasız üretilmelidir.</li>
+        <li>Hidrolojik sorgu yalnızca drenaj alanı ile sınırlı olmamalı; Havza/Alt Havza/İl vb. kapsamda sonuç vermelidir.</li>
+        <li>Tematik harita sorgu sonucu shp olarak indirilebilmelidir.</li>
+        <li>Lejant harita alanında sol tarafta (harita üzerinde) olmalıdır.</li>
+        <li>Havza sınırını aşan illerde haritada ilin havzaya giren kapsama oranı (%) gösterilmelidir.</li>
+        <li>Referans dönemde Sıcaklık, Yağış ve Ardışık Kurak Günler görüntülenmelidir.</li>
+        <li>Tüm tablolarda Tarih, Başlangıç Tarihi ve Bitiş Tarihi kolonları olmalıdır.</li>
+        <li>İlk açılışta MPI-ESM-MR, <code>RCP8.5</code>, 2071–2100 Türkiye Ölçeği verileri gösterilmeli; sorgu sonrası tüm bileşenler dinamik filtrelenmelidir.</li>
+        <li>Haritada tüm harita araçları ile İndir ve Yazdır bulunmalıdır.</li>
+        <li>Grafikler kaldırılabilir, yeniden eklenebilir, yerleri değiştirilebilir; değişken seçimi açılır kutusu olmalıdır.</li>
+        <li>Grafiklerde Yazdır aksiyonu olmalıdır. <strong>Not: Sistem geneli yazdır özelliği olmalıdır.</strong></li>
+        <li>Listelerde kolon filtre/sıralama, Filtreleri Temizle, Sütun Gizle/Göster ve Dışa Aktar olmalıdır; satırda Detay ile detay görüntülenebilmelidir.</li>
+        <li>Harita, tablo ve grafik çıktıları xlsx, shp, pdf, jpeg, csv vb. alınabilmelidir.</li>
+        <li>Yıllık Ortalama Sıcaklık ve Yıllık Ortalama Yağış grafikleri <strong>2026</strong> başlangıçlı tarih aralığı ile görüntülenebilmelidir.</li>
+        <li>Harita gösteriminde tek dönem seçilmeli; frekans ile son tarih buna uygun hesaplanmalıdır.</li>
+        <li>Meteorolojik zamansal değişim ekranı olmalı; havza–il–parametre toplu indirmeye uygun olmalıdır.</li>
+        <li>Menü ilk gösteriminde Türkiye Ölçeği dashboard açılmalıdır.</li>
+      </ul>
+    </section>
+  </main>
+</div>
+<script>
+window.TASK_HUB = {
+  taskRoot: '../../..',
+  page: 'mock-dashboard',
+  calisma: {
+    id: 'iklim',
+    label: 'IKLIM',
+    base: '..',
+    menuYer: 'sol',
+    mockups: [
+      { id: 'mock-dashboard', label: 'İklim Yönetimi Dashboard', href: 'mockup/dashboard.html', rapor: true }
+    ],
+    islerHref: 'isler.html'
+  }
+};
+</script>
+<script src="../../../js/mock-geo-map.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="dashboard-iklim.js"></script>
+<script src="../../../assets/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script>
+<script src="../../../js/mock-tom-select.js"></script>
+<script src="../../../js/calismalar-meta.js"></script>
+<script src="../../../js/rapor-widgets.js"></script>
+<script src="../../../js/calisma-cursor.js"></script>
+<script src="../../../js/sunum-query.js"></script>
+<script src="../../../js/mock-sunum.js"></script>
+<script src="../../../js/nav.js"></script>
+</body>
+</html>
