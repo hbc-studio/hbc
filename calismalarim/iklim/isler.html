@@ -48,7 +48,6 @@
           <li>İlk açılış varsayılanı: Türkiye Ölçeği · model MPI-ESM-MR · senaryo kodu RCP8.5 · dönem 2071–2100</li>
           <li>KPI: ortalamaSicaklik, toplamYagis, ardisikKurakGun, tesisSayisi</li>
           <li>Sorgu sonrası yalnızca filtreye uyan özet döner; harita/liste/grafik aynı filtre bağlamını kullanır</li>
-          <li>«Drenaj Alanı» filtre/parametre alanı olmamalıdır</li>
         </ul>
         <br>
         <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
@@ -236,7 +235,6 @@
           <li>Filtreler: Havza, Alt Havza, İl, İlçe — Tom Select çoklu (tek veya çoklu seçim); ayrı «çoklu havza» kontrolü yok</li>
           <li>İstasyon: Tom Select çoklu seçim; en üstte «Tüm İstasyonlar» — seçilince seçili Havza / İl / İlçe kapsamındaki tüm istasyonlar seçilir (önce kapsam, sonra istasyon)</li>
           <li>Filtre / sorgu başlıklarının yanına bilgilendirme ikonları; ikona tıklanınca pop-up açıklama penceresi tasarlanmalı; basit sorgu kısayolları eklenmelidir</li>
-          <li>«Drenaj Alanı Seç» yoktur</li>
           <li>Aktif sorgu özeti görünür (model, senaryo kodu, dönem)</li>
           <li>Temizle / Yenile / Tablo-Grafik Oluştur / Çıktı-Rapor</li>
         </ul>
@@ -258,11 +256,21 @@
         <h5>Kabul kriterleri</h5>
         <ul class="criteria">
           <li>Harita üzerindeki «Detaylı Sorgu» butonu ile modal/pencere açılır; Sorgula ile dashboard güncellenir</li>
-          <li>Alanlar ve kontrol türleri (ekran görüntüsü / mockup):
+          <li>Alanlar, kontrol türleri ve combobox içerikleri (ekran / mockup):
             <ul>
-              <li><strong>Combobox (tek seçim dropdown):</strong> Sorgu Alanı, Sorgu Türü, Senaryo, Projeksiyon Dönemi, Sorgulama Dönemi, Model, Parametre, Yıllık/Aylık/Mevsimlik Ortalama, Başlangıç Yılı, Bitiş Yılı, Frekans</li>
-              <li><strong>Checkbox:</strong> Referans Verisini Dahil Et</li>
-              <li><strong>Buton:</strong> Sorgula</li>
+              <li><strong>Sorgu Alanı</strong> (combobox): Türkiye Geneli, Havza, Alt Havza, İl</li>
+              <li><strong>Sorgu Türü</strong> (combobox): Projeksiyon, Referans, Meteorolojik gözlem</li>
+              <li><strong>Senaryo</strong> (combobox): RCP4.5, RCP8.5 (kod olarak)</li>
+              <li><strong>Projeksiyon Dönemi</strong> (combobox): 2016–2040, 2041–2070, 2071–2100</li>
+              <li><strong>Sorgulama Dönemi</strong> (combobox): Yıllık, 30 yıllık, Aylık, Mevsimlik</li>
+              <li><strong>Model</strong> (combobox): MPI-ESM-MR, HadGEM2-ES, CNRM-CM5.1</li>
+              <li><strong>Parametre</strong> (combobox): Ortalama Sıcaklık, Toplam Yağış, Ardışık Kurak Günler</li>
+              <li><strong>Yıllık / Aylık / Mevsimlik Ortalama</strong> (combobox): Yıllık, Aylık, Mevsimlik</li>
+              <li><strong>Başlangıç Yılı</strong> (combobox): 2016, 2026, 2030, 2041, 2071 (örnek; vatandaşta 2025 sonrası seçilebilir)</li>
+              <li><strong>Bitiş Yılı</strong> (combobox): 2040, 2070, 2100 (örnek; frekans ile hesaplanır)</li>
+              <li><strong>Frekans</strong> (combobox): 1 yıl, 10 yıl, 30 yıl</li>
+              <li><strong>Referans Verisini Dahil Et</strong> (checkbox)</li>
+              <li><strong>Butonlar:</strong> Vazgeç, Sorgula</li>
             </ul>
           </li>
           <li>Senaryo adları kod olarak gösterilir (RCP4.5, RCP8.5)</li>
