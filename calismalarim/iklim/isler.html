@@ -94,14 +94,15 @@
         <p class="desc">Dashboard haritasında tematik katmanlar, poligon seçim sonucu ve il–havza kapsama oranının filtrelenerek getirilmesi.</p>
         <h5>Kabul kriterleri</h5>
         <ul class="criteria">
-          <li>Katmanlar: sıcaklık, yağış, ardışık kurak günler, projeksiyon, RCP4.5, RCP8.5; vatandaş arayüzünde İklim/Hidrolojik Projeksiyon katman menüsü dönmemeli / gizlenebilir bayrak</li>
+          <li>Katmanlar: sıcaklık, yağış, ardışık kurak günler, projeksiyon, RCP4.5, RCP8.5</li>
           <li>Alan seçimi poligon seçime uygun geometri/özellik döner (Grid Seç yerine Poligon Seç)</li>
           <li>Havza sınırını aşan illerde ilin havzaya giren kapsama oranı (%) döner</li>
-          <li>İl bazlı shp yükleme desteklenir; sonuç hatasız üretilir</li>
-          <li>Tematik harita sorgu sonucu shp indirmeye uygun veri/servis sağlanır</li>
+          <li>Shape (.shp) ve KML/KMZ dosya yükleme desteklenir; sonuç hatasız üretilir</li>
+          <li>Tematik harita sorgu sonucu shp olarak indirilebilir veri/servis sağlanır</li>
           <li>Grid çizgi kalınlığı istemci ayarıdır; sunucu zorunlu kalın grid dayatmaz</li>
         </ul>
         <br>
+        <p class="desc"><strong>Not:</strong> Katmanlar / İklim Projeksiyon / Hidrolojik Projeksiyon alanı vatandaş arayüzünde olmamalıdır (endpoint gizlenebilir bayrak veya rol ile dönmemeli).</p>
         <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
         <button type="button" class="copy-btn">Tümünü kopyala</button>
       </div>
@@ -288,15 +289,18 @@
         <h5>Kabul kriterleri</h5>
         <ul class="criteria">
           <li>Lejant harita alanında sol tarafta (örnek dashboard’daki gibi harita üzerinde)</li>
+          <li>Harita ekranında tüm harita araçları bulunmalıdır (yakınlaştır/uzaklaştır, kaydırma, tam ekran, altlık, kuzey oku, ölçüm, ölçek, Ev/Türkiye vb. — mockup ile uyumlu)</li>
           <li>Poligon Seç (Grid Seç yerine); Detaylı Sorgu butonu haritada</li>
+          <li>Shape (.shp) ve KML/KMZ dosya yükle butonu ile eklenebilmelidir</li>
+          <li>Tematik harita sorgu sonucu shp olarak indirilebilmelidir</li>
           <li>İndir ve Yazdır seçenekleri</li>
           <li><strong>Not: Sistem geneli yazdır özelliği olmalıdır.</strong></li>
           <li>Grid çizgi kalınlığı müdahale edilebilir</li>
           <li>İl–havza kapsama % bilgi kartı/haritada gösterilir</li>
-          <li>Vatandaş arayüzünde İklim/Hidrolojik Projeksiyon katman alanı gösterilmez</li>
           <li>Harita tek dönem; frekans–son tarih kuralına uygun</li>
         </ul>
         <br>
+        <p class="desc"><strong>Not:</strong> Katmanlar / İklim Projeksiyon / Hidrolojik Projeksiyon alanı vatandaş arayüzünde olmamalıdır.</p>
         <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
         <button type="button" class="copy-btn">Tümünü kopyala</button>
       </div>
@@ -383,7 +387,8 @@
         <p class="desc">Harita, tablo ve grafik çıktılarının xlsx, shp, pdf, jpeg, csv vb. formatlarda alınması; yazdırma akışının sistem geneli yazdır ile uyumu.</p>
         <h5>Kabul kriterleri</h5>
         <ul class="criteria">
-          <li>Çıktı Al / Dışa Aktar menüsünden uygun format seçimi</li>
+          <li>Çıktı Al / Dışa Aktar menüsünden uygun format seçimi (xlsx, shp, pdf, jpeg, csv vb.)</li>
+          <li>Tematik harita sorgu sonucu shp olarak indirilebilmelidir</li>
           <li>Harita İndir / Yazdır; grafik Yazdır</li>
           <li><strong>Not: Sistem geneli yazdır özelliği olmalıdır.</strong></li>
         </ul>
