@@ -143,6 +143,7 @@
               <div class="td-map-tools" aria-label="Harita işlemleri">
                 <button type="button" class="mock-btn mock-btn-sm mock-btn-primary" id="btn-detayli-sorgu" data-bs-toggle="modal" data-bs-target="#modal-detayli-sorgu">Detaylı Sorgu</button>
                 <button type="button" class="mock-btn mock-btn-sm" id="btn-poligon">Poligon Seç</button>
+                <button type="button" class="mock-btn mock-btn-sm" id="btn-zaman-gezgini" title="Zaman Gezgini">Zaman Gezgini</button>
                 <button type="button" class="mock-btn mock-btn-sm">İndir ▾</button>
                 <button type="button" class="mock-btn mock-btn-sm">Yazdır</button>
                 <label class="id-grid-ctrl" for="f-grid">Grid
@@ -154,7 +155,7 @@
               <div class="td-map-canvas-wrap">
                 <div id="harita-iklim" class="mock-report-chart mock-report-chart--map td-map-canvas" aria-label="Türkiye ölçeği iklim haritası"></div>
 
-                <!-- Lejant: harita içinde sol (yüzen panel) -->
+                <!-- Lejant: taşkın kalıbı (katman aç/kapa) + tematik renk skalası -->
                 <aside class="td-legend td-legend--float-left" aria-label="Harita lejantı" id="id-legend">
                   <div class="td-legend-title">Lejant</div>
                   <label class="td-layer"><input type="checkbox" checked data-layer="sicaklik" /> <span class="td-swatch td-swatch--heat"></span> Sıcaklık</label>
@@ -163,6 +164,15 @@
                   <label class="td-layer"><input type="checkbox" checked data-layer="havza-oran" /> <span class="td-swatch" style="background:#6a1b9a"></span> İl–havza kapsama %</label>
                   <label class="td-layer"><input type="checkbox" data-layer="rcp85" checked /> <span class="td-swatch" style="background:#c62828"></span> RCP8.5</label>
                   <label class="td-layer"><input type="checkbox" data-layer="rcp45" /> <span class="td-swatch" style="background:#1565c0"></span> RCP4.5</label>
+                  <div class="td-legend-scale-block">
+                    <div class="td-legend-subtitle">Değer skalası</div>
+                    <ul class="td-legend-scale" aria-label="Tematik renk skalası">
+                      <li><span class="td-swatch" style="background:#e65100"></span> 18 – 20</li>
+                      <li><span class="td-swatch" style="background:#fb8c00"></span> 16 – 17</li>
+                      <li><span class="td-swatch" style="background:#ffb74d"></span> 14 – 15</li>
+                      <li><span class="td-swatch" style="background:#ffe0b2"></span> 12 – 13</li>
+                    </ul>
+                  </div>
                   <p class="td-legend-note">Vatandaş arayüzünde İklim/Hidrolojik Projeksiyon katman menüsü gösterilmez</p>
                 </aside>
 
@@ -195,7 +205,7 @@
                     <dl>
                       <div><dt>Model</dt><dd>MPI-ESM-MR</dd></div>
                       <div><dt>Senaryo</dt><dd><code>RCP8.5</code></dd></div>
-                      <div><dt>Dönem</dt><dd>2071–2100</dd></div>
+                      <div><dt>Dönem</dt><dd id="id-card-donem">2071–2100</dd></div>
                       <div><dt>Ort. Sıcaklık</dt><dd>17,4 °C</dd></div>
                       <div><dt>İl kapsama</dt><dd>Ankara %62</dd></div>
                     </dl>
@@ -218,10 +228,12 @@
                   </article>
                 </div>
 
-                <div class="td-time-slider" aria-label="Tek dönem — frekans ilişkili">
+                <!-- Harita time slider (taşkın Zaman Gezgini kalıbı) -->
+                <div class="td-time-slider" id="id-map-time-slider" aria-label="Zaman Gezgini">
                   <span>2071</span>
-                  <input type="range" min="2071" max="2100" value="2100" id="id-time-range" disabled title="Haritada tek dönem; frekans ile kilitli" />
-                  <span class="td-time-label" id="id-time-label">2071–2100</span>
+                  <input type="range" id="id-map-time-range" min="2071" max="2100" step="1" value="2100" />
+                  <span>2100</span>
+                  <span class="td-time-label">Dönem: <strong id="id-time-label">2071–2100</strong></span>
                 </div>
               </div>
             </div>
@@ -321,8 +333,80 @@
             <div class="td-list-panel" data-panel="istasyon" hidden>
               <div class="td-panel-head">
                 <h3>Meteorolojik gözlem — zamansal değişim</h3>
-                <button type="button" class="mock-btn mock-btn-sm">Toplu indir (havza / il / parametre)</button>
+                <p class="mock-report-hint">İstasyon serileri zamana göre; toplu indirme havza / il / tüm parametreler kapsamlı</p>
               </div>
+
+              <div class="id-meteo-zamansal" aria-label="Zamansal değişim ekranı">
+                <div class="id-meteo-zamansal-filters">
+                  <label class="form-label" for="m-istasyon">İstasyon</label>
+                  <select class="form-select form-select-sm" id="m-istasyon">
+                    <option selected>ANK-01 (Ankara)</option>
+                    <option>KON-04 (Konya)</option>
+                    <option>Tüm seçili istasyonlar</option>
+                  </select>
+                  <label class="form-label" for="m-param">Parametre</label>
+                  <select class="form-select form-select-sm" id="m-param">
+                    <option selected>Ortalama Sıcaklık</option>
+                    <option>Toplam Yağış</option>
+                    <option>Ardışık Kurak Günler</option>
+                  </select>
+                </div>
+                <div class="id-meteo-zamansal-main">
+                  <div class="mock-report-chart mock-report-chart--line id-meteo-chart-wrap">
+                    <canvas id="chart-meteo-zamansal" aria-label="Meteorolojik zamansal değişim 2026-2055"></canvas>
+                  </div>
+                  <div class="id-meteo-time-slider" aria-label="Meteorolojik zamansal değişim — time slider">
+                    <span id="m-time-start">2026</span>
+                    <input type="range" id="m-time-range" min="2026" max="2055" step="1" value="2040" />
+                    <span id="m-time-end">2055</span>
+                    <span class="id-meteo-time-label">Seçili yıl: <strong id="m-time-year">2040</strong></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="id-meteo-bulk" aria-label="Toplu veri indirme">
+                <strong class="id-meteo-bulk-title">Toplu veri indirme</strong>
+                <p class="mock-report-hint">Havza–il–tüm parametreler kapsamına uygun format</p>
+                <div class="id-meteo-bulk-row">
+                  <div>
+                    <label class="form-label" for="m-bulk-kapsam">Kapsam</label>
+                    <select class="form-select form-select-sm" id="m-bulk-kapsam">
+                      <option selected>Havza</option>
+                      <option>İl</option>
+                      <option>Havza + İl</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="form-label" for="m-bulk-hedef">Havza / İl</label>
+                    <select class="form-select form-select-sm" id="m-bulk-hedef">
+                      <option selected>Sakarya</option>
+                      <option>Kızılırmak</option>
+                      <option>Ankara</option>
+                      <option>Konya</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="form-label" for="m-bulk-param">Parametreler</label>
+                    <select class="form-select form-select-sm" id="m-bulk-param">
+                      <option selected>Tüm parametreler</option>
+                      <option>Ortalama Sıcaklık</option>
+                      <option>Toplam Yağış</option>
+                      <option>Ardışık Kurak Günler</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="form-label" for="m-bulk-format">Format</label>
+                    <select class="form-select form-select-sm" id="m-bulk-format">
+                      <option selected>xlsx</option>
+                      <option>csv</option>
+                    </select>
+                  </div>
+                  <div class="id-meteo-bulk-actions">
+                    <button type="button" class="mock-btn mock-btn-sm mock-btn-primary">Toplu indir</button>
+                  </div>
+                </div>
+              </div>
+
               <div class="td-table-toolbar">
                 <button type="button" class="mock-btn mock-btn-sm">Filtreleri Temizle</button>
                 <button type="button" class="mock-btn mock-btn-sm">Sütun Gizle/Göster</button>

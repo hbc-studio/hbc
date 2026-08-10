@@ -233,6 +233,84 @@
       });
     }
 
+    var meteoYears = [2026, 2030, 2035, 2040, 2045, 2050, 2055];
+    var meteoAnk = [13.8, 14.0, 14.2, 14.5, 14.8, 15.1, 15.4];
+    var meteoKon = [13.2, 13.4, 13.6, 13.9, 14.1, 14.4, 14.7];
+
+    function nearestMeteoIndex(year) {
+      var best = 0;
+      var bestDiff = Infinity;
+      for (var i = 0; i < meteoYears.length; i++) {
+        var d = Math.abs(meteoYears[i] - year);
+        if (d < bestDiff) {
+          bestDiff = d;
+          best = i;
+        }
+      }
+      return best;
+    }
+
+    function updateMeteoZamansal(year) {
+      year = Number(year) || 2040;
+      var label = document.getElementById('m-time-year');
+      if (label) label.textContent = String(year);
+      var chart = charts['chart-meteo-zamansal'];
+      if (!chart) return;
+      var idx = nearestMeteoIndex(year);
+      var radii = meteoYears.map(function (_, i) { return i === idx ? 6 : 3; });
+      chart.data.datasets.forEach(function (ds) {
+        ds.pointRadius = radii;
+        ds.pointHoverRadius = radii.map(function (r) { return r + 1; });
+      });
+      chart.update('none');
+    }
+
+    var meteoEl = document.getElementById('chart-meteo-zamansal');
+    if (meteoEl) {
+      destroyChart('chart-meteo-zamansal');
+      charts['chart-meteo-zamansal'] = new Chart(meteoEl, {
+        type: 'line',
+        data: {
+          labels: meteoYears.map(String),
+          datasets: [
+            {
+              label: 'ANK-01 Ort. Sıcaklık (°C)',
+              data: meteoAnk.slice(),
+              borderColor: '#e65100',
+              backgroundColor: 'rgba(230,81,0,0.12)',
+              tension: 0.25,
+              fill: true,
+              pointRadius: 3
+            },
+            {
+              label: 'KON-04 Ort. Sıcaklık (°C)',
+              data: meteoKon.slice(),
+              borderColor: '#1565c0',
+              backgroundColor: 'transparent',
+              tension: 0.25,
+              pointRadius: 3
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } },
+          scales: {
+            y: { title: { display: true, text: '°C', font: { size: 10 } }, grid: { color: '#eef2f7' } },
+            x: { grid: { display: false } }
+          }
+        }
+      });
+      var range = document.getElementById('m-time-range');
+      if (range) {
+        updateMeteoZamansal(range.value);
+        range.addEventListener('input', function () {
+          updateMeteoZamansal(range.value);
+        });
+      }
+    }
+
     function comboRcp(id, barColor, lightColor) {
       var el = document.getElementById(id);
       if (!el) return;
@@ -343,6 +421,41 @@
     var label = document.getElementById('id-time-label');
     if (label) label.textContent = start + '–' + end;
     state.donem = start + '–' + end;
+    var mapRange = document.getElementById('id-map-time-range');
+    if (mapRange) {
+      mapRange.min = String(start);
+      mapRange.max = String(end);
+      mapRange.value = String(end);
+    }
+    var cardDonem = document.getElementById('id-card-donem');
+    if (cardDonem) cardDonem.textContent = start + '–' + end;
+  }
+
+  function wireMapTimeSlider() {
+    var range = document.getElementById('id-map-time-range');
+    var label = document.getElementById('id-time-label');
+    var btn = document.getElementById('btn-zaman-gezgini');
+    var slider = document.getElementById('id-map-time-slider');
+    if (range && label) {
+      range.addEventListener('input', function () {
+        var start = range.min;
+        var end = range.value;
+        label.textContent = start + '–' + end;
+        state.donem = start + '–' + end;
+        setAktifSorgu();
+        var tip = document.getElementById('id-sync-tip');
+        if (tip) {
+          tip.hidden = false;
+          tip.textContent = 'Harita Zaman Gezgini: dönem ' + start + '–' + end + ' (mock).';
+        }
+      });
+    }
+    if (btn && slider) {
+      btn.addEventListener('click', function () {
+        slider.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        range && range.focus();
+      });
+    }
   }
 
   function applySorgula() {
@@ -600,6 +713,7 @@
     wireGrid();
     wireLayers();
     wireIstasyonSelectAll();
+    wireMapTimeSlider();
     syncFrekansBitis();
     showCard('havza-sakarya', { skipScroll: true });
     var appBody = document.querySelector('.mock-app-body');
