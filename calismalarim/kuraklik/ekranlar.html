@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ekranlar — Kuraklık</title>
+  <link rel="stylesheet" href="../../css/style.css" />
+  <link rel="stylesheet" href="../../css/mock-bootstrap.css" />
+</head>
+<body>
+<div class="layout">
+  <nav id="sidebar"></nav>
+  <main>
+    <h1>Ekranlar</h1>
+    <p class="subtitle">Kuraklık — mockup ekranları</p>
+    <div class="lead">
+      Mevcut mockup'lara tıklayarak önizleyin. <strong>+ Yeni ekran</strong> ile adım adım soruları yanıtlayın;
+      Cursor metnini kopyalayıp sohbete yapıştırın.
+    </div>
+    <div class="ekran-toolbar">
+      <button type="button" class="calisma-action-btn calisma-action-btn--primary" id="btn-yeni-ekran">+ Yeni ekran</button>
+    </div>
+    <p class="empty-note" id="ekran-empty">Henüz mockup yok. İlk ekranınızı eklemek için <strong>+ Yeni ekran</strong> kullanın.</p>
+    <div id="ekran-list"></div>
+  </main>
+</div>
+<script>
+window.TASK_HUB = {
+  taskRoot: '../..',
+  page: 'calisma-ekranlar',
+  calisma: {
+    id: "kuraklik",
+    label: "Kuraklık",
+    base: '.',
+    menuYer: "sol",
+    mockups: [
+      { id: 'mock-dashboard', label: 'Kuraklık Yönetimi Dashboard', href: 'mockup/dashboard.html', rapor: true }
+    ],
+    islerHref: 'isler.html'
+  }
+};
+</script>
+<script src="../../js/sunum-query.js"></script>
+<script src="../../assets/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script>
+<script src="../../js/mock-tom-select.js"></script>
+<script src="../../js/calismalar-meta.js"></script>
+<script src="../../js/rapor-widgets.js"></script>
+<script src="../../js/calisma-cursor.js"></script>
+<script src="../../js/ekran-wizard.js"></script>
+<script src="../../js/ekranlar-page.js"></script>
+<script src="../../js/nav.js"></script>
+</body>
+</html>

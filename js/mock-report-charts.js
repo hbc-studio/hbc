@@ -131,18 +131,36 @@
     );
   }
 
+  function initKuraklikDashboard() {
+    initBarV(
+      'chart-kuraklik-bar',
+      ['Sakarya', 'Kızılırmak', 'Yeşilırmak', 'Gediz', 'B. Menderes', 'Fırat-Dicle'],
+      [548, 412, 720, 635, 598, 465],
+      'Yıllık yağış (mm)'
+    );
+    initPie('chart-kuraklik-pie', ['Düşük', 'Orta', 'Yüksek', 'Çok yüksek'], [18, 42, 28, 12]);
+    initLine(
+      'chart-kuraklik-line',
+      ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'],
+      [62, 54, 71, 88, 96, 48, 22, 18, 41, 78, 90, 74],
+      { openY: true, label: 'Yağış (mm)' }
+    );
+  }
+
   window.MOCK_REPORT_CHARTS = {
     initPie: initPie,
     initBarH: initBarH,
     initBarV: initBarV,
     initLine: initLine,
     initOgrenciRaporlari: initOgrenciRaporlari,
-    initIklimDashboard: initIklimDashboard
+    initIklimDashboard: initIklimDashboard,
+    initKuraklikDashboard: initKuraklikDashboard
   };
 
   function boot() {
     if (document.getElementById('chart-sinif-pie')) initOgrenciRaporlari();
     if (document.getElementById('chart-iklim-pie')) initIklimDashboard();
+    if (document.getElementById('chart-kuraklik-bar')) initKuraklikDashboard();
   }
 
   if (document.readyState === 'loading') {

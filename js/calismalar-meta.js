@@ -1,6 +1,18 @@
 /** Çalışma listesi — yeni modül eklenince ve durum değişince Cursor günceller. */
 window.HBC_CALISMALAR = [
   {
+    id: 'kuraklik',
+    label: 'Kuraklık',
+    desc: 'Kuraklık Dashboard',
+    eklendi: '2026-08-11',
+    menuYer: 'sol',
+    durum: 'task-hazir',
+    mockupSayisi: 1,
+    taskBe: 8,
+    taskFe: 7,
+    icon: '📁'
+  },
+  {
     id: 'taskin_dashboard',
     label: 'Taşkın Dashboard',
     desc: 'Taşkın Dashboard',

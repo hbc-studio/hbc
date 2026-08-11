@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kuraklık — Jira Task Metinleri</title>
+  <link rel="stylesheet" href="../../css/style.css" />
+  <style>
+    .task-tabs { display: flex; gap: 0.35rem; margin: 1rem 0 0; border-bottom: 2px solid var(--border); }
+    .task-tab { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.55rem 1rem; font-size: 0.85rem; font-weight: 600; color: var(--muted); border: none; background: none; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; border-radius: 6px 6px 0 0; }
+    .task-tab.active { color: var(--accent); border-bottom-color: var(--accent); background: #fff; }
+    .tab-chip { display: inline-flex; align-items: center; justify-content: center; min-width: 1.35rem; height: 1.35rem; padding: 0 0.35rem; border-radius: 999px; font-size: 0.7rem; font-weight: 700; }
+    .tab-chip-be { background: #e3f2fd; color: #1565c0; }
+    .tab-chip-fe { background: #e8f5e9; color: #2e7d32; }
+    .task-tab.active .tab-chip-be { background: #1565c0; color: #fff; }
+    .task-tab.active .tab-chip-fe { background: #2e7d32; color: #fff; }
+    .tab-panel { padding-top: 1rem; }
+    .tab-panel[hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+<div class="layout layout--isler">
+  <nav id="sidebar"></nav>
+  <main class="isler-main" id="isler-main">
+    <h1>Kuraklık — Jira task metinleri</h1>
+    <p class="subtitle">8 Backend · 7 Frontend — Kuraklık Yönetimi Dashboard / Grafik</p>
+    <div class="task-tabs" role="tablist">
+      <button type="button" class="task-tab active" data-tab="be" id="tab-be">Backend <span class="tab-chip tab-chip-be" id="chip-be">8</span></button>
+      <button type="button" class="task-tab" data-tab="fe" id="tab-fe">Frontend <span class="tab-chip tab-chip-fe" id="chip-fe">7</span></button>
+    </div>
+
+    <div class="tab-panel" id="panel-be" data-tab-panel="be">
+
+      <div class="issue" id="be-dashboard-ozet">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[BE] Kuraklık Dashboard Özet ve Filtre Endpoint'i</h4>
+        <div class="issue-meta">
+          <span><strong>Method:</strong> getKuraklikDashboardOzet</span>
+          <span><strong>Tablo / kaynak:</strong> MGM entegrasyonu · Servis Entegrasyonu Sağlanacaktır</span>
+          <span><strong>Tüketici:</strong> [FE] Kuraklık Yönetimi Dashboard Kabuğu</span>
+          <span><strong>Bağımlılık:</strong> [FE] Kuraklık Yönetimi Dashboard Kabuğu, [FE] Harita↔Liste↔Grafik Senkronu, [BE] Kuraklık Liste / Tablo Endpoint'leri, [BE] Kuraklık Grafik Veri Endpoint'i</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Dashboard üst KPI (Yıllık Yağış Ortalaması, Yıllık Sıcaklık Ortalaması) ve global filtre sonucuna göre özet sayıların getirilmesi.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Filtreler: havza, altHavza, il, ilce — tek veya çoklu seçim (Tom Select)</li>
+          <li>Global filtre parametreleri: tarih, baslangicTarihi, bitisTarihi — Başlangıç–Bitiş aralığı listelerin / tabloların filtrelenmesinde kullanılır ([BE] Kuraklık Liste / Tablo Endpoint'leri ile birlikte)</li>
+          <li>KPI: Yıllık Yağış Ortalaması ve Yıllık Sıcaklık Ortalaması bilgileri için Meteoroloji Genel Müdürlüğü ile entegrasyon olmalıdır</li>
+          <li>Dönüş alanları: yillikYagisOrtalamasi, yillikSicaklikOrtalamasi (MGM verisi)</li>
+          <li>İlk açılışta tüm bilgilere göre özet; sorgu sonrası yalnızca filtreye uyan özet</li>
+          <li>Harita / liste / grafik aynı filtre bağlamını kullanır</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="be-spi-harita">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[BE] SPI Kuraklık Haritası / MGM Girdi Endpoint'i</h4>
+        <div class="issue-meta">
+          <span><strong>Method:</strong> getKuraklikSpiHarita</span>
+          <span><strong>Tablo / kaynak:</strong> MGM entegrasyonu (kuraklık haritası girdi verisi)</span>
+          <span><strong>Tüketici:</strong> [FE] Harita, SPI Lejant, Zaman Gezgini ve Harita Araçları</span>
+          <span><strong>Bağımlılık:</strong> [FE] Harita, SPI Lejant, Zaman Gezgini ve Harita Araçları, [FE] Harita↔Liste↔Grafik Senkronu, [BE] Kuraklık Dashboard Özet ve Filtre Endpoint'i, [BE] Kuraklık Dışa Aktar / Çıktı Endpoint'i</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Havzaların bulunduğu son 6 aylık SPI Türkiye Kuraklık Haritası (11 sınıflı uluslararası lejant) için tematik veri; girdi verisinin MGM entegrasyonu ile sağlanması.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Son 6 aylık SPI meteorolojik kuraklık haritası verisi</li>
+          <li>11 sınıf uluslararası SPI sınıfları (Olağanüstü Kurak … Olağanüstü Nemli)</li>
+          <li>Girdi veri MGM entegrasyonu ile üretilir / sağlanır</li>
+          <li>Havza / Alt Havza / İl katman geometrileri ve özellik anahtarları döner</li>
+          <li>Zaman Gezgini (2000–2025) için dönem/versiyon parametresi desteklenir</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="be-bilgi-karti">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[BE] Havza / Alt Havza Bilgi Kartı Endpoint'i</h4>
+        <div class="issue-meta">
+          <span><strong>Method:</strong> getKuraklikHavzaKarti, getKuraklikAltHavzaKarti</span>
+          <span><strong>Tablo / kaynak:</strong> Havza Takip Sistemi · TÜİK nüfus gridi entegrasyonu</span>
+          <span><strong>Tüketici:</strong> [FE] Harita, SPI Lejant, Zaman Gezgini ve Harita Araçları</span>
+          <span><strong>Bağımlılık:</strong> [FE] Harita, SPI Lejant, Zaman Gezgini ve Harita Araçları, [FE] Harita↔Liste↔Grafik Senkronu, [BE] SPI Kuraklık Haritası / MGM Girdi Endpoint'i</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Haritada havza / alt havza tıklanınca açılan bilgi kartı alanlarının getirilmesi.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Havza kartı: Havza Adı, Kodu, Yüz Ölçümü/Alan, Havza Nüfus</li>
+          <li>Havza Nüfus: TÜİK entegrasyonu ile gelen nüfus gridi esas alınarak Havza Takip Sisteminde otomatik hesaplanır</li>
+          <li>Alt havza kartı: Alt Havza Adı, Kodu, Yüz Ölçümü/Alan, Havza Adı, HBCB Kodu</li>
+          <li>Yanıtta harita↔liste senkronu için özellik anahtarı (featureId) döner</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="be-liste-tablolar">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[BE] Kuraklık Liste / Tablo Endpoint'leri</h4>
+        <div class="issue-meta">
+          <span><strong>Method:</strong> getKuraklikTedbirler, getKuraklikSayilari, getKuraklikAlanNufus, getKuraklikTedbirSayisi, getKuraklikTedbirDurum, getKuraklikKypVeriGiris</span>
+          <span><strong>Tablo / kaynak:</strong> Yönetim planı tedbir listesi · MGM · Servis Entegrasyonu Sağlanacaktır</span>
+          <span><strong>Tüketici:</strong> [FE] Dashboard Listeleri ve Combobox Görünümleri</span>
+          <span><strong>Bağımlılık:</strong> [FE] Dashboard Listeleri ve Combobox Görünümleri, [FE] Liste Kolon Filtre / Sıralama / Sütun / Dışa Aktar, [FE] Harita↔Liste↔Grafik Senkronu, [BE] Kuraklık Dashboard Özet ve Filtre Endpoint'i, [BE] Kuraklık Dışa Aktar / Çıktı Endpoint'i</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Dashboard liste sekmelerinin sayfalanabilir, filtrelenebilir ve combobox görünümüne göre getirilmesi; satır detayının sağlanması.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Kuraklık Yönetim Planı Tedbirleri: başlıklar yönetim planı tedbir listesinden gelir</li>
+          <li>Kuraklık Sayıları combobox içerikleri: «Havza Bazında Kuraklık Sayıları», «Alt Havza Bazında Kuraklık Sayıları», «İl Bazında Kuraklık Sayıları» — MGM entegrasyonu</li>
+          <li>Alan / Nüfus combobox içerikleri: «Havza İçindeki İl ve Alan Bilgileri», «Alt Havza İçindeki İl ve Alan Bilgileri», «İl Yüz Ölçümü ve Nüfus Bilgileri», «Havza Yüz Ölçümü ve Nüfus Bilgileri»</li>
+          <li>Tedbir Sayısı combobox içerikleri: «Havza Bazında Kuraklık Tedbir Sayısı», «Alt Havza Bazında Kuraklık Tedbir Sayısı», «İl Bazında Kuraklık Tedbir Sayısı»</li>
+          <li>Tedbir Güncel Durum combobox içerikleri: «Havzadaki İllere Ait Tedbirlerin Güncel Durumu», «Havzadaki Tedbirlerin Güncel Durumu» (giriş yapılmış/yapılmamış, başlamamış, biten vb.)</li>
+          <li>Havza KYP Tedbir Veri Giriş tablosu</li>
+          <li>Tüm tablolarda Havza / Alt Havza / İl / İlçe filtresi uygulanır</li>
+          <li>Tüm tablolarda «Tarih», «Başlangıç Tarihi» ve «Bitiş Tarihi» kolonları yer almalıdır; Başlangıç–Bitiş Tarihi seçilen iki tarih arasında tablonun filtrelenmesini sağlar (endpoint aralık parametresi destekler)</li>
+          <li>Detay butonu için kayıt detay endpoint’i / iş anahtarı</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="be-grafik">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[BE] Kuraklık Grafik Veri Endpoint'i</h4>
+        <div class="issue-meta">
+          <span><strong>Method:</strong> getKuraklikGrafikVeri</span>
+          <span><strong>Tablo / kaynak:</strong> MGM entegrasyonu · Servis Entegrasyonu Sağlanacaktır</span>
+          <span><strong>Tüketici:</strong> [FE] Dashboard Grafikleri</span>
+          <span><strong>Bağımlılık:</strong> [FE] Dashboard Grafikleri, [FE] Harita↔Liste↔Grafik Senkronu, [BE] Kuraklık Dashboard Özet ve Filtre Endpoint'i, [BE] Baraj Seviye / Aktif Hacim Endpoint'i</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Dashboard grafiklerinin filtre ve seçime göre dinamik veri setlerinin sağlanması.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>«Tablo/Grafik Oluştur» ile 1, 3, 6, 9, 12 aylık ortalama yağış değerleri</li>
+          <li>Ülkemiz yıllık ortalama yağış (1980–2025); ülke yıllık ortalama sıcaklık (1990–2025) — Meteoroloji Genel Müdürlüğü entegrasyonu</li>
+          <li>Havza / Alt Havza / İl yıllık ortalama sıcaklık ve yağış (1990–2025) — MGM entegrasyonu</li>
+          <li>Yıllık Yağış Ortalaması ve Yıllık Sıcaklık Ortalaması bilgileri için Meteoroloji Genel Müdürlüğü ile entegrasyon olmalıdır (dashboard KPI ile aynı kaynak)</li>
+          <li>Havza yüzölçümü / nüfus grafik verisi</li>
+          <li>25 havza tedbir sayıları ve veri girişi yapılmış tedbir sayısı</li>
+          <li>KYP veri giriş durumu (yapılmış / yapılmamış)</li>
+          <li>Filtre (havza, altHavza, il, ilce, tarih aralığı) uygulanır; seçime göre dinamikleşir</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="be-baraj">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[BE] Baraj Seviye / Aktif Hacim Endpoint'i</h4>
+        <div class="issue-meta">
+          <span><strong>Method:</strong> getKuraklikBarajSeviye</span>
+          <span><strong>Tablo / kaynak:</strong> MGM / ilgili entegrasyon · Servis Entegrasyonu Sağlanacaktır</span>
+          <span><strong>Tüketici:</strong> [FE] Dashboard Grafikleri</span>
+          <span><strong>Bağımlılık:</strong> [FE] Dashboard Grafikleri, [BE] Kuraklık Grafik Veri Endpoint'i, [BE] Kuraklık Dashboard Özet ve Filtre Endpoint'i</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Baraj Güncel Seviye / Aktif Hacim grafiği için veri; frekans ve baraj seçimine göre.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Baraj seçimi combobox (ör. Selevir, Çay, Kırca, Seyitler — canlı listeden)</li>
+          <li>Frekans: Yıllık, Aylık, Haftalık, Günlük</li>
+          <li>Seriler: Baraj Doluluk Oranı, Güncel Seviye, Aktif Hacim</li>
+          <li>Dashboard global filtreleri uygulanır</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="be-kyp">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[BE] KYP Tedbir / Veri Giriş Endpoint'i</h4>
+        <div class="issue-meta">
+          <span><strong>Method:</strong> getKuraklikKypTedbir, getKuraklikKypVeriGirisDurum</span>
+          <span><strong>Tablo / kaynak:</strong> KYP tedbir / veri giriş · Servis Entegrasyonu Sağlanacaktır</span>
+          <span><strong>Tüketici:</strong> [FE] Dashboard Listeleri ve Combobox Görünümleri, [FE] Dashboard Grafikleri</span>
+          <span><strong>Bağımlılık:</strong> [FE] Dashboard Listeleri ve Combobox Görünümleri, [FE] Dashboard Grafikleri, [BE] Kuraklık Liste / Tablo Endpoint'leri, [BE] Kuraklık Grafik Veri Endpoint'i</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Havza KYP tedbir veri giriş tablosu ve 25 havza tedbir / veri girişi yapılmış sayı grafiklerinin verisi.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>KYP tedbir veri giriş tablosu kolonları mockup ile uyumlu</li>
+          <li>Yıl / Dönem / Havza–Alt Havza–İl–İlçe seçim parametreleri</li>
+          <li>25 havza için tedbir sayısı + veri girişi yapılmış tedbir sayısı</li>
+          <li>Havza illeri ve havza tedbirleri güncel durum (giriş yapılmış/yapılmamış, başlamamış, biten vb.)</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="be-export">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[BE] Kuraklık Dışa Aktar / Çıktı Endpoint'i</h4>
+        <div class="issue-meta">
+          <span><strong>Method:</strong> postKuraklikDisaAktar / getKuraklikRapor</span>
+          <span><strong>Tablo / kaynak:</strong> Servis Entegrasyonu Sağlanacaktır</span>
+          <span><strong>Tüketici:</strong> [FE] Harita / Tablo / Grafik Rapor ve Çıktı</span>
+          <span><strong>Bağımlılık:</strong> [FE] Harita / Tablo / Grafik Rapor ve Çıktı, [FE] Liste Kolon Filtre / Sıralama / Sütun / Dışa Aktar, [BE] SPI Kuraklık Haritası / MGM Girdi Endpoint'i, [BE] Kuraklık Liste / Tablo Endpoint'leri, [BE] Kuraklık Grafik Veri Endpoint'i</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Harita, tablo ve grafik bilgilerinin çıktı ve raporunun alınması.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Formatlar: xlsx, pdf, jpeg, csv vb. (mockup / sistem standardı)</li>
+          <li>Liste Dışa Aktar; harita İndir / Yazdır / Rapor; grafik çıktısı / raporu</li>
+          <li>Aktif filtre ve seçim bağlamı çıktıya yansır</li>
+          <li><strong>Not: Sistem geneli yazdır özelliği olmalıdır.</strong></li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+    </div>
+
+    <div class="tab-panel" id="panel-fe" data-tab-panel="fe" hidden>
+
+      <div class="issue" id="fe-kabuk">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[FE] Kuraklık Yönetimi Dashboard Kabuğu</h4>
+        <div class="issue-meta">
+          <span><strong>Menü:</strong> Kuraklık Bilgi Sistemi › Kuraklık Yönetimi Dashboard</span>
+          <span><strong>Veri:</strong> [BE] Kuraklık Dashboard Özet ve Filtre Endpoint'i</span>
+          <span><strong>Bağımlılık:</strong> [BE] Kuraklık Dashboard Özet ve Filtre Endpoint'i, [FE] Harita↔Liste↔Grafik Senkronu, [FE] Harita, SPI Lejant, Zaman Gezgini ve Harita Araçları, [FE] Dashboard Listeleri ve Combobox Görünümleri, [FE] Dashboard Grafikleri</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Kuraklık Yönetimi Dashboard / Grafik ekranı kabuğu: KPI, global filtreler, Tablo/Grafik Oluştur, Temizle / Yenile, çıktı aksiyonları.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>KPI: Yıllık Yağış Ortalaması, Yıllık Sıcaklık Ortalaması</li>
+          <li>Yıllık Yağış Ortalaması ve Yıllık Sıcaklık Ortalaması bilgileri için Meteoroloji Genel Müdürlüğü ile entegrasyon olmalıdır ([BE] Kuraklık Dashboard Özet ve Filtre Endpoint'i)</li>
+          <li>Filtreler: Havza, Alt Havza, İl, İlçe (Tom Select çoklu)</li>
+          <li>Global filtre alanları: Tarih, Başlangıç Tarihi, Bitiş Tarihi — Başlangıç–Bitiş seçilen iki tarih arasında tabloların (ve ilgili bileşenlerin) filtrelenmesini sağlar</li>
+          <li>«Tablo/Grafik Oluştur» → 1 / 3 / 6 / 9 / 12 aylık ortalama yağış grafikleri</li>
+          <li>İlk açılışta tüm bilgiler; sorgu sonrası harita, tablo, grafik dinamik filtrelenir</li>
+          <li>Rapor Al / Çıktı Al / Excel’e aktar aksiyonları</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="fe-harita">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[FE] Harita, SPI Lejant, Zaman Gezgini ve Harita Araçları</h4>
+        <div class="issue-meta">
+          <span><strong>Menü:</strong> Kuraklık Bilgi Sistemi › Kuraklık Yönetimi Dashboard › Harita</span>
+          <span><strong>Veri:</strong> [BE] SPI Kuraklık Haritası / MGM Girdi Endpoint'i, [BE] Havza / Alt Havza Bilgi Kartı Endpoint'i</span>
+          <span><strong>Bağımlılık:</strong> [BE] SPI Kuraklık Haritası / MGM Girdi Endpoint'i, [BE] Havza / Alt Havza Bilgi Kartı Endpoint'i, [BE] Kuraklık Dışa Aktar / Çıktı Endpoint'i, [FE] Harita↔Liste↔Grafik Senkronu, [FE] Kuraklık Yönetimi Dashboard Kabuğu</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">SPI Türkiye kuraklık haritası, lejant, Zaman Gezgini, bilgi kartları ve tüm harita araçlarının sunulması.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Son 6 aylık SPI haritası; 11 sınıflı uluslararası lejant (okunabilir)</li>
+          <li>Lejantta Havza ve Alt Havza katmanları (aç/kapa); İl seçimi harita araç çubuğundan (Havza / Alt Havza · İl butonları)</li>
+          <li>Zaman Gezgini: 2000–2025 zaman çubuğu + buton (ekran görüntüsü)</li>
+          <li>Havza kartı: Havza Adı, Kodu, Yüz Ölçümü/Alan, Havza Nüfus</li>
+          <li>Alt havza kartı: Alt Havza Adı, Kodu, Yüz Ölçümü/Alan, Havza Adı, HBCB Kodu</li>
+          <li>Harita ekranında tüm harita araçları (İndir, Yazdır, Altlık, kuzey, ölçüm, gezinme, ölçek, tam ekran vb.)</li>
+          <li><strong>Not: Sistem geneli yazdır özelliği olmalıdır.</strong></li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="fe-listeler">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[FE] Dashboard Listeleri ve Combobox Görünümleri</h4>
+        <div class="issue-meta">
+          <span><strong>Menü:</strong> Kuraklık Bilgi Sistemi › Kuraklık Yönetimi Dashboard › Listeler</span>
+          <span><strong>Veri:</strong> [BE] Kuraklık Liste / Tablo Endpoint'leri, [BE] KYP Tedbir / Veri Giriş Endpoint'i</span>
+          <span><strong>Bağımlılık:</strong> [BE] Kuraklık Liste / Tablo Endpoint'leri, [BE] KYP Tedbir / Veri Giriş Endpoint'i, [FE] Liste Kolon Filtre / Sıralama / Sütun / Dışa Aktar, [FE] Harita↔Liste↔Grafik Senkronu</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Liste sekmeleri ve combobox ile görünüm değiştirme; Detay ile kayıt detayına ulaşma.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Sekmeler: Kuraklık Yönetim Planı Tedbirleri; Kuraklık Sayıları; Alan / Nüfus; Tedbir Sayısı; Tedbir Güncel Durum; KYP Tedbir Veri Giriş</li>
+          <li>Kuraklık Sayıları combobox: Havza Bazında Kuraklık Sayıları · Alt Havza Bazında Kuraklık Sayıları · İl Bazında Kuraklık Sayıları</li>
+          <li>Alan / Nüfus combobox: Havza İçindeki İl ve Alan Bilgileri · Alt Havza İçindeki İl ve Alan Bilgileri · İl Yüz Ölçümü ve Nüfus Bilgileri · Havza Yüz Ölçümü ve Nüfus Bilgileri</li>
+          <li>Tedbir Sayısı combobox: Havza Bazında Kuraklık Tedbir Sayısı · Alt Havza Bazında Kuraklık Tedbir Sayısı · İl Bazında Kuraklık Tedbir Sayısı</li>
+          <li>Tedbir Güncel Durum combobox: Havzadaki İllere Ait Tedbirlerin Güncel Durumu · Havzadaki Tedbirlerin Güncel Durumu</li>
+          <li>Combobox seçimine göre ilgili tablo görünümü açılır</li>
+          <li>Tüm tablolarda «Tarih», «Başlangıç Tarihi» ve «Bitiş Tarihi» kolonları yer almalıdır</li>
+          <li>Başlangıç–Bitiş Tarihi: seçilen iki tarih arasında tablonun filtrelenmesini sağlar (üst global filtre + tablo kolonları ile uyumlu)</li>
+          <li>Satırda Detay butonu ile detay bilgisine ulaşılır</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="fe-tablo-arac">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[FE] Liste Kolon Filtre / Sıralama / Sütun / Dışa Aktar</h4>
+        <div class="issue-meta">
+          <span><strong>Menü:</strong> Kuraklık Bilgi Sistemi › Kuraklık Yönetimi Dashboard › Listeler</span>
+          <span><strong>Veri:</strong> [BE] Kuraklık Liste / Tablo Endpoint'leri, [BE] Kuraklık Dışa Aktar / Çıktı Endpoint'i</span>
+          <span><strong>Bağımlılık:</strong> [FE] Dashboard Listeleri ve Combobox Görünümleri, [BE] Kuraklık Liste / Tablo Endpoint'leri, [BE] Kuraklık Dışa Aktar / Çıktı Endpoint'i</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Listelerde kolon başlıklarında filtreleme/sıralama, filtreleri temizleme, sütun gizle/göster ve dışa aktar.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>«Kolon Başlıklarında Filtreleme ve Sıralama» ile başlıklarda filtre/sıralama (Tarih, Başlangıç Tarihi, Bitiş Tarihi kolonları dahil)</li>
+          <li>«Filtreleri Temizle» başlık filtrelerini iptal eder</li>
+          <li>«Sütun Gizle/Göster» ile kolon ekleme ve gizleme</li>
+          <li>«Dışa Aktar» tablo çıktısı</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="fe-grafik">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[FE] Dashboard Grafikleri</h4>
+        <div class="issue-meta">
+          <span><strong>Menü:</strong> Kuraklık Bilgi Sistemi › Kuraklık Yönetimi Dashboard › Grafikler</span>
+          <span><strong>Veri:</strong> [BE] Kuraklık Grafik Veri Endpoint'i, [BE] Baraj Seviye / Aktif Hacim Endpoint'i, [BE] KYP Tedbir / Veri Giriş Endpoint'i</span>
+          <span><strong>Bağımlılık:</strong> [BE] Kuraklık Grafik Veri Endpoint'i, [BE] Baraj Seviye / Aktif Hacim Endpoint'i, [BE] KYP Tedbir / Veri Giriş Endpoint'i, [FE] Harita↔Liste↔Grafik Senkronu, [FE] Kuraklık Yönetimi Dashboard Kabuğu</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Dashboard grafiklerinin gösterimi; kaldır / ekle / yer değiştir; filtrelerle dinamikleştirme.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Baraj Güncel Seviye / Aktif Hacim (baraj combobox + Yıllık/Aylık/Haftalık/Günlük)</li>
+          <li>1 / 3 / 6 / 9 / 12 aylık ortalama yağış (Tablo/Grafik Oluştur)</li>
+          <li>Ülke yağış 1980–2025; ülke sıcaklık 1990–2025 — MGM entegrasyonu</li>
+          <li>Havza / Alt Havza / İl yıllık ortalama sıcaklık ve yağış (1990–2025) — MGM entegrasyonu</li>
+          <li>Yıllık Yağış Ortalaması ve Yıllık Sıcaklık Ortalaması bilgileri için Meteoroloji Genel Müdürlüğü ile entegrasyon olmalıdır</li>
+          <li>Havza yüzölçümü ve nüfus; 25 havza tedbir / veri girişi; KYP veri giriş durumu</li>
+          <li>Grafikler kaldırılabilir, yeniden eklenebilir, yerleri değiştirilebilir</li>
+          <li>Filtreler uygulanarak grafikler dinamikleştirilir</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="fe-senkron">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[FE] Harita↔Liste↔Grafik Senkronu</h4>
+        <div class="issue-meta">
+          <span><strong>Menü:</strong> Kuraklık Bilgi Sistemi › Kuraklık Yönetimi Dashboard</span>
+          <span><strong>Veri:</strong> [BE] Kuraklık Dashboard Özet ve Filtre Endpoint'i (ortak filtre bağlamı)</span>
+          <span><strong>Bağımlılık:</strong> [FE] Kuraklık Yönetimi Dashboard Kabuğu, [FE] Harita, SPI Lejant, Zaman Gezgini ve Harita Araçları, [FE] Dashboard Listeleri ve Combobox Görünümleri, [FE] Dashboard Grafikleri</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Harita, liste ve grafikler ilişkili olmalıdır; birinde yapılan seçim/sorgu diğerlerinde dinamik yansıtılır.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Haritada havza/alt havza seçimi → liste satırı ve grafikler güncellenir</li>
+          <li>Liste satırı seçimi → harita kartı / pin ve grafikler güncellenir</li>
+          <li>Global filtre / sorgu sonrası tüm bileşenler aynı sonuca göre filtrelenir</li>
+          <li>İlk açılışta tüm bilgiler; sorgu sonrası dinamik senkron</li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+      <div class="issue" id="fe-rapor-cikti">
+        <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/dashboard.html" target="_blank" rel="noopener">mockup/dashboard.html</a></div>
+        <h4>[FE] Harita / Tablo / Grafik Rapor ve Çıktı</h4>
+        <div class="issue-meta">
+          <span><strong>Menü:</strong> Kuraklık Bilgi Sistemi › Kuraklık Yönetimi Dashboard</span>
+          <span><strong>Veri:</strong> [BE] Kuraklık Dışa Aktar / Çıktı Endpoint'i</span>
+          <span><strong>Bağımlılık:</strong> [BE] Kuraklık Dışa Aktar / Çıktı Endpoint'i, [FE] Harita, SPI Lejant, Zaman Gezgini ve Harita Araçları, [FE] Liste Kolon Filtre / Sıralama / Sütun / Dışa Aktar, [FE] Dashboard Grafikleri</span>
+        </div>
+        <h5>İster</h5>
+        <p class="desc">Harita, tablo ve grafik bilgilerinin çıktısı ve raporunun alınması.</p>
+        <h5>Kabul kriterleri</h5>
+        <ul class="criteria">
+          <li>Harita: İndir, Yazdır, Rapor</li>
+          <li>Tablo: Dışa Aktar</li>
+          <li>Grafik: Grafik Çıktısı / Grafik Raporu / Yazdır</li>
+          <li>Header: Rapor Al, Çıktı Al, Excel’e aktar</li>
+          <li>Formatlar: xlsx, pdf, jpeg, csv vb.</li>
+          <li><strong>Not: Sistem geneli yazdır özelliği olmalıdır.</strong></li>
+        </ul>
+        <br>
+        <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
+        <button type="button" class="copy-btn">Tümünü kopyala</button>
+      </div>
+
+    </div>
+  </main>
+  <aside class="isler-toc-wrap" id="isler-toc" aria-label="Task listesi"></aside>
+</div>
+<script>
+window.TASK_HUB = {
+  taskRoot: '../..',
+  page: 'calisma-isler',
+  calisma: {
+    id: 'kuraklik',
+    label: 'Kuraklık',
+    base: '.',
+    menuYer: 'sol',
+    mockups: [
+      { id: 'mock-dashboard', label: 'Kuraklık Yönetimi Dashboard', href: 'mockup/dashboard.html', rapor: true }
+    ],
+    islerHref: 'isler.html'
+  }
+};
+(function () {
+  function switchTab(name) {
+    document.querySelectorAll('.task-tab').forEach(function (btn) {
+      var on = btn.getAttribute('data-tab') === name;
+      btn.classList.toggle('active', on);
+    });
+    document.querySelectorAll('[data-tab-panel]').forEach(function (panel) {
+      panel.hidden = panel.getAttribute('data-tab-panel') !== name;
+    });
+  }
+  document.querySelectorAll('.task-tab').forEach(function (btn) {
+    btn.addEventListener('click', function () { switchTab(btn.getAttribute('data-tab')); });
+  });
+})();
+</script>
+<script src="../../js/sunum-query.js"></script>
+<script src="../../js/isler-mockups.js"></script>
+<script src="../../js/isler-copy.js"></script>
+<script src="../../js/isler-task-edit.js"></script>
+<script src="../../js/isler-toc.js"></script>
+<script src="../../js/nav.js"></script>
+</body>
+</html>
