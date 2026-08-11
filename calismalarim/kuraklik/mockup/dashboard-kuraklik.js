@@ -84,13 +84,13 @@
       charts[id].update('none');
     }
 
-    var y80 = yearSeries(1980, 2025, 5, function (y) {
+    var y80 = yearSeries(1980, 2026, 5, function (y) {
       return 55 + Math.round(20 * Math.sin((y - 1980) / 8) + (y % 5) * 2);
     }).data;
-    var t90 = yearSeries(1990, 2025, 5, function (y) {
+    var t90 = yearSeries(1990, 2026, 5, function (y) {
       return 12 + Math.round((y - 1990) * 0.08 + (y % 7) * 0.3);
     }).data;
-    var y90 = yearSeries(1990, 2025, 5, function (y) {
+    var y90 = yearSeries(1990, 2026, 5, function (y) {
       return 50 + Math.round(18 * Math.sin((y - 1990) / 7) + (y % 4) * 2);
     }).data;
 
@@ -233,13 +233,13 @@
       });
     }
 
-    var y80 = yearSeries(1980, 2025, 5, function (y) {
+    var y80 = yearSeries(1980, 2026, 5, function (y) {
       return 55 + Math.round(20 * Math.sin((y - 1980) / 8) + (y % 5) * 2);
     });
-    var t90 = yearSeries(1990, 2025, 5, function (y) {
+    var t90 = yearSeries(1990, 2026, 5, function (y) {
       return 12 + Math.round((y - 1990) * 0.08 + (y % 7) * 0.3);
     });
-    var y90 = yearSeries(1990, 2025, 5, function (y) {
+    var y90 = yearSeries(1990, 2026, 5, function (y) {
       return 50 + Math.round(18 * Math.sin((y - 1990) / 7) + (y % 4) * 2);
     });
 

@@ -73,7 +73,7 @@
           <li>11 sınıf uluslararası SPI sınıfları (Olağanüstü Kurak … Olağanüstü Nemli)</li>
           <li>Girdi veri MGM entegrasyonu ile üretilir / sağlanır</li>
           <li>Havza / Alt Havza / İl katman geometrileri ve özellik anahtarları döner</li>
-          <li>Zaman Gezgini (2000–2025) için dönem/versiyon parametresi desteklenir</li>
+          <li>Zaman Gezgini (2000–2026) için dönem/versiyon parametresi desteklenir</li>
         </ul>
         <br>
         <p class="desc issue-fe-theme-note"><strong>Not: Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
@@ -145,8 +145,9 @@
         <h5>Kabul kriterleri</h5>
         <ul class="criteria">
           <li>«Tablo/Grafik Oluştur» ile 1, 3, 6, 9, 12 aylık ortalama yağış değerleri</li>
-          <li>Ülkemiz yıllık ortalama yağış (1980–2025); ülke yıllık ortalama sıcaklık (1990–2025) — Meteoroloji Genel Müdürlüğü entegrasyonu</li>
-          <li>Havza / Alt Havza / İl yıllık ortalama sıcaklık ve yağış (1990–2025) — MGM entegrasyonu</li>
+          <li>Havza / Alt Havza / İl Bazında Kuraklık Sayıları grafik veri seti — MGM entegrasyonu</li>
+          <li>Ülkemiz yıllık ortalama yağış (1980–2026); ülke yıllık ortalama sıcaklık (1990–2026) — Meteoroloji Genel Müdürlüğü entegrasyonu</li>
+          <li>Havza / Alt Havza / İl yıllık ortalama sıcaklık ve yağış (1990–2026) — MGM entegrasyonu</li>
           <li>Yıllık Yağış Ortalaması ve Yıllık Sıcaklık Ortalaması bilgileri için Meteoroloji Genel Müdürlüğü ile entegrasyon olmalıdır (dashboard KPI ile aynı kaynak)</li>
           <li>Havza yüzölçümü / nüfus grafik verisi</li>
           <li>25 havza tedbir sayıları ve veri girişi yapılmış tedbir sayısı</li>
@@ -270,8 +271,8 @@
         <ul class="criteria">
           <li>Son 6 aylık SPI haritası; 11 sınıflı uluslararası lejant (okunabilir)</li>
           <li>Lejantta Havza ve Alt Havza katmanları (aç/kapa); İl seçimi harita araç çubuğundan (Havza / Alt Havza · İl butonları)</li>
-          <li>Zaman Gezgini: 2000–2025 zaman çubuğu + buton (ekran görüntüsü)</li>
-          <li>Havza kartı: Havza Adı, Kodu, Yüz Ölçümü/Alan, Havza Nüfus</li>
+          <li>Zaman Gezgini: 2000–2026 zaman çubuğu + buton (ekran görüntüsü)</li>
+          <li>Havza kartı: Havza Adı, Kodu, Yüz Ölçümü/Alan, Havza Nüfus (TÜİK nüfus gridi · Havza Takip Sistemi otomatik hesap)</li>
           <li>Alt havza kartı: Alt Havza Adı, Kodu, Yüz Ölçümü/Alan, Havza Adı, HBCB Kodu</li>
           <li>Harita ekranında tüm harita araçları (İndir, Yazdır, Altlık, kuzey, ölçüm, gezinme, ölçek, tam ekran vb.)</li>
           <li><strong>Not: Sistem geneli yazdır özelliği olmalıdır.</strong></li>
@@ -299,6 +300,7 @@
           <li>Tedbir Sayısı combobox: Havza Bazında Kuraklık Tedbir Sayısı · Alt Havza Bazında Kuraklık Tedbir Sayısı · İl Bazında Kuraklık Tedbir Sayısı</li>
           <li>Tedbir Güncel Durum combobox: Havzadaki İllere Ait Tedbirlerin Güncel Durumu · Havzadaki Tedbirlerin Güncel Durumu</li>
           <li>Combobox seçimine göre ilgili tablo görünümü açılır</li>
+          <li>Tüm tablolarda Havza, Alt Havza, İl ve İlçe seçimi yapılabilmeli; seçime göre filtreler uygulanır (grafikler senkron ile dinamikleşir)</li>
           <li>Tüm tablolarda «Tarih», «Başlangıç Tarihi» ve «Bitiş Tarihi» kolonları yer almalıdır</li>
           <li>Başlangıç–Bitiş Tarihi: seçilen iki tarih arasında tablonun filtrelenmesini sağlar (üst global filtre + tablo kolonları ile uyumlu)</li>
           <li>Satırda Detay butonu ile detay bilgisine ulaşılır</li>
@@ -343,9 +345,10 @@
         <h5>Kabul kriterleri</h5>
         <ul class="criteria">
           <li>Baraj Güncel Seviye / Aktif Hacim (baraj combobox + Yıllık/Aylık/Haftalık/Günlük)</li>
+          <li>Havza / Alt Havza / İl Bazında Kuraklık Sayıları — tablo ile ilişkili grafik görünümü (MGM)</li>
           <li>1 / 3 / 6 / 9 / 12 aylık ortalama yağış (Tablo/Grafik Oluştur)</li>
-          <li>Ülke yağış 1980–2025; ülke sıcaklık 1990–2025 — MGM entegrasyonu</li>
-          <li>Havza / Alt Havza / İl yıllık ortalama sıcaklık ve yağış (1990–2025) — MGM entegrasyonu</li>
+          <li>Ülke yağış 1980–2026; ülke sıcaklık 1990–2026 — MGM entegrasyonu</li>
+          <li>Havza / Alt Havza / İl yıllık ortalama sıcaklık ve yağış (1990–2026) — MGM entegrasyonu</li>
           <li>Yıllık Yağış Ortalaması ve Yıllık Sıcaklık Ortalaması bilgileri için Meteoroloji Genel Müdürlüğü ile entegrasyon olmalıdır</li>
           <li>Havza yüzölçümü ve nüfus; 25 havza tedbir / veri girişi; KYP veri giriş durumu</li>
           <li>Grafikler kaldırılabilir, yeniden eklenebilir, yerleri değiştirilebilir</li>
