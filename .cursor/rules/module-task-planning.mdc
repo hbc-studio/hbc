@@ -483,7 +483,7 @@ Birbirine bağlı `[BE]` ve `[FE]` task’ları Jira metninde **İster** başlı
 
 **Tablo adı (`issue-meta` içindeki `Tablo:` satırı):** Yalnızca tablo adını yaz — şema öneki (`hbc.` vb.) **yazma**. Örnek: `Tablo: yazi_secenek` (veya Excel import tabloları); `Tablo: yazi, yazi_form_alan`. Kabul kriterlerinde ve İster metninde de aynı kural geçerli.
 
-**FE tema notu (zorunlu):** Her `[FE]` task kutusunda kabul kriterleri listesinin **altında** (boş satırla ayrılmış) şu metin yer alır; Jira kopyasında kalın görünsün diye HTML'de `<strong>`, `js/isler-copy.js` bunu `*metin*` olarak kopyalar:
+**FE tema notu (yalnızca Frontend — zorunlu):** Her `[FE]` task kutusunda kabul kriterleri listesinin **altında** (boş satırla ayrılmış) şu metin yer alır; Jira kopyasında kalın görünsün diye HTML'de `<strong>`, `js/isler-copy.js` bunu `*metin*` olarak kopyalar:
 
 ```html
         </ul>
@@ -492,7 +492,8 @@ Birbirine bağlı `[BE]` ve `[FE]` task’ları Jira metninde **İster** başlı
         <button type="button" class="copy-btn">Tümünü kopyala</button>
 ```
 
-- BE task'larına bu not **eklenmez**.
+- **Yalnızca `[FE]`:** Bu not UI / mockup teması içindir; ekranların mevcut uygulama temasına uyması FE kabul kriteridir.
+- **`[BE]` task'lara `issue-fe-theme-note` ekleme** — Backend endpoint işinde «ekranlar temaya uygun yapılmalıdır» anlamsızdır; BE kutusunda `<br>` + tema notu **yasak**.
 - Mockup'taki Tom Select, native select vb. teknik ayrıntıları FE task metnine yazma; yazılımcı mevcut uygulama bileşenlerini kullanır.
 
 **Mockup FE/BE notları → Jira (zorunlu):**
@@ -566,13 +567,31 @@ Mockup linkinin **altında** koyu arka planlı kopya container'ı; **Tümünü k
   <p class="desc">…</p>
   <h5>Kabul kriterleri</h5>
   <ul class="criteria">…</ul>
+  <button type="button" class="copy-btn">Tümünü kopyala</button>
+</div>
+```
+
+```html
+<div class="issue" id="fe-ornek">
+  <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/liste.html" target="_blank" rel="noopener">mockup/liste.html</a></div>
+  <h4>[FE] Örnek Listesi</h4>
+  <div class="issue-meta">…</div>
+  <h5>Bağlı Olduğu İşler</h5>
+  <ul class="criteria issue-veri">
+    <li><strong>Frontend:</strong> [FE] Örnek Listesi</li>
+    <li><strong>Backend:</strong> [BE] Örnek Endpoint</li>
+  </ul>
+  <h5>İster</h5>
+  <p class="desc">…</p>
+  <h5>Kabul kriterleri</h5>
+  <ul class="criteria">…</ul>
   <br>
   <p class="desc issue-fe-theme-note"><strong>Ekranlar örnektir, mevcut temaya uygun şekilde yapılmalıdır.</strong></p>
   <button type="button" class="copy-btn">Tümünü kopyala</button>
 </div>
 ```
 
-FE şablonunda tema notu zorunlu; BE şablonunda yok. Her kutuda **Tümünü kopyala** → Jira **Text** modunda yapıştır → **Visual** ile kontrol.
+FE şablonunda tema notu **zorunlu**; BE şablonunda tema notu **yok** (kabul kriterlerinden sonra doğrudan `copy-btn`). Her kutuda **Tümünü kopyala** → Jira **Text** modunda yapıştır → **Visual** ile kontrol.
 
 **Sağ menü (hızlı erişim):**
 
@@ -871,7 +890,7 @@ assets/
 - Mockup bitince: `durum` → `onay-bekliyor`, `mockupSayisi` güncelle
 - Analist mockup onaylayınca: `onay: { tarih, kim }` yaz; task yoksa `durum` `onay-bekliyor` kalsın
 - `isler.html` doldurulunca: `taskBe` / `taskFe` say, `durum` → `task-hazir`
-- Her `[FE]` task kutusuna kabul kriterleri altında tema notu ekle (`issue-fe-theme-note` + `<br>`)
+- Her `[FE]` task kutusuna kabul kriterleri altında tema notu ekle (`issue-fe-theme-note` + `<br>`); `[BE]` task'lara `issue-fe-theme-note` **ekleme** (UI teması BE işi değildir)
 - Çalışma iptal: `durum` → `iptal`, `iptal: { tarih, kim }`; klasörü silme
 - Scaffold şablonuna `calisma-cursor.js` ekle
 - Analist özet sayfası butonları `calisma-cursor.js` — Cursor metnini kopyalar; meta güncellemesini agent yapar
