@@ -522,20 +522,24 @@ Mockup ekranlarına eklenen `mock-fe-warning` (Frontend İçin Uyarı / Backend 
 - Mockup notları **Tümünü kopyala** çıktısına dahildir (Jira’ya gider).
 - Onay sonrası `isler.html` güncellenirken mockup’ta yeni not eklendiyse task metinleri de güncellenir.
 
-**Mockup linki (yalnızca sayfada, Jira'ya gitmez):**
+**Mockup linki (yalnızca sayfada, Jira'ya gitmez — sunum modu):**
 
 Her task kutusunda (BE ve FE) üstte tıklanabilir mockup satırı; Jira metnine **yazılmaz**, **Tümünü kopyala** çıktısına **dahil edilmez**.
+
+- **`href`:** sunum modu — `mockup/….html?sunum=1` (path + `?sunum=1`; hash varsa `?sunum=1` hash’ten önce)
+- **Görünen metin:** dosya yolu / query **yazma**. `TASK_HUB.calisma.mockups[].label` (ekran adı) kullan; label yoksa yalnızca dosya adı (`dashboard.html`)
 
 ```html
 <div class="issue-mockup no-copy">
   <span>Mockup: </span>
-  <a href="mockup/liste.html" target="_blank" rel="noopener">mockup/liste.html</a>
+  <a href="mockup/liste.html?sunum=1" target="_blank" rel="noopener">Örnek Listesi</a>
 </div>
 ```
 
 - Sınıf `no-copy` — kopya scripti bu bloğu çıkarır.
-- BE task'larında da ilgili ekran mockup'ına link ver (analist bağlamı için).
+- BE task'larında da ilgili ekran mockup'ına sunum linki ver (analist bağlamı için).
 - FE task `issue-meta` içinde `Mockup:` satırı **kullanma**; yalnızca üstteki link.
+- `?sunum=1` olmayan düz mockup URL kullanma; görünen metinde `mockup/` veya `?sunum=1` gösterme.
 
 **Kopya alanı düzeni:**
 
@@ -555,7 +559,7 @@ Mockup linkinin **altında** koyu arka planlı kopya container'ı; **Tümünü k
 
 ```html
 <div class="issue" id="be-ornek">
-  <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/liste.html" target="_blank" rel="noopener">mockup/liste.html</a></div>
+  <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/liste.html?sunum=1" target="_blank" rel="noopener">Örnek Listesi</a></div>
   <h4>[BE] Örnek Endpoint</h4>
   <div class="issue-meta">…</div>
   <h5>Bağlı Olduğu İşler</h5>
@@ -573,7 +577,7 @@ Mockup linkinin **altında** koyu arka planlı kopya container'ı; **Tümünü k
 
 ```html
 <div class="issue" id="fe-ornek">
-  <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/liste.html" target="_blank" rel="noopener">mockup/liste.html</a></div>
+  <div class="issue-mockup no-copy"><span>Mockup: </span><a href="mockup/liste.html?sunum=1" target="_blank" rel="noopener">Örnek Listesi</a></div>
   <h4>[FE] Örnek Listesi</h4>
   <div class="issue-meta">…</div>
   <h5>Bağlı Olduğu İşler</h5>
@@ -880,7 +884,7 @@ assets/
 - Faz numarası ve iç plan jargonu Jira metinlerine yazma
 - Tab yapısını `isler.html` oluştururken/güncellerken koru
 - Task `h4` başlığında `[BE]` veya `[FE]` öneki kullan; görsel chip/badge (`tag-be`, `tag-fe`) ekleme
-- Mockup linkini `issue-mockup no-copy` ile ekle; Jira metnine mockup URL yazma
+- Mockup linkini `issue-mockup no-copy` ile ekle; `href` `?sunum=1` ile sunum modu olsun; görünen metin `mockups[].label` (yoksa dosya adı), path/query gösterme; Jira metnine mockup URL yazma
 - Task kutusu: mockup üstte, kopya içeriği altta; `copy-btn` + `js/isler-copy.js` ile sağ üst toolbar
 - Özet `index.html`: mockup listesini `tile-panel` + numaralı `tile-card--fe` grid ile kur
 - Çoklu seçim form alanı: `form-select mock-tom-select` (Bootstrap 5 yerel + Tom Select CDN)
